@@ -15,7 +15,7 @@ public interface Query {
     String UPDATE_CATEGORY = "UPDATE category SET price = ? WHERE category_id = ?";
 
     String GET_ALL_FILMS = "SELECT * FROM film LIMIT ?, ?";
-    String GET_FILM_BY_TITLE = "SELECT * FROM film WHERE title = ?";
+    String GET_FILM_BY_ID = "SELECT * FROM film WHERE film_id = ?";
     String GET_FILM_BY_GENRE = "SELECT * FROM film WHERE genre = ?";
     String CREATE_FILM =
             "INSERT INTO film (title, director, cast, description, genre_id, duration) VALUES (?, ?, ?, ?, ?, ?)";

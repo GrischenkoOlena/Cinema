@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAO extends AbstractDAO <String, Film>{
+public class FilmDAO extends AbstractDAO <Long, Film>{
     private final QueryBuilder<Film> filmQueryBuilder = new FilmQueryBuilder();
 
     @Override
@@ -25,12 +25,12 @@ public class FilmDAO extends AbstractDAO <String, Film>{
     }
 
     @Override
-    public Film findEntityByKey(String title) throws DAOException {
+    public Film findEntityByKey(Long id) throws DAOException {
         Film film;
         try {
-            film = filmQueryBuilder.executeAndReturnValue(connection, Query.GET_FILM_BY_TITLE, title);
+            film = filmQueryBuilder.executeAndReturnValue(connection, Query.GET_FILM_BY_ID, id);
         } catch (SQLException e){
-            throw new DAOException("problem in find film by title", e);
+            throw new DAOException("problem in find film by id", e);
         }
         return film;
     }

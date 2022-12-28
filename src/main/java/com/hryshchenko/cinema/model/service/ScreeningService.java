@@ -5,12 +5,14 @@ import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.builder.QueryBuilder;
 import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
 import com.hryshchenko.cinema.model.dao.ScreeningDAO;
+import com.hryshchenko.cinema.model.dto.ScreeningDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScreeningService implements ICinemaService {
@@ -52,6 +54,15 @@ public class ScreeningService implements ICinemaService {
         }
         dbManager.closeConnection(conn);
         return result;
+    }
+
+    public List<ScreeningDTO> getFullScreening (LocalDate date) throws DAOException {
+        List<ScreeningDTO> screeningDTOList = new ArrayList<>();
+        List<Screening> screenings = getScreeningByDate(date);
+        for (Screening screening : screenings){
+            screeningDTOList.add(ScreeningDTO.build(screening));
+        }
+        return screeningDTOList;
     }
 }
 
