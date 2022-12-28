@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller;
+package com.hryshchenko.cinema.controller.commandFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

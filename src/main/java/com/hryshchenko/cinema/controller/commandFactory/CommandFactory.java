@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller;
+package com.hryshchenko.cinema.controller.commandFactory;
 
 import com.hryshchenko.cinema.controller.commands.LoginCommand;
 import com.hryshchenko.cinema.controller.commands.MainCommand;

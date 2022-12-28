@@ -26,7 +26,7 @@ public class AppContextListener implements ServletContextListener {
         log.debug("ICommand container initialization started");
 
         try {
-            Class.forName("com.hryshchenko.cinema.controller.CommandFactory");
+            Class.forName("com.hryshchenko.cinema.controller.commandFactory.CommandFactory");
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }
