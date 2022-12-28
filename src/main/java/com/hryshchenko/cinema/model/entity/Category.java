@@ -5,7 +5,7 @@ public class Category extends Entity{
     private String category;
     private double price;
 
-    public Category() {};
+    public Category() {}
 
     public Category(long id, String category, double price) {
         super(id);

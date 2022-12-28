@@ -1,18 +1,21 @@
 package com.hryshchenko.cinema.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Screening extends Entity {
     private static final long serialVersionUID = 1L;
     private int filmId;
-    private Date timeBegin;
+    private LocalDate filmDate;
+    private LocalTime timeBegin;
     private int stateId;
 
     public Screening(){ }
 
-    public Screening(long id, int filmId, Date timeBegin, int stateId) {
+    public Screening(long id, int filmId, LocalDate filmDate, LocalTime timeBegin, int stateId) {
         super(id);
         this.filmId = filmId;
+        this.filmDate = filmDate;
         this.timeBegin = timeBegin;
         this.stateId = stateId;
     }
@@ -25,11 +28,11 @@ public class Screening extends Entity {
         this.filmId = filmId;
     }
 
-    public Date getTimeBegin() {
+    public LocalTime getTimeBegin() {
         return timeBegin;
     }
 
-    public void setTimeBegin(Date timeBegin) {
+    public void setTimeBegin(LocalTime timeBegin) {
         this.timeBegin = timeBegin;
     }
 
@@ -41,10 +44,19 @@ public class Screening extends Entity {
         this.stateId = stateId;
     }
 
+    public LocalDate getFilmDate() {
+        return filmDate;
+    }
+
+    public void setFilmDate(LocalDate filmDate) {
+        this.filmDate = filmDate;
+    }
+
     @Override
     public String toString() {
         return "Screening{" +
                 "filmId=" + filmId +
+                ", filmDate=" + filmDate +
                 ", timeBegin=" + timeBegin +
                 ", stateId=" + stateId +
                 '}';

@@ -6,7 +6,7 @@ public class Ticket extends Entity {
     private int userId;
     private int ticketCount;
 
-    public Ticket() {};
+    public Ticket() {}
 
     public Ticket(long id, int screeningId, int userId, int ticketCount) {
         super(id);

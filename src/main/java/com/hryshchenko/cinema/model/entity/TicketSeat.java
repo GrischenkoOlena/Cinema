@@ -5,7 +5,7 @@ public class TicketSeat extends Entity {
     private int ticketId;
     private int seatId;
 
-    public TicketSeat(){};
+    public TicketSeat(){}
 
     public TicketSeat (long id, int ticketId, int seatId) {
         super(id);

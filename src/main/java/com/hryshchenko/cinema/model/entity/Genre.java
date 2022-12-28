@@ -4,7 +4,7 @@ public class Genre extends Entity {
     private static final long serialVersionUID = 1L;
     private String genre;
 
-    public Genre() {};
+    public Genre() {}
 
     public Genre(long id, String genre) {
         super(id);

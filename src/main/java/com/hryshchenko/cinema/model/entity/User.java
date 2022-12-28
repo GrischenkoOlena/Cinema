@@ -7,7 +7,7 @@ public class User extends Entity{
     private String name;
     private double balance;
     private UserRole role;
-    public User(){ };
+    public User(){ }
 
     public User(long id, String login, String password, String name, double balance, UserRole role) {
         super(id);

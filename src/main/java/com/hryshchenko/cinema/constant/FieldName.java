@@ -25,6 +25,7 @@ public interface FieldName {
 
     String SCREENING_ID = "screening_id";
     String SCREENING_FILM_ID = "film_id";
+    String SCREENING_FILM_DATE = "film_date";
     String SCREENING_TIME_BEGIN = "time_begin";
     String SCREENING_STATE_ID = "state_id";
 

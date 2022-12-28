@@ -2,14 +2,13 @@ package com.hryshchenko.cinema.model.entity;
 
 public class Film extends Entity{
     private static final long serialVersionUID = 1L;
-    private String title;
-    private String director;
-    private String cast;
-    private String description;
-    private long genreId;
-    private int duration;
+    private final String title;
+    private final String director;
+    private final String cast;
+    private final String description;
+    private final long genreId;
+    private final int duration;
 
-    private Film (){ };
 
     private Film (FilmBuilder filmBuilder){
         super(filmBuilder.id);

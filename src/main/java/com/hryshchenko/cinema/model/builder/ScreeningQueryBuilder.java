@@ -16,7 +16,8 @@ public class ScreeningQueryBuilder extends QueryBuilder <Screening> {
         while (rs.next()){
             screening.setId(rs.getInt(SCREENING_ID));
             screening.setFilmId(rs.getInt(SCREENING_FILM_ID));
-            screening.setTimeBegin(rs.getTimestamp(SCREENING_TIME_BEGIN));
+            screening.setFilmDate(rs.getDate(SCREENING_FILM_DATE).toLocalDate());
+            screening.setTimeBegin(rs.getTime(SCREENING_TIME_BEGIN).toLocalTime());
             screening.setStateId(rs.getInt(SCREENING_STATE_ID));
         }
         return screening;
@@ -29,7 +30,8 @@ public class ScreeningQueryBuilder extends QueryBuilder <Screening> {
             Screening screening = new Screening();
             screening.setId(rs.getInt(SCREENING_ID));
             screening.setFilmId(rs.getInt(SCREENING_FILM_ID));
-            screening.setTimeBegin(rs.getTimestamp(SCREENING_TIME_BEGIN));
+            screening.setFilmDate(rs.getDate(SCREENING_FILM_DATE).toLocalDate());
+            screening.setTimeBegin(rs.getTime(SCREENING_TIME_BEGIN).toLocalTime());
             screening.setStateId(rs.getInt(SCREENING_STATE_ID));
             screenings.add(screening);
         }

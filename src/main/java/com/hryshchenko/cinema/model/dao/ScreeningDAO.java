@@ -1,33 +1,89 @@
 package com.hryshchenko.cinema.model.dao;
 
+import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.model.builder.QueryBuilder;
+import com.hryshchenko.cinema.model.builder.ScreeningQueryBuilder;
 import com.hryshchenko.cinema.model.entity.Screening;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScreeningDAO extends AbstractDAO <Integer, Screening> {
+
+    private final QueryBuilder<Screening> screeningQueryBuilder = new ScreeningQueryBuilder();
     @Override
     public List<Screening> findAll() throws DAOException {
-        return null;
+        List<Screening> screenings;
+        try {
+            screenings = screeningQueryBuilder.executeAndReturnList(connection, Query.GET_ALL_SCREENINGS, 0,10);
+        } catch (SQLException e){
+            throw new DAOException("problem in find all screenings", e);
+        }
+        return screenings;
     }
 
     @Override
     public Screening findEntityByKey(Integer id) throws DAOException {
-        return null;
+        Screening screening;
+        try {
+            screening = screeningQueryBuilder.executeAndReturnValue(connection, Query.GET_SCREENING_BY_ID, id);
+        } catch (SQLException e){
+            throw new DAOException("problem in find screening by id", e);
+        }
+        return screening;
     }
 
     @Override
     public boolean delete(Screening screening) throws DAOException {
-        return false;
+        boolean result;
+        try {
+            result = screeningQueryBuilder.execute(connection, Query.DELETE_SCREENING, screening.getId());
+        } catch (SQLException e){
+            throw new DAOException("problem in delete screening", e);
+        }
+        return result;
     }
 
     @Override
     public boolean create(Screening screening) throws DAOException {
-        return false;
+        boolean result;
+        try {
+            List<Object> params = new ArrayList<>();
+            params.add(screening.getFilmId());
+            params.add(screening.getFilmDate());
+            params.add(screening.getTimeBegin());
+            params.add(screening.getStateId());
+
+            result = screeningQueryBuilder.execute(connection, Query.CREATE_SCREENING, params.toArray());
+        } catch (SQLException e){
+            throw new DAOException("problem in delete screening", e);
+        }
+        return result;
     }
 
     @Override
     public boolean update(Screening screening) throws DAOException {
-        return false;
+        boolean result;
+        try {
+            result = screeningQueryBuilder.execute(connection,
+                    Query.UPDATE_SCREENING, screening.getStateId(), screening.getId());
+        } catch (SQLException e){
+            throw new DAOException("problem in update screening", e);
+        }
+        return result;
+    }
+
+    public List<Screening> findScreeningsByDate(LocalDate date) throws DAOException {
+        List<Screening> screenings;
+        try {
+            screenings = screeningQueryBuilder.executeAndReturnList(connection,
+                    Query.GET_SCREENINGS_BY_DATE, date);
+        } catch (SQLException e){
+            throw new DAOException("problem in find screenings by date", e);
+        }
+        return screenings;
     }
 }

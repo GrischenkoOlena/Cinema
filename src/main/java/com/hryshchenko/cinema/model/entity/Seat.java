@@ -6,7 +6,7 @@ public class Seat extends Entity{
     private int place;
     private int categoryId;
 
-    public Seat() {};
+    public Seat() {}
 
     public Seat(int id, int line, int place, int categoryId) {
         super(id);
