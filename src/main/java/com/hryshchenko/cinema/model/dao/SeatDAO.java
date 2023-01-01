@@ -54,4 +54,24 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
         }
         return result;
     }
+
+    public int findMaxRow() throws DAOException {
+        int rowCount;
+        try {
+            rowCount = seatQueryBuilder.executeAndReturnAggregate(connection, Query.GET_MAX_ROW);
+        } catch (SQLException e){
+            throw new DAOException("problem in find max row", e);
+        }
+        return rowCount;
+    }
+
+    public int findMaxPlace() throws DAOException {
+        int placeCount;
+        try {
+            placeCount = seatQueryBuilder.executeAndReturnAggregate(connection, Query.GET_MAX_PLACE);
+        } catch (SQLException e){
+            throw new DAOException("problem in find max place", e);
+        }
+        return placeCount;
+    }
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScreeningDAO extends AbstractDAO <Integer, Screening> {
+public class ScreeningDAO extends AbstractDAO <Long, Screening> {
 
     private final QueryBuilder<Screening> screeningQueryBuilder = new ScreeningQueryBuilder();
     @Override
@@ -26,7 +26,7 @@ public class ScreeningDAO extends AbstractDAO <Integer, Screening> {
     }
 
     @Override
-    public Screening findEntityByKey(Integer id) throws DAOException {
+    public Screening findEntityByKey(Long id) throws DAOException {
         Screening screening;
         try {
             screening = screeningQueryBuilder.executeAndReturnValue(connection, Query.GET_SCREENING_BY_ID, id);

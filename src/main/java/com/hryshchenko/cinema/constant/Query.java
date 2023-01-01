@@ -30,6 +30,8 @@ public interface Query {
     String GET_ALL_SEATS = "SELECT * FROM seat";
     String GET_SEAT_BY_ID = "SELECT * FROM seat WHERE seat_id = ?";
     String UPDATE_SEAT = "UPDATE seat SET category_id = ? WHERE seat_id = ?";
+    String GET_MAX_ROW = "SELECT max(line) FROM seat";
+    String GET_MAX_PLACE = "SELECT max(place) FROM seat";
 
     String GET_ALL_SCREENINGS = "SELECT * FROM screening LIMIT ?, ?";
     String GET_SCREENING_BY_ID = "SELECT * FROM screening WHERE screening_id = ?";

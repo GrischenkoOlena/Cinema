@@ -1,5 +1,6 @@
 package com.hryshchenko.cinema.controller.commandFactory;
 
+import com.hryshchenko.cinema.controller.commands.FreeSeatCommand;
 import com.hryshchenko.cinema.controller.commands.LoginCommand;
 import com.hryshchenko.cinema.controller.commands.MainCommand;
 
@@ -13,6 +14,7 @@ public class CommandFactory {
     static {
         commands.put("login", new LoginCommand());
         commands.put("main", new MainCommand());
+        commands.put("freeSeats", new FreeSeatCommand());
     }
 
     private CommandFactory() {}
