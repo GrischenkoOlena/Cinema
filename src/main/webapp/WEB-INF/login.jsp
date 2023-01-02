@@ -1,12 +1,14 @@
-<!doctype html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
+
+<%@ include file="/WEB-INF/templates/taglib.jspf" %>
+
 <html lang="en">
-  <jsp:include page="/WEB-INF/templates/header.jsp"></jsp:include>
+  <c:set var="title" value="Cinema" scope="session"/>
+  <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
   <body class="w-50 p-3">
     <h2>Login</h2>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
 
     <div class="container">
       <form>
@@ -17,7 +19,7 @@
         </div>
         <div class="mb-3">
           <label for="inputPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword">
+          <input type="password" class="form-control" id="password">
         </div>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="checkMe">
@@ -26,5 +28,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
      </div>
+     
+     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
 </body>
 </html>
