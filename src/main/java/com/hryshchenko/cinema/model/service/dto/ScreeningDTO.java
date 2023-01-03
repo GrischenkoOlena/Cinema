@@ -1,10 +1,10 @@
-package com.hryshchenko.cinema.model.dto;
+package com.hryshchenko.cinema.model.service.dto;
 
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.entity.Film;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.State;
-import com.hryshchenko.cinema.model.service.FilmService;
+import com.hryshchenko.cinema.model.service.dbservices.FilmService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

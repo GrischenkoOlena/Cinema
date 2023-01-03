@@ -4,13 +4,13 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.dto.ScreeningDTO;
-import com.hryshchenko.cinema.model.dto.SeatDTO;
+import com.hryshchenko.cinema.model.service.dto.ScreeningDTO;
+import com.hryshchenko.cinema.model.service.dto.SeatDTO;
 import com.hryshchenko.cinema.model.entity.Category;
 import com.hryshchenko.cinema.model.entity.Screening;
-import com.hryshchenko.cinema.model.service.CategoryService;
-import com.hryshchenko.cinema.model.service.ScreeningService;
-import com.hryshchenko.cinema.model.service.SeatService;
+import com.hryshchenko.cinema.model.service.dbservices.CategoryService;
+import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
+import com.hryshchenko.cinema.model.service.dbservices.SeatService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

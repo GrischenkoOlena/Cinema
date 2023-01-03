@@ -6,9 +6,9 @@ import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginCommand implements ICommand {
+public class SignUpCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        return Path.USER_MAIN;
+        return Path.SUCCESS;
     }
 }

@@ -5,10 +5,18 @@ import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
-public class LoginCommand implements ICommand {
+public class EnterCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        return Path.USER_MAIN;
+        String page = req.getParameter("page");
+        if (page.equals("login")) {
+            return Path.LOGIN;
+        }
+        if (page.equals("signUp")) {
+            return Path.SIGN_UP;
+        }
+        return Path.ERROR;
     }
 }

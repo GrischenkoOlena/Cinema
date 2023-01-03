@@ -4,8 +4,8 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.dto.ScreeningDTO;
-import com.hryshchenko.cinema.model.service.ScreeningService;
+import com.hryshchenko.cinema.model.service.dto.ScreeningDTO;
+import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

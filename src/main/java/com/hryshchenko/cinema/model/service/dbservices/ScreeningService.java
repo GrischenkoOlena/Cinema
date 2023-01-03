@@ -1,8 +1,8 @@
-package com.hryshchenko.cinema.model.service;
+package com.hryshchenko.cinema.model.service.dbservices;
 
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dao.ScreeningDAO;
-import com.hryshchenko.cinema.model.dto.ScreeningDTO;
+import com.hryshchenko.cinema.model.service.dto.ScreeningDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
 
 import java.sql.Connection;

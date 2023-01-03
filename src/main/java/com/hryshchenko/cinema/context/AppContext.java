@@ -1,9 +1,9 @@
 package com.hryshchenko.cinema.context;
 
-import com.hryshchenko.cinema.model.service.CategoryService;
-import com.hryshchenko.cinema.model.service.FilmService;
-import com.hryshchenko.cinema.model.service.ScreeningService;
-import com.hryshchenko.cinema.model.service.SeatService;
+import com.hryshchenko.cinema.model.service.dbservices.CategoryService;
+import com.hryshchenko.cinema.model.service.dbservices.FilmService;
+import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
+import com.hryshchenko.cinema.model.service.dbservices.SeatService;
 
 public class AppContext {
     private static volatile AppContext appContext = new AppContext();

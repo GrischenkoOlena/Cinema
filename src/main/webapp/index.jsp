@@ -11,6 +11,23 @@
     <h2>Welcome to cinema</h2>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <form name="header" action="controller" method="POST">
+          <input type="hidden" name="action" value="enter"/>
+          <button type="submit" name="page" value="login" class="btn btn-outline-primary me-2">Login</button>
+          <button type="submit" name="page" value="signUp" class="btn btn-outline-warning">Sign-up</button>
+        </form>
+      </div>
+    </header>
     
     <div class="container">
 
@@ -22,7 +39,7 @@
         </div>
       </nav>
 
-      <form name="Simple" action="controller" method="POST">
+
       <div class="btn-group" role="group" aria-label="Basic radio toggle button group" onclick = "sendRadioValue()">
         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
         <label class="btn btn-outline-primary" for="btnradio1"><p id="date"></p></label>
@@ -38,9 +55,10 @@
       </div>
       <br><br>
 
-      <input type="hidden" name="action" value="main"/>
-      <input type="hidden" name="scheduleDate" id="sendDate" value=""/>
-      <input type="submit" class="btn btn-success" value="Schedule"/>
+      <form name="simple" action="controller" method="POST">
+        <input type="hidden" name="action" value="main"/>
+        <input type="hidden" name="scheduleDate" id="sendDate" value=""/>
+        <input type="submit" class="btn btn-success" value="Schedule"/>
       </form>
 
     </div>

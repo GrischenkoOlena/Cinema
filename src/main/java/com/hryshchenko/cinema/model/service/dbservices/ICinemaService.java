@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.model.service;
+package com.hryshchenko.cinema.model.service.dbservices;
 
 import com.hryshchenko.cinema.model.connectionpool.DBManager;
 
