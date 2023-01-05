@@ -1,9 +1,6 @@
 package com.hryshchenko.cinema.context;
 
-import com.hryshchenko.cinema.model.service.dbservices.CategoryService;
-import com.hryshchenko.cinema.model.service.dbservices.FilmService;
-import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
-import com.hryshchenko.cinema.model.service.dbservices.SeatService;
+import com.hryshchenko.cinema.model.service.dbservices.*;
 
 public class AppContext {
     private static volatile AppContext appContext = new AppContext();
@@ -11,7 +8,7 @@ public class AppContext {
     private final FilmService filmService = new FilmService();
     private final CategoryService categoryService = new CategoryService();
 
-
+    private final UserService userService = new UserService();
     private final SeatService seatService = new SeatService();
 
     public static AppContext getInstance() {
@@ -32,5 +29,9 @@ public class AppContext {
 
     public CategoryService getCategoryService() {
         return categoryService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }

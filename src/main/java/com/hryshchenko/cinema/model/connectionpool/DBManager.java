@@ -48,6 +48,10 @@ public final class DBManager {
         }
     }
 
+    public void closePool(){
+        connectionPool.close();
+    }
+
     private Properties getProperties() throws IOException {
         Properties props = new Properties();
         props.load(DBManager.class.getResourceAsStream("/database.properties"));

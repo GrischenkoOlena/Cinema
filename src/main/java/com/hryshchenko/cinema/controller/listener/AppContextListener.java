@@ -1,11 +1,14 @@
 package com.hryshchenko.cinema.controller.listener;
 
+import com.hryshchenko.cinema.model.connectionpool.DBManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
@@ -19,7 +22,14 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        ServletContextListener.super.contextDestroyed(sce);
+        DBManager.getInstance().closePool();
+        log.debug("ConnectionPool was closed");
+        try {
+            DriverManager.deregisterDriver(DriverManager.getDrivers().nextElement());
+        } catch (SQLException e) {
+            log.error("deregisterDriver error" + e.getMessage());
+        }
+        log.debug("Servlet context destroy finished");
     }
 
     private void initCommandFactory() {
