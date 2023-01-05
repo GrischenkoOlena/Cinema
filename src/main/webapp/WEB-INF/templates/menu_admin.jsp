@@ -1,36 +1,34 @@
-<%@ include file="/WEB-INF/templates/page.jspf" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start border-bottom">
     <a class="navbar-brand" href="#">
-        <img src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-        ISP Manager
+      <img src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Cinema
     </a>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="controller?action=users"><fmt:message key="main.menu.button.subscribers"/> <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="controller?action=services"><fmt:message key="main.menu.button.services"/></a>
-            </li>
-        </ul>
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">
-                    language
-                </i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <form class="form-inline" method="post" action="controller?action=i18n">
-                    <button type="submit" name="ru" class="dropdown-item">Russian</button>
-                    <button type="submit" name="en" class="dropdown-item">English</button>
-                </form>
-            </div>
-        </div>
-        <form class="form-inline my-2 my-lg-0" method="post" action="controller?action=logout">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="mainmenu.button.logout"/></button>
-        </form>
-    </div>
-</nav>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-5 justify-content-center mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="controller?action=screenings">Screenings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="controller?action=films">Films</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="controller?action=customers">Customers</a>
+        </li>
+      </ul>
+
+      <form class="form-inline col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="controller?action=i18n">
+         <select class="form-select" name="language" aria-label="Default select example">
+            <option value="en" selected>en</option>
+            <option value="ua">ua</option>
+         </select>
+      </form>
+
+      <form class="form-inline my-2 my-lg-0 text-end" method="post" action="controller?action=logout">
+        <button class="btn btn-outline-success" type="submit">Log out</button>
+      </form>
+  </div>
+  </div>

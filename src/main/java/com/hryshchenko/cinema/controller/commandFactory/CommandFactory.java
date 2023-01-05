@@ -15,6 +15,14 @@ public class CommandFactory {
         commands.put("login", new LoginCommand());
         commands.put("signUp", new SignUpCommand());
         commands.put("freeSeats", new FreeSeatCommand());
+        commands.put("logout", new LogoutCommand());
+        commands.put("i18n", new InternationalizationCommand());
+
+        commands.put("customers", new CustomersCommand());
+        commands.put("screenings", new ScreeningsCommand());
+        commands.put("films", new FilmsCommand());
+
+        commands.put("tickets", new TicketsCommand());
     }
 
     private CommandFactory() {}

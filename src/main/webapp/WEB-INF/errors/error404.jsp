@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/templates/scripts.jsp" %>
 
 <html>
-    <c:set var="title" value="Error" scope="page"/>
+    <c:set var="title" value="Error" scope="session"/>
     <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 <body>
 <div class="page-container-responsive">

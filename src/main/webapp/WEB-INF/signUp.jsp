@@ -8,8 +8,7 @@
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
   <body class="w-25 p-3">
-    <h2>Login</h2>
-
+    <h2>Create your account</h2>
     <div class="container">
       <form action="controller" method="POST">
         <div class="mb-3">

@@ -21,11 +21,9 @@
           <label for="inputPassword" class="form-label">Password</label>
           <input type="password" name="password" class="form-control" id="password">
         </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="checkMe">
-          <label class="form-check-label" for="checkMe">Check me out</label>
-        </div>
-        <button type="submit" name="action" value="login" class="btn btn-primary">Submit</button>
+        <button type="submit" name="action" value="login" class="btn btn-primary">Log in</button>
+
+        <input type="hidden" name="error"/>
       </form>
      </div>
      
