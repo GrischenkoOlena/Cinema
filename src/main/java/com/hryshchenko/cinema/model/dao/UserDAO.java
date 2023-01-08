@@ -69,7 +69,8 @@ public class UserDAO extends AbstractDAO <String, User> {
     public boolean update(User user) throws DAOException {
         boolean result;
         try {
-            result = userQueryBuilder.execute(connection, Query.UPDATE_USER, user.getBalance(), user.getLogin());
+            result = userQueryBuilder.execute(connection, Query.UPDATE_USER,
+                                user.getLogin(), user.getName(), user.getBalance(), user.getId());
         } catch (SQLException e){
             throw new DAOException("problem in update user", e);
         }

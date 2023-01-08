@@ -6,8 +6,7 @@ public interface Query {
     String CREATE_USER =
             "INSERT INTO user(login, password, user_name, balance, role_id) VALUES (?, ?, ?, ?, ?)";
     String DELETE_USER = "DELETE FROM user WHERE login = ?";
-    String UPDATE_USER = "UPDATE user SET balance = ? WHERE login = ?";
-
+    String UPDATE_USER = "UPDATE user SET login = ?, user_name = ?, balance = ? WHERE user_id = ?";
     String GET_ALL_CATEGORIES = "SELECT * FROM category LIMIT ?, ?";
     String GET_CATEGORY_BY_ID = "SELECT * FROM category WHERE category_id = ?";
     String CREATE_CATEGORY = "INSERT INTO category (category, price) VALUES (?, ?)";

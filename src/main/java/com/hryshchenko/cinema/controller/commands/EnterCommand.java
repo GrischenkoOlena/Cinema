@@ -5,7 +5,6 @@ import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 public class EnterCommand implements ICommand {
     @Override
