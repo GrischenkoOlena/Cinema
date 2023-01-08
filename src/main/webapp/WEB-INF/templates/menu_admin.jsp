@@ -3,7 +3,7 @@
 
   <div class="container">
   <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start border-bottom">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index.jsp">
       <img src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         Cinema
     </a>
@@ -17,6 +17,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="controller?action=customers">Customers</a>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" href="controller?action=attendance">Attendance</a>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" href="controller?action=profile">Profile</a>
         </li>
       </ul>
 

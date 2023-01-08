@@ -3,21 +3,22 @@
 
   <div class="container">
   <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start border-bottom">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index.jsp">
       <img src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         Cinema
     </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-5 justify-content-center mb-md-0">
         <li class="nav-item">
-          <a class="nav-link" href="index.jsp">Home</a>
-        </li>
-        <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="main.jsp">Schedule</a>
+           <a class="nav-link active" aria-current="page" href="controller?action=schedule">Schedule</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="controller?action=tickets">Tickets</a>
         </li>
+        <li class="nav-item">
+           <a class="nav-link" href="controller?action=profile">Profile</a>
+        </li>
+
       </ul>
 
       <form class="form-inline col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="controller?action=i18n">

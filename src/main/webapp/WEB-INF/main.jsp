@@ -8,6 +8,7 @@
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
   <body class="w-50 p-3">
+    <jsp:include page="/WEB-INF/templates/menu_main.jsp"></jsp:include>
     <h2>Schedule</h2>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
