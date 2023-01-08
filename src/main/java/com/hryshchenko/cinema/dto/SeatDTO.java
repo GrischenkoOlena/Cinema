@@ -1,10 +1,10 @@
-package com.hryshchenko.cinema.model.service.dto;
+package com.hryshchenko.cinema.dto;
 
-import com.hryshchenko.cinema.constant.StatePlace;
+import com.hryshchenko.cinema.constant.enums.StatePlace;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.entity.Category;
 import com.hryshchenko.cinema.model.entity.Seat;
-import com.hryshchenko.cinema.model.service.dbservices.CategoryService;
+import com.hryshchenko.cinema.model.dbservices.CategoryService;
 
 public class SeatDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;

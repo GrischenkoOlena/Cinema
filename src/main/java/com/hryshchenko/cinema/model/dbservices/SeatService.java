@@ -1,12 +1,12 @@
-package com.hryshchenko.cinema.model.service.dbservices;
+package com.hryshchenko.cinema.model.dbservices;
 
 import com.hryshchenko.cinema.constant.Query;
-import com.hryshchenko.cinema.constant.StatePlace;
+import com.hryshchenko.cinema.constant.enums.StatePlace;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.builder.QueryBuilder;
 import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
 import com.hryshchenko.cinema.model.dao.SeatDAO;
-import com.hryshchenko.cinema.model.service.dto.SeatDTO;
+import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.Seat;
 

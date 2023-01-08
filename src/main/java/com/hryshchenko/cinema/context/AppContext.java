@@ -1,6 +1,6 @@
 package com.hryshchenko.cinema.context;
 
-import com.hryshchenko.cinema.model.service.dbservices.*;
+import com.hryshchenko.cinema.model.dbservices.*;
 
 public class AppContext {
     private static volatile AppContext appContext = new AppContext();

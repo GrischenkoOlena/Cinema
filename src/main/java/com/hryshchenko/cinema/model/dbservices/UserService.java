@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.model.service.dbservices;
+package com.hryshchenko.cinema.model.dbservices;
 
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dao.UserDAO;
@@ -20,5 +20,21 @@ public class UserService implements ICinemaService{
         Optional<User> user = Optional.of(userDAO.findEntityByKey(login));
         dbManager.closeConnection(conn);
         return user;
+    }
+
+    public boolean createUser(User user) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        userDAO.setConnection(conn);
+        boolean result = userDAO.create(user);
+        dbManager.closeConnection(conn);
+        return result;
+    }
+
+    public boolean updateUser(User user) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        userDAO.setConnection(conn);
+        boolean result = userDAO.update(user);
+        dbManager.closeConnection(conn);
+        return result;
     }
 }

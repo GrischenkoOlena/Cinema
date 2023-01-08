@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.model.service.dbservices;
+package com.hryshchenko.cinema.model.dbservices;
 
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dao.CategoryDAO;
