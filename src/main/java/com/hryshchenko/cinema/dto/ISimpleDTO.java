@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.model.service.dto;
+package com.hryshchenko.cinema.dto;
 
 import java.io.Serializable;
 
