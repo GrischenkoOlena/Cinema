@@ -1,7 +1,7 @@
 package com.hryshchenko.cinema.controller.filter;
 
 import com.hryshchenko.cinema.constant.Path;
-import com.hryshchenko.cinema.model.entity.UserRole;
+import com.hryshchenko.cinema.constant.enums.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 @WebFilter(urlPatterns = "/controller",
         initParams = {
-                @WebInitParam(name = "admin", value = "customers screenings films"),
-                @WebInitParam(name = "client", value = "tickets"),
-                @WebInitParam(name = "common", value = "logout i18n"),
-                @WebInitParam(name = "everybody", value = "main freeSeats enter login signUp")
+                @WebInitParam(name = "admin", value = "customers screenings films attendance"),
+                @WebInitParam(name = "client", value = "tickets schedule"),
+                @WebInitParam(name = "common", value = "logout i18n profile purchase updateEntity saveUpdate"),
+                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty")
         })
 public class AuthenticationFilter implements Filter {
     private static final Logger log = LogManager.getLogger();

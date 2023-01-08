@@ -15,14 +15,24 @@ public class CommandFactory {
         commands.put("login", new LoginCommand());
         commands.put("signUp", new SignUpCommand());
         commands.put("freeSeats", new FreeSeatCommand());
+
         commands.put("logout", new LogoutCommand());
         commands.put("i18n", new InternationalizationCommand());
+        commands.put("profile", new ProfileCommand());
+
+        commands.put("updateEntity", new UpdateEntityCommand());
+        commands.put("saveUpdate", new SaveUpdateEntityCommand());
 
         commands.put("customers", new CustomersCommand());
         commands.put("screenings", new ScreeningsCommand());
         commands.put("films", new FilmsCommand());
+        commands.put("attendance", new AttendanceCommand());
 
         commands.put("tickets", new TicketsCommand());
+        commands.put("schedule", new ScheduleCommand());
+        commands.put("purchase", new PurchaseCommand());
+
+        commands.put("empty", new EmptyCommand());
     }
 
     private CommandFactory() {}
@@ -36,6 +46,9 @@ public class CommandFactory {
 
     public ICommand getCommand(HttpServletRequest req){
         String action = req.getParameter("action");
+        if (action == null || action.isEmpty()) {
+            action = "empty";
+        }
         return commands.get(action);
     }
 }
