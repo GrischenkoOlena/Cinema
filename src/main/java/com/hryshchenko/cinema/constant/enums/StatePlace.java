@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.constant;
+package com.hryshchenko.cinema.constant.enums;
 
 public enum StatePlace {
     FREE(1), SOLD(2);

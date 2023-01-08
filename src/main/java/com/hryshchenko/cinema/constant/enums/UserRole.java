@@ -1,19 +1,16 @@
-package com.hryshchenko.cinema.model.entity;
+package com.hryshchenko.cinema.constant.enums;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum State {
-    ACTIVE (1),
-    CANCELED(2),
-    PAST(3),
-    PLANED(4);
-
+public enum UserRole {
+    ADMIN (1),
+    CLIENT (2);
     private final Integer id;
-    private static final Map<Integer, State> ENUM_MAP;
+    private static final Map<Integer, UserRole> ENUM_MAP;
 
-    State(Integer id) {
+    UserRole(Integer id) {
         this.id = id;
     }
 
@@ -22,13 +19,13 @@ public enum State {
     }
 
     static {
-        Map<Integer, State> map = new HashMap<>();
-        for(State val : State.values()){
+        Map<Integer, UserRole> map = new HashMap<>();
+        for(UserRole val : UserRole.values()){
             map.put(val.getId(), val);
         }
         ENUM_MAP = Collections.unmodifiableMap(map);
     }
-    public static State getValueFromId(Integer id){
+    public static UserRole getValueFromId(Integer id){
         return ENUM_MAP.get(id);
     }
 }

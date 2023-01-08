@@ -1,5 +1,7 @@
 package com.hryshchenko.cinema.model.entity;
 
+import com.hryshchenko.cinema.constant.enums.UserRole;
+
 public class User extends Entity{
     private static final long serialVersionUID = 1L;
     private String login;

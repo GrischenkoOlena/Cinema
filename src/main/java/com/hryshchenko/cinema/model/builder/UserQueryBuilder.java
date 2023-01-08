@@ -1,7 +1,7 @@
 package com.hryshchenko.cinema.model.builder;
 
 import com.hryshchenko.cinema.model.entity.User;
-import com.hryshchenko.cinema.model.entity.UserRole;
+import com.hryshchenko.cinema.constant.enums.UserRole;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
