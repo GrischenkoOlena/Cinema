@@ -5,8 +5,8 @@ import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.entity.User;
-import com.hryshchenko.cinema.model.entity.UserRole;
-import com.hryshchenko.cinema.model.service.dbservices.UserService;
+import com.hryshchenko.cinema.constant.enums.UserRole;
+import com.hryshchenko.cinema.model.dbservices.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +39,7 @@ public class LoginCommand implements ICommand {
                     if (userRole == UserRole.CLIENT) {
                         response = Path.USER_MAIN;
                     }
-                    session.setAttribute("user", user);
+                    session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
                 } else {
                     req.setAttribute("login", login);
@@ -47,6 +47,7 @@ public class LoginCommand implements ICommand {
                     response = Path.LOGIN;
                 }
             } else {
+                req.setAttribute("error", "Login isn't exists");
                 response = Path.SIGN_UP;
             }
         } catch (DAOException e) {

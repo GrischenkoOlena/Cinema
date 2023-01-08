@@ -13,22 +13,23 @@
       <form action="controller" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
-          <input type="email" name="login" class="form-control" id="email" aria-describedby="emailHelp" required>
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <input type="email" name="login" class="form-control" aria-describedby="emailHelp" required>
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Your name</label>
+          <input type="input" name="userName" class="form-control">
         </div>
         <div class="mb-3">
           <label for="inputPassword" class="form-label">Password</label>
-          <input type="password" name="inputPassword" class="form-control">
+          <input type="password" name="inputPassword" class="form-control" required>
         </div>
         <div class="mb-3">
            <label for="repeatPassword" class="form-label">Repeat password</label>
-           <input type="password" name="repeatPassword" class="form-control">
+           <input type="password" name="repeatPassword" class="form-control" required>
         </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="checkMe">
-          <label class="form-check-label" for="checkMe">Check me out</label>
-        </div>
-        <button type="submit" name="action" value="signUp" class="btn btn-primary">Submit</button>
+        <button type="submit" name="action" value="signUp" class="btn btn-primary">Sign up</button>
+        <p class="p-3 mb-2 text-danger"> ${error} </p>
       </form>
      </div>
      

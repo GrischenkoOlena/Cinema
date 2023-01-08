@@ -11,4 +11,15 @@ public interface Path {
     String USER_MAIN = "/WEB-INF/user/userMain.jsp";
     String ADMIN_MAIN = "/WEB-INF/admin/adminMain.jsp";
 
+    String PROFILE = "WEB-INF/profile.jsp";
+    String UPDATE_ENTITY = "WEB-INF/updateEntity.jsp";
+    String USER_TICKETS = "/WEB-INF/user/tickets.jsp";
+    String ADMIN_FILMS = "/WEB-INF/admin/films.jsp";
+    String ADMIN_CUSTOMERS = "/WEB-INF/admin/customers.jsp";
+    String ADMIN_ATTENDANCE = "/WEB-INF/admin/attendance.jsp";
+    String ADD_FILM = "/WEB-INF/admin/addFilm.jsp";
+    String ADD_SCREENING = "/WEB-INF/admin/addScreening.jsp";
+
+
+
 }

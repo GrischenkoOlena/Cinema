@@ -9,6 +9,7 @@
 
   <body class="w-50 p-3">
     <h2>User main</h2>
+    <jsp:include page="/WEB-INF/templates/menu_user.jsp"></jsp:include>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
   </body>
