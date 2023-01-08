@@ -4,13 +4,16 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.service.dto.ScreeningDTO;
-import com.hryshchenko.cinema.model.service.dto.SeatDTO;
+import com.hryshchenko.cinema.dto.ScreeningDTO;
+import com.hryshchenko.cinema.dto.SeatDTO;
+import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.entity.Category;
 import com.hryshchenko.cinema.model.entity.Screening;
-import com.hryshchenko.cinema.model.service.dbservices.CategoryService;
-import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
-import com.hryshchenko.cinema.model.service.dbservices.SeatService;
+import com.hryshchenko.cinema.model.dbservices.CategoryService;
+import com.hryshchenko.cinema.model.dbservices.ScreeningService;
+import com.hryshchenko.cinema.model.dbservices.SeatService;
+import com.hryshchenko.cinema.service.mapper.IMapperService;
+import com.hryshchenko.cinema.service.mapper.MapperScreening;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ public class FreeSeatCommand implements ICommand {
     private final ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
     private final SeatService seatServ = AppContext.getInstance().getSeatService();
     private final CategoryService categoryServ = AppContext.getInstance().getCategoryService();
+    IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -27,7 +31,7 @@ public class FreeSeatCommand implements ICommand {
 
         try {
             Screening screening = screeningsServ.getScreeningById(screeningId);
-            req.setAttribute("screening", ScreeningDTO.build(screening));
+            req.setAttribute("screening", mapperService.getDTO(screening));
 
             SeatDTO[][] seats = seatServ.getFullFreeSeats(screening);
             req.setAttribute("seats", seats);
@@ -35,7 +39,7 @@ public class FreeSeatCommand implements ICommand {
             List<Category> categories = categoryServ.getAllCategory();
             req.setAttribute("categories", categories);
 
-        } catch (DAOException e) {
+        } catch (DAOException | MapperException e) {
             e.printStackTrace();
         }
         return Path.FREE_SEAT;

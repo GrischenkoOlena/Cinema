@@ -4,8 +4,12 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.service.dto.ScreeningDTO;
-import com.hryshchenko.cinema.model.service.dbservices.ScreeningService;
+import com.hryshchenko.cinema.dto.ScreeningDTO;
+import com.hryshchenko.cinema.exception.MapperException;
+import com.hryshchenko.cinema.model.dbservices.ScreeningService;
+import com.hryshchenko.cinema.model.entity.Screening;
+import com.hryshchenko.cinema.service.mapper.IMapperService;
+import com.hryshchenko.cinema.service.mapper.MapperScreening;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,10 +23,12 @@ public class MainCommand implements ICommand {
         LocalDate date = getScheduleDate(scheduleDate);
 
         ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
+        IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
         try {
-            List<ScreeningDTO> screenings = screeningsServ.getFullScreening(date);
+            List<Screening> screeningsList = screeningsServ.getScreeningByDate(date);
+            List<ScreeningDTO> screenings = mapperService.getListDTO(screeningsList);
             req.setAttribute("screenings", screenings);
-        } catch (DAOException e) {
+        } catch (DAOException | MapperException e) {
             e.printStackTrace();
         }
         return Path.MAIN;

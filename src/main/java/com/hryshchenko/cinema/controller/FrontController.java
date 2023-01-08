@@ -35,7 +35,9 @@ public class FrontController extends HttpServlet {
         ICommand ic = commandFactory.getCommand(req);
         String page = ic.execute(req, resp);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-        dispatcher.forward(req, resp);
+        if (!page.equals("redirect")) {
+            dispatcher.forward(req, resp);
+        }
     }
 
 }
