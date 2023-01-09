@@ -27,6 +27,7 @@ public class CommandFactory {
         commands.put("screenings", new ScreeningsCommand());
         commands.put("films", new FilmsCommand());
         commands.put("attendance", new AttendanceCommand());
+        commands.put("changeBalance", new ChangeBalanceCommand());
 
         commands.put("tickets", new TicketsCommand());
         commands.put("schedule", new ScheduleCommand());

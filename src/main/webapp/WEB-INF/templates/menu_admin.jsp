@@ -10,10 +10,10 @@
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-5 justify-content-center mb-md-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="controller?action=screenings">Screenings</a>
+          <a class="nav-link active" aria-current="page" href="controller?action=screenings">Sessions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="controller?action=films">Films</a>
+          <a class="nav-link" href="controller?action=films">Movies</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="controller?action=customers">Customers</a>

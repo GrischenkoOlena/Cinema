@@ -21,6 +21,10 @@ public class FilmDTO implements ISimpleDTO {
         duration = filmBuilder.duration;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -22,6 +22,7 @@ public interface Path {
 
     String COMMAND_REDIRECT = "redirect";
     String COMMAND_USER_SCHEDULE = "controller?action=schedule";
+    String COMMAND_ADMIN_SCREENINGS = "controller?action=screenings";
 
 
 

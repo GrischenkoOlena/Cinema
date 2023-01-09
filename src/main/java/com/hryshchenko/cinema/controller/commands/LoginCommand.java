@@ -32,15 +32,18 @@ public class LoginCommand implements ICommand {
         try {
             Optional<User> user = userService.getUserByLogin(login);
             if(user.isPresent()) {
+                String forward = Path.ERROR;
                 if (user.get().getPassword().equals(password)) {
                     UserRole userRole = user.get().getRole();
                     if (userRole == UserRole.ADMIN) {
-                        response = Path.ADMIN_MAIN;
+                        forward = Path.COMMAND_ADMIN_SCREENINGS;
                     }
                     if (userRole == UserRole.CLIENT) {
-                        resp.sendRedirect(Path.COMMAND_USER_SCHEDULE);
-                        response = Path.COMMAND_REDIRECT;
+                        forward = Path.COMMAND_USER_SCHEDULE;
                     }
+                    resp.sendRedirect(forward);
+                    response = Path.COMMAND_REDIRECT;
+
                     session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
                 } else {
