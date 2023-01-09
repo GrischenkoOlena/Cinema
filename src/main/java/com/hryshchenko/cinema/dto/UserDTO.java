@@ -4,6 +4,7 @@ import com.hryshchenko.cinema.constant.enums.UserRole;
 
 public class UserDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;
+    private final long id;
     private final String login;
     private final transient String password;
     private final String name;
@@ -11,11 +12,16 @@ public class UserDTO implements ISimpleDTO{
     private final UserRole role;
 
     private UserDTO(UserDTOBuilder builder){
+        id = builder.id;
         login = builder.login;
         name = builder.name;
         password = builder.password;
         balance = builder.balance;
         role = builder.role;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getLogin() {
@@ -49,15 +55,15 @@ public class UserDTO implements ISimpleDTO{
     }
 
     public static class UserDTOBuilder{
-        private String login;
-        private transient String password;
+        private final long id;
+        private String login = "";
+        private transient String password = "";
         private String name = "";
         private double balance = 0.0;
         private UserRole role = UserRole.CLIENT;
 
-        public UserDTOBuilder(String login, String password){
-            this.login = login;
-            this.password = password;
+        public UserDTOBuilder(long id){
+            this.id = id;
         }
 
         public UserDTOBuilder login (String val){

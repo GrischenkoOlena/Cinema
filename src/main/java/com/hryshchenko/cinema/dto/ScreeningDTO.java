@@ -14,6 +14,7 @@ public class ScreeningDTO implements ISimpleDTO {
     private LocalDate filmDate;
     private LocalTime timeBegin;
     private StateScreening state;
+    private int availableSeats;
 
     public ScreeningDTO() { }
 
@@ -55,5 +56,24 @@ public class ScreeningDTO implements ISimpleDTO {
 
     public void setState(StateScreening state) {
         this.state = state;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "ScreeningDTO{" +
+                "film=" + film +
+                ", filmDate=" + filmDate +
+                ", timeBegin=" + timeBegin +
+                ", state=" + state +
+                ", availableSeats=" + availableSeats +
+                '}';
     }
 }

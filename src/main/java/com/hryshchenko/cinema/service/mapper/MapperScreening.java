@@ -1,6 +1,7 @@
 package com.hryshchenko.cinema.service.mapper;
 
 import com.hryshchenko.cinema.constant.enums.StateScreening;
+import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
