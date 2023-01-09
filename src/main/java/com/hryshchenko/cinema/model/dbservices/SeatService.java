@@ -9,6 +9,7 @@ import com.hryshchenko.cinema.model.dao.SeatDAO;
 import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.Seat;
+import com.hryshchenko.cinema.model.entity.Ticket;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,6 +39,14 @@ public class SeatService implements ICinemaService {
         } catch (SQLException e) {
             throw new DAOException("problem with get free seats", e);
         }
+        dbManager.closeConnection(conn);
+        return seats;
+    }
+
+    public List<Seat> getSeatsByTicket(Ticket ticket) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        seatDAO.setConnection(conn);
+        List<Seat> seats = seatDAO.getSeatByTicket(ticket.getId());
         dbManager.closeConnection(conn);
         return seats;
     }

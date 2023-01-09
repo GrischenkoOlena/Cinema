@@ -86,4 +86,24 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
         }
         return screenings;
     }
+
+    public long findCountScreenings() throws DAOException {
+        long result;
+        try {
+            result = screeningQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_SCREENING);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of screenings", e);
+        }
+        return result;
+    }
+    public List<Screening> findPageScreenings(long begin, long amount) throws DAOException {
+        List<Screening> screenings;
+        try {
+            screenings = screeningQueryBuilder.executeAndReturnList(connection,
+                    Query.GET_ALL_SCREENINGS, begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find screenings by page", e);
+        }
+        return screenings;
+    }
 }

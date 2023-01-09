@@ -74,4 +74,14 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
         }
         return placeCount;
     }
+
+    public List<Seat> getSeatByTicket(long ticketId) throws DAOException{
+        List<Seat> seats;
+        try {
+            seats = seatQueryBuilder.executeAndReturnList(connection, Query.GET_SEATS_BY_TICKET, ticketId);
+        } catch (SQLException e){
+            throw new DAOException("problem in find seats by ticket", e);
+        }
+        return seats;
+    }
 }

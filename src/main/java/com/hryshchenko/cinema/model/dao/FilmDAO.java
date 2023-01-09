@@ -79,4 +79,24 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
         }
         return film;
     }
+
+    public long findCountFilms() throws DAOException {
+        long result;
+        try {
+            result = filmQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_FILM);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of movies", e);
+        }
+        return result;
+    }
+    public List<Film> findPageFilms(long begin, long amount) throws DAOException {
+        List<Film> screenings;
+        try {
+            screenings = filmQueryBuilder.executeAndReturnList(connection,
+                    Query.GET_ALL_FILMS, begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find movies by page", e);
+        }
+        return screenings;
+    }
 }

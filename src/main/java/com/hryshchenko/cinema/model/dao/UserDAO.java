@@ -29,7 +29,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public User findEntityByKey(String login) throws DAOException {
         User user;
         try {
-            user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_ID, login);
+            user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_LOGIN, login);
         } catch (SQLException e){
             throw new DAOException("problem in find user by login", e);
         }
@@ -75,5 +75,35 @@ public class UserDAO extends AbstractDAO <String, User> {
             throw new DAOException("problem in update user", e);
         }
         return result;
+    }
+
+    public long findCountUsers() throws DAOException {
+        long result;
+        try {
+            result = userQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_USER);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of users", e);
+        }
+        return result;
+    }
+    public List<User> findPageUsers(long begin, long amount) throws DAOException {
+        List<User> screenings;
+        try {
+            screenings = userQueryBuilder.executeAndReturnList(connection,
+                    Query.GET_ALL_USERS, begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find users by page", e);
+        }
+        return screenings;
+    }
+
+    public User findUserById(long id) throws DAOException {
+        User user;
+        try {
+            user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_ID, id);
+        } catch (SQLException e){
+            throw new DAOException("problem in find user by id", e);
+        }
+        return user;
     }
 }

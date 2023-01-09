@@ -73,4 +73,24 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         }
         return tickets;
     }
+
+    public long findCountTicketByUser(User user) throws DAOException {
+        long result;
+        try {
+            result = ticketQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_TICKETS_BY_USER, user.getId());
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of tickets", e);
+        }
+        return result;
+    }
+    public List<Ticket> findPageTickets(User user, long begin, long amount) throws DAOException {
+        List<Ticket> screenings;
+        try {
+            screenings = ticketQueryBuilder.executeAndReturnList(connection,
+                    Query.GET_TICKETS_BY_USER, user.getId(), begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find tickets by page", e);
+        }
+        return screenings;
+    }
 }
