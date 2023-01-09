@@ -10,6 +10,7 @@ public class AppContext {
 
     private final UserService userService = new UserService();
     private final SeatService seatService = new SeatService();
+    private final TicketService ticketService = new TicketService();
 
     public static AppContext getInstance() {
         return appContext;
@@ -33,5 +34,9 @@ public class AppContext {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public TicketService getTicketService() {
+        return ticketService;
     }
 }

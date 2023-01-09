@@ -20,6 +20,9 @@ public interface Path {
     String ADD_FILM = "/WEB-INF/admin/addFilm.jsp";
     String ADD_SCREENING = "/WEB-INF/admin/addScreening.jsp";
 
+    String COMMAND_REDIRECT = "redirect";
+    String COMMAND_USER_SCHEDULE = "controller?action=schedule";
+
 
 
 }

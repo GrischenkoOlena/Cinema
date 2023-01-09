@@ -11,6 +11,7 @@ import com.hryshchenko.cinema.model.dbservices.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Optional;
 
 public class LoginCommand implements ICommand {
@@ -37,7 +38,8 @@ public class LoginCommand implements ICommand {
                         response = Path.ADMIN_MAIN;
                     }
                     if (userRole == UserRole.CLIENT) {
-                        response = Path.USER_MAIN;
+                        resp.sendRedirect(Path.COMMAND_USER_SCHEDULE);
+                        response = Path.COMMAND_REDIRECT;
                     }
                     session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
@@ -50,7 +52,7 @@ public class LoginCommand implements ICommand {
                 req.setAttribute("error", "Login isn't exists");
                 response = Path.SIGN_UP;
             }
-        } catch (DAOException e) {
+        } catch (DAOException | IOException e) {
             e.printStackTrace();
         }
         return response;
