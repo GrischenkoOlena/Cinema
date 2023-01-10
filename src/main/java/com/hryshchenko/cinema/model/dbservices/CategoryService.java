@@ -6,6 +6,7 @@ import com.hryshchenko.cinema.model.entity.Category;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryService implements ICinemaService{
     private final CategoryDAO categoryDAO;
@@ -14,10 +15,10 @@ public class CategoryService implements ICinemaService{
         this.categoryDAO = new CategoryDAO();
     }
 
-    public Category getCategoryByID(int id) throws DAOException {
+    public Optional<Category> getCategoryByID(int id) throws DAOException {
         Connection conn = dbManager.getConnection();
         categoryDAO.setConnection(conn);
-        Category category = categoryDAO.findEntityByKey(id);
+        Optional<Category> category = categoryDAO.findEntityByKey(id);
         dbManager.closeConnection(conn);
         return category;
     }

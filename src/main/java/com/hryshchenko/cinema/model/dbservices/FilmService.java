@@ -6,6 +6,7 @@ import com.hryshchenko.cinema.model.entity.Film;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class FilmService implements ICinemaService{
     private final FilmDAO filmDAO;
@@ -13,10 +14,10 @@ public class FilmService implements ICinemaService{
     public FilmService() {
         this.filmDAO = new FilmDAO();
     }
-    public Film getFilmById(long id) throws DAOException {
+    public Optional<Film> getFilmById(long id) throws DAOException {
         Connection conn = dbManager.getConnection();
         filmDAO.setConnection(conn);
-        Film film = filmDAO.findEntityByKey(id);
+        Optional<Film> film = filmDAO.findEntityByKey(id);
         dbManager.closeConnection(conn);
         return film;
     }

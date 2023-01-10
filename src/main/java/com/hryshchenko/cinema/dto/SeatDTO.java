@@ -1,10 +1,6 @@
 package com.hryshchenko.cinema.dto;
 
 import com.hryshchenko.cinema.constant.enums.StatePlace;
-import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.entity.Category;
-import com.hryshchenko.cinema.model.entity.Seat;
-import com.hryshchenko.cinema.model.dbservices.CategoryService;
 
 public class SeatDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;
@@ -12,22 +8,11 @@ public class SeatDTO implements ISimpleDTO{
     private long id;
     private int line;
     private int place;
-    private Category category;
-
+    private CategoryDTO category;
 
     private StatePlace state;
 
-    private SeatDTO(){}
-
-    public static SeatDTO build(Seat seat) throws DAOException {
-        SeatDTO seatDTO = new SeatDTO();
-        seatDTO.id = seat.getId();
-        seatDTO.line = seat.getLine();
-        seatDTO.place = seat.getPlace();
-        seatDTO.category = new CategoryService().getCategoryByID(seat.getCategoryId());
-        seatDTO.state = StatePlace.FREE;
-        return seatDTO;
-    }
+    public SeatDTO(){}
 
     public long getId() {
         return id;
@@ -41,12 +26,28 @@ public class SeatDTO implements ISimpleDTO{
         return place;
     }
 
-    public Category getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 
     public StatePlace getState() {
         return state;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
+    }
+
+    public void setCategory(CategoryDTO category) {
+        this.category = category;
     }
 
     public void setState(StatePlace state) {

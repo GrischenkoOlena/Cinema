@@ -55,10 +55,10 @@ public class UserService implements ICinemaService{
         return count;
     }
 
-    public User getUserById(long id) throws DAOException {
+    public Optional<User> getUserById(long id) throws DAOException {
         Connection conn = dbManager.getConnection();
         userDAO.setConnection(conn);
-        User user = userDAO.findUserById(id);
+        Optional<User> user = userDAO.findUserById(id);
         dbManager.closeConnection(conn);
         return user;
     }

@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.model.dbservices;
 import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.constant.enums.StatePlace;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.builder.QueryBuilder;
 import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
 import com.hryshchenko.cinema.model.dao.SeatDAO;
@@ -10,6 +11,8 @@ import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.Seat;
 import com.hryshchenko.cinema.model.entity.Ticket;
+import com.hryshchenko.cinema.service.mapper.IMapperService;
+import com.hryshchenko.cinema.service.mapper.MapperSeat;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -51,21 +54,9 @@ public class SeatService implements ICinemaService {
         return seats;
     }
 
-    public int getCountFreeSeatByScreening(Screening screening) throws DAOException {
-        int result;
-        QueryBuilder<Seat> seatQueryBuilder = new SeatQueryBuilder();
-        Connection conn = dbManager.getConnection();
-        try {
-            result = seatQueryBuilder.executeAndReturnAggregate(conn,
-                    Query.GET_COUNT_FREE_SEAT_BY_SCREENING, screening.getId());
-        } catch (SQLException e) {
-            throw new DAOException("problem with get count free seats", e);
-        }
-        dbManager.closeConnection(conn);
-        return result;
-    }
 
-    public SeatDTO[][] getFullFreeSeats(Screening screening) throws DAOException {
+    public SeatDTO[][] getFullFreeSeats(Screening screening) throws DAOException, MapperException {
+        IMapperService<Seat, SeatDTO> mapperService = new MapperSeat();
         int rows = getRowsCount();
         int cols = getPlacesCount();
 
@@ -75,7 +66,7 @@ public class SeatService implements ICinemaService {
         for(Seat seat : allSeats){
             int row = seat.getLine()-1;
             int col = seat.getPlace()-1;
-            seats[row][col] = SeatDTO.build(seat);
+            seats[row][col] = mapperService.getDTO(seat);
         }
         setSoldSeat(screening, seats, allSeats);
 

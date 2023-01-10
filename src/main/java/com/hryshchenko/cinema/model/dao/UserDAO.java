@@ -98,13 +98,13 @@ public class UserDAO extends AbstractDAO <String, User> {
         return screenings;
     }
 
-    public User findUserById(long id) throws DAOException {
+    public Optional<User> findUserById(long id) throws DAOException {
         User user;
         try {
             user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find user by id", e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 }

@@ -6,6 +6,7 @@ import com.hryshchenko.cinema.model.entity.Genre;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class GenreService implements ICinemaService{
     private final GenreDAO genreDAO;
@@ -13,10 +14,10 @@ public class GenreService implements ICinemaService{
     public GenreService() {
         this.genreDAO = new GenreDAO();
     }
-    public Genre getGenreById(long id) throws DAOException {
+    public Optional<Genre> getGenreById(long id) throws DAOException {
         Connection conn = dbManager.getConnection();
         genreDAO.setConnection(conn);
-        Genre genre = genreDAO.findEntityByKey((int) id);
+        Optional<Genre> genre = genreDAO.findEntityByKey((int) id);
         dbManager.closeConnection(conn);
         return genre;
     }

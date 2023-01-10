@@ -10,7 +10,7 @@ public class ScreeningDTO implements ISimpleDTO {
     private static final long serialVersionUID = 1L;
 
     private long id;
-    private Film film;
+    private FilmDTO film;
     private LocalDate filmDate;
     private LocalTime timeBegin;
     private StateScreening state;
@@ -22,8 +22,8 @@ public class ScreeningDTO implements ISimpleDTO {
         return id;
     }
 
-    public String  getFilm() {
-        return film.getTitle();
+    public FilmDTO  getFilm() {
+        return film;
     }
 
     public LocalDate getFilmDate() {
@@ -42,7 +42,7 @@ public class ScreeningDTO implements ISimpleDTO {
         this.id = id;
     }
 
-    public void setFilm(Film film) {
+    public void setFilm(FilmDTO film) {
         this.film = film;
     }
 

@@ -11,6 +11,8 @@ public class TicketDTO implements ISimpleDTO {
     private int ticketCount;
     private List<SeatDTO> seats;
 
+    public TicketDTO() {}
+
     public long getId() {
         return id;
     }

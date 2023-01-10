@@ -1,12 +1,18 @@
 package com.hryshchenko.cinema.model.dbservices;
 
+import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.model.builder.QueryBuilder;
+import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
 import com.hryshchenko.cinema.model.dao.ScreeningDAO;
 import com.hryshchenko.cinema.model.entity.Screening;
+import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class ScreeningService implements ICinemaService {
     private final ScreeningDAO screeningDAO;
@@ -23,10 +29,10 @@ public class ScreeningService implements ICinemaService {
         return screenings;
     }
 
-    public Screening getScreeningById(long id) throws DAOException {
+    public Optional<Screening> getScreeningById(long id) throws DAOException {
         Connection conn = dbManager.getConnection();
         screeningDAO.setConnection(conn);
-        Screening screening = screeningDAO.findEntityByKey(id);
+        Optional<Screening> screening = screeningDAO.findEntityByKey(id);
         dbManager.closeConnection(conn);
         return screening;
     }
@@ -43,6 +49,14 @@ public class ScreeningService implements ICinemaService {
         Connection conn = dbManager.getConnection();
         screeningDAO.setConnection(conn);
         long count = screeningDAO.findCountScreenings();
+        dbManager.closeConnection(conn);
+        return count;
+    }
+
+    public int getCountAvailableSeatsById(long screeningId) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningDAO.setConnection(conn);
+        int count = screeningDAO.findCountFreeSeatsById(screeningId);
         dbManager.closeConnection(conn);
         return count;
     }
