@@ -9,6 +9,7 @@ import com.hryshchenko.cinema.model.entity.Category;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryDAO extends AbstractDAO <Integer, Category> {
     private final QueryBuilder<Category> categoryQueryBuilder = new CategoryQueryBuilder();
@@ -25,14 +26,14 @@ public class CategoryDAO extends AbstractDAO <Integer, Category> {
     }
 
     @Override
-    public Category findEntityByKey(Integer id) throws DAOException {
+    public Optional<Category> findEntityByKey(Integer id) throws DAOException {
         Category category;
         try {
             category = categoryQueryBuilder.executeAndReturnValue(connection, Query.GET_CATEGORY_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find category by id", e);
         }
-        return category;
+        return Optional.ofNullable(category);
     }
 
     @Override
