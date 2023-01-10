@@ -30,12 +30,13 @@ public class FreeSeatCommand implements ICommand {
         long screeningId = Long.parseLong((req.getParameter("screening")));
 
         try {
-            Screening screening = screeningsServ.getScreeningById(screeningId);
-            req.setAttribute("screening", mapperService.getDTO(screening));
+            if(screeningsServ.getScreeningById(screeningId).isPresent()){
+                Screening screening = screeningsServ.getScreeningById(screeningId).get();
+                req.setAttribute("screening", mapperService.getDTO(screening));
 
-            SeatDTO[][] seats = seatServ.getFullFreeSeats(screening);
-            req.setAttribute("seats", seats);
-
+                SeatDTO[][] seats = seatServ.getFullFreeSeats(screening);
+                req.setAttribute("seats", seats);
+            }
             List<Category> categories = categoryServ.getAllCategory();
             req.setAttribute("categories", categories);
 

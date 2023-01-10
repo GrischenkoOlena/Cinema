@@ -7,10 +7,10 @@ public class AppContext {
     private final ScreeningService screeningService = new ScreeningService();
     private final FilmService filmService = new FilmService();
     private final CategoryService categoryService = new CategoryService();
-
     private final UserService userService = new UserService();
     private final SeatService seatService = new SeatService();
     private final TicketService ticketService = new TicketService();
+    private final GenreService genreService = new GenreService();
 
     public static AppContext getInstance() {
         return appContext;
@@ -38,5 +38,9 @@ public class AppContext {
 
     public TicketService getTicketService() {
         return ticketService;
+    }
+
+    public GenreService getGenreService() {
+        return genreService;
     }
 }

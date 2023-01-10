@@ -17,6 +17,7 @@ import com.hryshchenko.cinema.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
     @Override
@@ -27,7 +28,7 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
         ticketDTO.setUser(getUserDTO(entity.getUserId()));
 
         ticketDTO.setTicketCount(entity.getTicketCount());
-        ticketDTO.setSeats(getSeats(entity));
+        ticketDTO.setSeats(getSeatsDTO(entity));
         return ticketDTO;
     }
 
@@ -44,35 +45,42 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
         ScreeningService screeningService = AppContext.getInstance().getScreeningService();
         IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
         try {
-            Screening screening = screeningService.getScreeningById(screeningId);
-            return mapperService.getDTO(screening);
+            Optional<Screening> screening = screeningService.getScreeningById(screeningId);
+            if (screening.isPresent()){
+                return mapperService.getDTO(screening.get());
+            }
         } catch (DAOException e) {
-            throw new MapperException("problem with get screening from ticket");
+            throw new MapperException("problem with mapping screening from ticket", e);
         }
+        throw new MapperException("such screening is absent in BD");
     }
 
     private UserDTO getUserDTO(int userId) throws MapperException {
         UserService userService = AppContext.getInstance().getUserService();
         IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
-            User user = userService.getUserById(userId);
-            return mapperService.getDTO(user);
+            Optional<User> user = userService.getUserById(userId);
+            if(user.isPresent()){
+                return mapperService.getDTO(user.get());
+            }
         } catch (DAOException e) {
-            throw new MapperException(e);
+            throw new MapperException("problem with mapping user from ticket",e);
         }
+        throw new MapperException("such user is absent in BD");
     }
 
-    private List<SeatDTO> getSeats(Ticket ticket) throws MapperException {
+    private List<SeatDTO> getSeatsDTO(Ticket ticket) throws MapperException {
         SeatService seatService = AppContext.getInstance().getSeatService();
+        IMapperService<Seat, SeatDTO> mapperService = new MapperSeat();
         try {
             List<Seat> allSeats = seatService.getSeatsByTicket(ticket);
             List<SeatDTO> seats = new ArrayList<>();
             for(Seat seat : allSeats){
-                seats.add(SeatDTO.build(seat));
+                seats.add(mapperService.getDTO(seat));
             }
             return seats;
         } catch (DAOException e) {
-            throw new MapperException(e);
+            throw new MapperException("problem with mapping seat from ticket", e);
         }
     }
 }

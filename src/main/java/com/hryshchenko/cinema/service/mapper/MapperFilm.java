@@ -1,5 +1,6 @@
 package com.hryshchenko.cinema.service.mapper;
 
+import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.GenreDTO;
 import com.hryshchenko.cinema.exception.DAOException;
@@ -10,18 +11,17 @@ import com.hryshchenko.cinema.model.entity.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MapperFilm implements IMapperService<Film, FilmDTO> {
     @Override
     public FilmDTO getDTO(Film entity) throws MapperException {
-        GenreDTO genreDTO = getGenreDTO(entity.getGenreID());
-
         return new FilmDTO.FilmDTOBuilder(entity.getId())
                 .title(entity.getTitle())
                 .director(entity.getDirector())
                 .cast(entity.getCast())
                 .description(entity.getDescription())
-                .genre(genreDTO)
+                .genre(getGenreDTO(entity.getGenreID()))
                 .build();
     }
 
@@ -36,12 +36,15 @@ public class MapperFilm implements IMapperService<Film, FilmDTO> {
 
     private GenreDTO getGenreDTO(long genreId) throws MapperException {
         IMapperService<Genre, GenreDTO> genreMapperService = new MapperGenre();
-        GenreDTO genreDTO;
+        GenreService genreService = AppContext.getInstance().getGenreService();
         try {
-            genreDTO = genreMapperService.getDTO(new GenreService().getGenreById(genreId));
+            Optional<Genre> genre = genreService.getGenreById(genreId);
+            if(genre.isPresent()){
+                return genreMapperService.getDTO(genre.get());
+            }
         } catch (DAOException e) {
             throw new MapperException("problem with mapping genre",e);
         }
-        return genreDTO;
+        throw new MapperException("such genre is absent in BD");
     }
 }
