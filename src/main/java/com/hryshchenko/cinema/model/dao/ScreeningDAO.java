@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ScreeningDAO extends AbstractDAO <Long, Screening> {
 
@@ -26,14 +27,14 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
     }
 
     @Override
-    public Screening findEntityByKey(Long id) throws DAOException {
+    public Optional<Screening> findEntityByKey(Long id) throws DAOException {
         Screening screening;
         try {
             screening = screeningQueryBuilder.executeAndReturnValue(connection, Query.GET_SCREENING_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find screening by id", e);
         }
-        return screening;
+        return Optional.ofNullable(screening);
     }
 
     @Override
@@ -105,5 +106,16 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
             throw new DAOException("problem in find screenings by page", e);
         }
         return screenings;
+    }
+
+    public int findCountFreeSeatsById(long id) throws DAOException {
+        int result;
+        try {
+            result = screeningQueryBuilder.executeAndReturnAggregate(connection,
+                            Query.GET_COUNT_FREE_SEAT_BY_SCREENING, id);
+        } catch (SQLException e) {
+            throw new DAOException("problem with get count free seats", e);
+        }
+        return result;
     }
 }

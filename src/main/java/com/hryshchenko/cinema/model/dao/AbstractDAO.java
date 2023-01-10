@@ -5,12 +5,13 @@ import com.hryshchenko.cinema.model.entity.Entity;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 
 public abstract class AbstractDAO <K, T extends Entity> {
     protected Connection connection;
     public abstract List<T> findAll() throws DAOException;
-    public abstract T findEntityByKey (K id) throws DAOException;
+    public abstract Optional<T> findEntityByKey (K id) throws DAOException;
     public abstract boolean create(T t) throws DAOException;
     public abstract boolean delete(T t) throws DAOException;
     public abstract boolean update (T t) throws DAOException;

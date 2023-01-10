@@ -9,6 +9,7 @@ import com.hryshchenko.cinema.model.entity.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class TicketDAO extends AbstractDAO <Integer, Ticket> {
 
@@ -19,14 +20,14 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
     }
 
     @Override
-    public Ticket findEntityByKey(Integer id) throws DAOException {
+    public Optional<Ticket> findEntityByKey(Integer id) throws DAOException {
         Ticket ticket;
         try {
             ticket = ticketQueryBuilder.executeAndReturnValue(connection, Query.GET_TICKET_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find ticket by id", e);
         }
-        return ticket;
+        return Optional.ofNullable(ticket);
     }
 
     @Override

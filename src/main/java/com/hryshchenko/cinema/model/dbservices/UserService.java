@@ -18,7 +18,7 @@ public class UserService implements ICinemaService{
     public Optional<User> getUserByLogin(String login) throws DAOException {
         Connection conn = dbManager.getConnection();
         userDAO.setConnection(conn);
-        Optional<User> user = Optional.of(userDAO.findEntityByKey(login));
+        Optional<User> user = userDAO.findEntityByKey(login);
         dbManager.closeConnection(conn);
         return user;
     }

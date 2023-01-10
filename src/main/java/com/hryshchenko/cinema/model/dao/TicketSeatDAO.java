@@ -8,6 +8,7 @@ import com.hryshchenko.cinema.model.entity.TicketSeat;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class TicketSeatDAO extends AbstractDAO <Integer, TicketSeat> {
     private final QueryBuilder<TicketSeat> ticketSeatQueryBuilder = new TicketSeatQueryBuilder();
@@ -17,8 +18,8 @@ public class TicketSeatDAO extends AbstractDAO <Integer, TicketSeat> {
     }
 
     @Override
-    public TicketSeat findEntityByKey(Integer id) throws DAOException {
-        return null;
+    public Optional<TicketSeat> findEntityByKey(Integer id) throws DAOException {
+        return Optional.empty();
     }
 
     @Override

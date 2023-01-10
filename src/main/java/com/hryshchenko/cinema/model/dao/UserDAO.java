@@ -9,6 +9,7 @@ import com.hryshchenko.cinema.model.entity.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO extends AbstractDAO <String, User> {
 
@@ -26,14 +27,14 @@ public class UserDAO extends AbstractDAO <String, User> {
     }
 
     @Override
-    public User findEntityByKey(String login) throws DAOException {
+    public Optional<User> findEntityByKey(String login) throws DAOException {
         User user;
         try {
             user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_LOGIN, login);
         } catch (SQLException e){
             throw new DAOException("problem in find user by login", e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override

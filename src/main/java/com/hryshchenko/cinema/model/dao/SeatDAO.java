@@ -8,6 +8,7 @@ import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class SeatDAO extends AbstractDAO <Integer, Seat> {
     private final QueryBuilder<Seat> seatQueryBuilder = new SeatQueryBuilder();
@@ -24,14 +25,14 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     }
 
     @Override
-    public Seat findEntityByKey(Integer id) throws DAOException {
+    public Optional<Seat> findEntityByKey(Integer id) throws DAOException {
         Seat seat;
         try {
             seat = seatQueryBuilder.executeAndReturnValue(connection, Query.GET_SEAT_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find seat by id", e);
         }
-        return seat;
+        return Optional.ofNullable(seat);
     }
 
     @Override

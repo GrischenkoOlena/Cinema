@@ -9,6 +9,7 @@ import com.hryshchenko.cinema.model.entity.Film;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FilmDAO extends AbstractDAO <Long, Film>{
     private final QueryBuilder<Film> filmQueryBuilder = new FilmQueryBuilder();
@@ -25,14 +26,14 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
     }
 
     @Override
-    public Film findEntityByKey(Long id) throws DAOException {
+    public Optional<Film> findEntityByKey(Long id) throws DAOException {
         Film film;
         try {
             film = filmQueryBuilder.executeAndReturnValue(connection, Query.GET_FILM_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find film by id", e);
         }
-        return film;
+        return Optional.ofNullable(film);
     }
 
     @Override

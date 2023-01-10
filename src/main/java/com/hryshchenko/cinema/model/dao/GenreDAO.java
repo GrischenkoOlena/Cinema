@@ -8,6 +8,7 @@ import com.hryshchenko.cinema.model.entity.Genre;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class GenreDAO extends AbstractDAO<Integer, Genre>{
 
@@ -25,14 +26,14 @@ public class GenreDAO extends AbstractDAO<Integer, Genre>{
     }
 
     @Override
-    public Genre findEntityByKey(Integer id) throws DAOException {
+    public Optional<Genre> findEntityByKey(Integer id) throws DAOException {
         Genre genre;
         try {
             genre = genreQueryBuilder.executeAndReturnValue(connection, Query.GET_GENRE_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find genre by id", e);
         }
-        return genre;
+        return Optional.ofNullable(genre);
     }
 
     @Override
