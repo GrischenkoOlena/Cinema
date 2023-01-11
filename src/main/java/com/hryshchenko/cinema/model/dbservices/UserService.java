@@ -39,10 +39,10 @@ public class UserService implements ICinemaService{
         return result;
     }
 
-    public List<User> getUsersPage(long begin, long amount) throws DAOException {
+    public List<User> getUsersPage(String order, long begin, long amount) throws DAOException {
         Connection conn = dbManager.getConnection();
         userDAO.setConnection(conn);
-        List<User> users = userDAO.findPageUsers(begin, amount);
+        List<User> users = userDAO.findPageUsers(order, begin, amount);
         dbManager.closeConnection(conn);
         return users;
     }

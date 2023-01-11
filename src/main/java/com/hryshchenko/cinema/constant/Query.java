@@ -1,7 +1,7 @@
 package com.hryshchenko.cinema.constant;
 
 public interface Query {
-    String GET_ALL_USERS = "SELECT * FROM user LIMIT ?, ?";
+    String GET_ALL_USERS = "SELECT * FROM user orderField LIMIT ?, ?";
     String GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
     String CREATE_USER =
             "INSERT INTO user(login, password, user_name, balance, role_id) VALUES (?, ?, ?, ?, ?)";
@@ -16,7 +16,7 @@ public interface Query {
     String DELETE_CATEGORY = "DELETE FROM category WHERE category_id = ?";
     String UPDATE_CATEGORY = "UPDATE category SET price = ? WHERE category_id = ?";
 
-    String GET_ALL_FILMS = "SELECT * FROM film LIMIT ?, ?";
+    String GET_ALL_FILMS = "SELECT * FROM film orderField LIMIT ?, ?";
     String GET_FILM_BY_ID = "SELECT * FROM film WHERE film_id = ?";
     String GET_FILM_BY_GENRE = "SELECT * FROM film WHERE genre = ?";
     String CREATE_FILM =
@@ -36,7 +36,7 @@ public interface Query {
     String GET_MAX_ROW = "SELECT max(line) FROM seat";
     String GET_MAX_PLACE = "SELECT max(place) FROM seat";
 
-    String GET_ALL_SCREENINGS = "SELECT * FROM screening ORDER BY film_date DESC LIMIT ?, ?";
+    String GET_ALL_SCREENINGS = "SELECT * FROM screening ORDER BY orderField LIMIT ?, ?";
     String GET_SCREENING_BY_ID = "SELECT * FROM screening WHERE screening_id = ?";
     String GET_SCREENINGS_BY_DATE = "SELECT * FROM screening WHERE film_date = ? ORDER BY time_begin";
     String CREATE_SCREENING = "INSERT INTO screening (film_id, film_date, time_begin, state_id) VALUES (?, ?, ?, ?)";
@@ -45,7 +45,7 @@ public interface Query {
     String COUNT_SCREENING = "SELECT count(*) FROM screening";
 
     String GET_TICKET_BY_ID = "SELECT * FROM ticket WHERE ticket_id = ?";
-    String GET_TICKETS_BY_USER = "SELECT * FROM ticket WHERE user_id = ? LIMIT ?, ?";
+    String GET_TICKETS_BY_USER = "SELECT * FROM ticket WHERE user_id = ? orderField LIMIT ?, ?";
     String CREATE_TICKET = "INSERT INTO ticket (screening_id, user_id, ticket_count) VALUES (?, ?, ?)";
     String DELETE_TICKET = "DELETE FROM ticket WHERE ticket_id = ?";
     String UPDATE_TICKET = "UPDATE ticket SET ticket_count = ? WHERE ticket_id = ?";

@@ -18,8 +18,9 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
     @Override
     public List<Screening> findAll() throws DAOException {
         List<Screening> screenings;
+        String query = Query.GET_ALL_SCREENINGS.replace("orderField", "film_date");
         try {
-            screenings = screeningQueryBuilder.executeAndReturnList(connection, Query.GET_ALL_SCREENINGS, 0,10);
+            screenings = screeningQueryBuilder.executeAndReturnList(connection, query, 0,10);
         } catch (SQLException e){
             throw new DAOException("problem in find all screenings", e);
         }
@@ -97,11 +98,11 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
         }
         return result;
     }
-    public List<Screening> findPageScreenings(long begin, long amount) throws DAOException {
+    public List<Screening> findPageScreenings(String order, long begin, long amount) throws DAOException {
         List<Screening> screenings;
         try {
-            screenings = screeningQueryBuilder.executeAndReturnList(connection,
-                    Query.GET_ALL_SCREENINGS, begin-1, amount);
+            String query = Query.GET_ALL_SCREENINGS.replace("orderField", order);
+            screenings = screeningQueryBuilder.executeAndReturnList(connection, query, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find screenings by page", e);
         }

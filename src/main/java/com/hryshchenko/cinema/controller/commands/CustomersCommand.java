@@ -19,6 +19,9 @@ public class CustomersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String order = req.getParameter("order");
+        if(order == null){
+            order = "user_id";
+        }
 
         long page;
         try {
@@ -30,7 +33,7 @@ public class CustomersCommand implements ICommand {
         Pagination usersPagination = new Pagination(AppContext.getInstance());
         IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
-            List<User> usersList = usersPagination.getUsersPage(page);
+            List<User> usersList = usersPagination.getUsersPage(order, page);
             List<UserDTO> users = mapperService.getListDTO(usersList);
             req.setAttribute("users", users);
 

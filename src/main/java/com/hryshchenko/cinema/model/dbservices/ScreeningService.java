@@ -37,10 +37,10 @@ public class ScreeningService implements ICinemaService {
         return screening;
     }
 
-    public List<Screening> getScreeningsPage(long begin, long amount) throws DAOException {
+    public List<Screening> getScreeningsPage(String order,long begin, long amount) throws DAOException {
         Connection conn = dbManager.getConnection();
         screeningDAO.setConnection(conn);
-        List<Screening> screenings = screeningDAO.findPageScreenings(begin, amount);
+        List<Screening> screenings = screeningDAO.findPageScreenings(order, begin, amount);
         dbManager.closeConnection(conn);
         return screenings;
     }
@@ -60,5 +60,6 @@ public class ScreeningService implements ICinemaService {
         dbManager.closeConnection(conn);
         return count;
     }
+
 }
 

@@ -19,6 +19,9 @@ public class FilmsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String order = req.getParameter("order");
+        if(order == null){
+            order = "film_id";
+        }
 
         long page;
         try {
@@ -30,7 +33,7 @@ public class FilmsCommand implements ICommand {
         Pagination filmsPagination = new Pagination(AppContext.getInstance());
         IMapperService<Film, FilmDTO> mapperService = new MapperFilm();
         try {
-            List<Film> filmsList = filmsPagination.getFilmsPage(page);
+            List<Film> filmsList = filmsPagination.getFilmsPage(order, page);
             List<FilmDTO> films = mapperService.getListDTO(filmsList);
             req.setAttribute("films", films);
 

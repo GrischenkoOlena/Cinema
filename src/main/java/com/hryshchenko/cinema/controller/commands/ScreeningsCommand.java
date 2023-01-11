@@ -20,6 +20,9 @@ public class ScreeningsCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String order = req.getParameter("order");
+        if(order == null){
+            order = "film_date DESC";
+        }
         String filter = req.getParameter("filter");
 
         long page;
@@ -34,7 +37,7 @@ public class ScreeningsCommand implements ICommand {
         Pagination screeningsPagination = new Pagination(AppContext.getInstance());
         IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
         try {
-            List<Screening> screeningsList = screeningsPagination.getScreeningsPage(page);
+            List<Screening> screeningsList = screeningsPagination.getScreeningsPage(order, page);
             List<ScreeningDTO> screenings = mapperService.getListDTO(screeningsList);
             req.setAttribute("screenings", screenings);
 

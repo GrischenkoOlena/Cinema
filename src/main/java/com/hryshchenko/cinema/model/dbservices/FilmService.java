@@ -22,10 +22,10 @@ public class FilmService implements ICinemaService{
         return film;
     }
 
-    public List<Film> getFilmsPage(long begin, long amount) throws DAOException {
+    public List<Film> getFilmsPage(String order, long begin, long amount) throws DAOException {
         Connection conn = dbManager.getConnection();
         filmDAO.setConnection(conn);
-        List<Film> films = filmDAO.findPageFilms(begin, amount);
+        List<Film> films = filmDAO.findPageFilms(order, begin, amount);
         dbManager.closeConnection(conn);
         return films;
     }

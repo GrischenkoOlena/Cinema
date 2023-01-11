@@ -23,6 +23,10 @@ public class TicketsCommand implements ICommand {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
+        String order = req.getParameter("order");
+        if(order == null){
+            order = "ticket_id";
+        }
         long page;
         try {
             page = Long.parseLong(req.getParameter("page"));
@@ -33,7 +37,7 @@ public class TicketsCommand implements ICommand {
         Pagination ticketPagination = new Pagination(AppContext.getInstance());
         IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
         try {
-            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(user, page);
+            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(order, user, page);
 
             List<TicketDTO> ticketDTOList = mapperService.getListDTO(ticketList);
             req.setAttribute("tickets", ticketDTOList);

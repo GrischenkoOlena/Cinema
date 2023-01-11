@@ -16,10 +16,10 @@ public class TicketService implements ICinemaService {
         ticketDAO = new TicketDAO();
     }
 
-    public List<Ticket> getTicketsPageByUser(User user, long begin, long amount) throws DAOException {
+    public List<Ticket> getTicketsPageByUser(String order, User user, long begin, long amount) throws DAOException {
         Connection conn = dbManager.getConnection();
         ticketDAO.setConnection(conn);
-        List<Ticket> tickets = ticketDAO.findPageTickets(user, begin, amount);
+        List<Ticket> tickets = ticketDAO.findPageTickets(order, user, begin, amount);
         dbManager.closeConnection(conn);
         return tickets;
     }

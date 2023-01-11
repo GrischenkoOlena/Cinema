@@ -18,8 +18,9 @@ public class UserDAO extends AbstractDAO <String, User> {
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users;
+        String query = Query.GET_ALL_USERS.replace("orderField", "");
         try {
-            users = userQueryBuilder.executeAndReturnList(connection, Query.GET_ALL_USERS, 0,10);
+            users = userQueryBuilder.executeAndReturnList(connection, query, 0,10);
         } catch (SQLException e){
             throw new DAOException("problem in find all user", e);
         }
@@ -87,11 +88,11 @@ public class UserDAO extends AbstractDAO <String, User> {
         }
         return result;
     }
-    public List<User> findPageUsers(long begin, long amount) throws DAOException {
+    public List<User> findPageUsers(String order, long begin, long amount) throws DAOException {
         List<User> screenings;
+        String query = Query.GET_ALL_USERS.replace("orderField", "ORDER BY " + order);
         try {
-            screenings = userQueryBuilder.executeAndReturnList(connection,
-                    Query.GET_ALL_USERS, begin-1, amount);
+            screenings = userQueryBuilder.executeAndReturnList(connection, query, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find users by page", e);
         }

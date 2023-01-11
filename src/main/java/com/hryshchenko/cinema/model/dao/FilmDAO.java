@@ -17,8 +17,9 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
     @Override
     public List<Film> findAll() throws DAOException {
         List<Film> films;
+        String query = Query.GET_ALL_FILMS.replace("orderField", "");
         try {
-            films = filmQueryBuilder.executeAndReturnList(connection, Query.GET_ALL_FILMS, 0,10);
+            films = filmQueryBuilder.executeAndReturnList(connection, query, 0,10);
         } catch (SQLException e){
             throw new DAOException("problem in find all films", e);
         }
@@ -90,11 +91,11 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
         }
         return result;
     }
-    public List<Film> findPageFilms(long begin, long amount) throws DAOException {
+    public List<Film> findPageFilms(String order, long begin, long amount) throws DAOException {
         List<Film> screenings;
+        String query = Query.GET_ALL_FILMS.replace("orderField", "ORDER BY " + order);
         try {
-            screenings = filmQueryBuilder.executeAndReturnList(connection,
-                    Query.GET_ALL_FILMS, begin-1, amount);
+            screenings = filmQueryBuilder.executeAndReturnList(connection, query,begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find movies by page", e);
         }

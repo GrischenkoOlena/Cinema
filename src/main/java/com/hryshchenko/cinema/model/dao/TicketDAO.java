@@ -67,8 +67,9 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
 
     public List<Ticket> findTicketsByUser(User user) throws DAOException{
         List<Ticket> tickets;
+        String query = Query.GET_TICKETS_BY_USER.replace("orderField", "");
         try {
-            tickets = ticketQueryBuilder.executeAndReturnList(connection, Query.GET_TICKETS_BY_USER, user.getId());
+            tickets = ticketQueryBuilder.executeAndReturnList(connection, query, user.getId());
         } catch (SQLException e){
             throw new DAOException("problem in find tickets by user", e);
         }
@@ -84,11 +85,12 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         }
         return result;
     }
-    public List<Ticket> findPageTickets(User user, long begin, long amount) throws DAOException {
+    public List<Ticket> findPageTickets(String order, User user, long begin, long amount) throws DAOException {
         List<Ticket> screenings;
+        String query = Query.GET_TICKETS_BY_USER.replace("orderField", "ORDER BY " + order);
         try {
-            screenings = ticketQueryBuilder.executeAndReturnList(connection,
-                    Query.GET_TICKETS_BY_USER, user.getId(), begin-1, amount);
+            screenings = ticketQueryBuilder.executeAndReturnList(connection, query,
+                    user.getId(), begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find tickets by page", e);
         }
