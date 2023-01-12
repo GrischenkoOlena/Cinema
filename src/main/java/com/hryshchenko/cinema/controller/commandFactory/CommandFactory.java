@@ -20,14 +20,17 @@ public class CommandFactory {
         commands.put("i18n", new InternationalizationCommand());
         commands.put("profile", new ProfileCommand());
 
-        commands.put("updateEntity", new UpdateEntityCommand());
-        commands.put("saveUpdate", new SaveUpdateEntityCommand());
+        commands.put("updateProfile", new UpdateProfileCommand());
+        //commands.put("saveUpdate", new SaveUpdateProfileCommand());
 
         commands.put("customers", new CustomersCommand());
         commands.put("screenings", new ScreeningsCommand());
         commands.put("films", new FilmsCommand());
         commands.put("attendance", new AttendanceCommand());
-        commands.put("changeBalance", new ChangeBalanceCommand());
+        commands.put("updateBalance", new UpdateBalanceCommand());
+        //commands.put("saveBalance", new SaveBalanceCommand());
+        commands.put("addFilm", new AddFilmCommand());
+        commands.put("addScreening", new AddScreeningCommand());
 
         commands.put("tickets", new TicketsCommand());
         commands.put("schedule", new ScheduleCommand());

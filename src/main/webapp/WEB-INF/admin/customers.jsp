@@ -10,6 +10,31 @@
   <body class="w-50 p-3">
     <jsp:include page="/WEB-INF/templates/menu_admin.jsp"></jsp:include>
 
+        <!-- Modal -->
+        <div class="modal fade" id="updateBalanceForm" aria-hidden="true"
+              aria-labelledby="editUserModalLabel" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editUserModalLabel">Your change</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <form action="controller?action=updateBalance" method="POST">
+                <div class="modal-body">
+                  <label for="paramInput" class="form-label">Balance</label>
+                  <input class="form-control" type="text" id="paramInput" name="updateValue">
+                  <input type="hidden" id="userLogin" name="userLogin">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" name="btnChangeUser" class="btn btn-dark">Save change</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
     <br>
     <h2>Customers</h2>
     <div class="container">
@@ -56,12 +81,12 @@
                           <td>${user.balance}</td>
                           <td>${user.role}</td>
                           <td>
-                              <form action="controller" method="POST">
-                              <input type="hidden" name="action" value="changeBalance"/>
-                              <input type="hidden" name="userLogin" value=${user.login}/>
-                              <input type="hidden" name="userBalance" value=${user.balance}/>
-                              <input type="submit" class="btn btn-success" value="Change balance"/>
-                              </form>
+                              <button type="button" class="btn btn-info text-white" data-bs-toggle="modal"
+                                          data-bs-target="#updateBalanceForm"
+                                          data-bs-updateBalance="${user.balance}"
+                                          data-bs-updateLogin="${user.login}">
+                                   Change balance
+                              </button>
                           </td>
                       </tr>
                   </c:forEach>
@@ -70,6 +95,19 @@
             </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
+
+  <script>
+    const exampleModal = document.getElementById('updateBalanceForm');
+    exampleModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const updateBalance = button.getAttribute('data-bs-updateBalance');
+        const updateLogin = button.getAttribute('data-bs-updateLogin');
+        document.getElementById('paramInput').value = updateBalance;
+        document.getElementById('userLogin').value = updateLogin;
+
+    })
+  </script>
+
   </body>
 
 </html>

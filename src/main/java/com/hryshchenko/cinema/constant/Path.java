@@ -12,7 +12,6 @@ public interface Path {
     String ADMIN_MAIN = "/WEB-INF/admin/adminMain.jsp";
 
     String PROFILE = "WEB-INF/profile.jsp";
-    String UPDATE_ENTITY = "WEB-INF/updateEntity.jsp";
     String USER_TICKETS = "/WEB-INF/user/tickets.jsp";
     String ADMIN_FILMS = "/WEB-INF/admin/films.jsp";
     String ADMIN_CUSTOMERS = "/WEB-INF/admin/customers.jsp";
@@ -23,6 +22,7 @@ public interface Path {
     String COMMAND_REDIRECT = "redirect";
     String COMMAND_USER_SCHEDULE = "controller?action=schedule";
     String COMMAND_ADMIN_SCREENINGS = "controller?action=screenings";
+    String COMMAND_ADMIN_CUSTOMERS = "controller?action=customers";
 
 
 

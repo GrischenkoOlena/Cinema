@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 @WebFilter(urlPatterns = "/controller",
         initParams = {
-                @WebInitParam(name = "admin", value = "customers screenings films attendance"),
+                @WebInitParam(name = "admin", value = "customers screenings films attendance updateBalance addScreening addFilm"),
                 @WebInitParam(name = "client", value = "tickets schedule"),
-                @WebInitParam(name = "common", value = "logout i18n profile purchase updateEntity saveUpdate"),
+                @WebInitParam(name = "common", value = "logout i18n profile purchase updateProfile"),
                 @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty")
         })
 public class AuthenticationFilter implements Filter {
