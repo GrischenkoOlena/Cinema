@@ -3,7 +3,7 @@
 
 <%@ include file="/WEB-INF/templates/taglib.jspf" %>
 
-<html lang="en">
+<html lang="uk">
   <c:set var="title" value="Cinema" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
@@ -13,14 +13,14 @@
 
     <jsp:include page="/WEB-INF/templates/menu_main.jsp"></jsp:include>
 
-    <h2>Welcome to cinema</h2>
+    <h2><fmt:message key="main.header"/></h2>
     
     <div class="container">
 
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">In our cinema</a>
+            <a class="navbar-brand" href="#"><fmt:message key="main.navbar"/></a>
           </div>
         </div>
       </nav>
@@ -44,7 +44,9 @@
       <form name="simple" action="controller" method="POST">
         <input type="hidden" name="action" value="main"/>
         <input type="hidden" name="scheduleDate" id="sendDate" value=""/>
-        <input type="submit" class="btn btn-success" value="Schedule"/>
+         <button type="submit" class="btn btn-success">
+            <fmt:message key="main.button.schedule"/>
+        </button>
       </form>
 
     </div>
