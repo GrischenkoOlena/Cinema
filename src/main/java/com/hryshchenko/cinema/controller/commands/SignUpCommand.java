@@ -7,6 +7,7 @@ import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.model.dbservices.UserService;
+import com.hryshchenko.cinema.util.PasswordHashUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class SignUpCommand implements ICommand {
 
         User newUser = new User();
         newUser.setLogin(login);
-        newUser.setPassword(password);
+        newUser.setPassword(PasswordHashUtil.encode(password));
         newUser.setName(userName);
         newUser.setRole(UserRole.CLIENT);
         newUser.setBalance(0.0);
