@@ -9,20 +9,73 @@
   <body class="w-50 p-3">
     <jsp:include page="/WEB-INF/templates/menu_admin.jsp"></jsp:include>
 
+  <!-- Modal add new session -->
+  <div class="modal fade" id="addNewSessionForm" aria-hidden="true"
+              aria-labelledby="addNewSessionLabel" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addNewSessionLabel">New session</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form action="controller?action=addScreening" method="POST">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="film" class="form-label">Film</label>
+              <select class="form-select" id="film" name="film">
+                <option selected style="display:none;"></option>
+                <c:forEach var="film" items="${films}">
+                  <option value="${film.id}">${film.title}</option>
+                </c:forEach>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Date</label>
+              <input type="input" id="date" name="date" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="time" class="form-label">Time</label>
+              <input type="input" id="time" name="time" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="state" class="form-label">State</label>
+              <select class="form-select" id="state" name="state">
+                <option selected style="display:none;"></option>
+                <c:forEach var="state" items="${states}">
+                  <option value="${state.id}">${state}</option>
+                </c:forEach>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="btnAddSession" class="btn btn-dark">Add new session</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
         <br>
         <h2> Sessions </h2>
         <div class="container">
-          <form class="row g-4" action="controller" method="POST">
+          <form class="row g-3" action="controller" method="POST">
             <div class="col-auto">
-              <select class="form-select" name="order">
-                <option selected>Sort by</option>
-                <option value="movieAsc">movie title &#8593;</option>
-                <option value="movieDesc">movie title &#8595;</option>
-                <option value="dataAsc">data/time &#8593;</option>
-                <option value="dataDesc">data/time &#8595;</option>
-                <option value="avaibleAsc">avaible seats &#8593;</option>
-                <option value="avaibleDesc">avaible seats &#8595;</option>
-              </select>
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="inputOrder">Sort by</label>
+                <select class="form-select" id="inputOrder" name="order">
+                  <option selected style="display:none;"></option>
+                  <option value="movieAsc">movie title &#8593;</option>
+                  <option value="movieDesc">movie title &#8595;</option>
+                  <option value="dataAsc">data/time &#8593;</option>
+                  <option value="dataDesc">data/time &#8595;</option>
+                  <option value="avaibleAsc">avaible seats &#8593;</option>
+                  <option value="avaibleDesc">avaible seats &#8595;</option>
+                </select>
+                <button class="btn btn-outline-secondary" type="button">Apply</button>
+              </div>
             </div>
 
             <div class="form-check col-auto">
@@ -31,21 +84,17 @@
                  the movies available for viewing
               </label>
             </div>
-
-            <div class="col-auto">
-              <input type="hidden" name="action" value="screenings"/>
-              <input type="submit" class="btn btn-success" value="Apply"/>
-            </div>
-
-            <nav>
-              <ul class="pagination pagination-sm justify-content-center">
-                <c:forEach var = "i" begin = "1" end = "${countPages}">
-                  <c:set var="hrefPage" value="controller?action=screenings&page=${i}" />
-                  <li class="page-item"><a class="page-link" href="${hrefPage}">${i}</a></li>
-                </c:forEach>
-              </ul>
-            </nav>
+            <input type="hidden" name="action" value="screenings">
           </form>
+
+          <nav>
+            <ul class="pagination pagination-sm justify-content-center">
+              <c:forEach var = "i" begin = "1" end = "${countPages}">
+                <c:set var="hrefPage" value="controller?action=screenings&page=${i}" />
+                <li class="page-item"><a class="page-link" href="${hrefPage}">${i}</a></li>
+              </c:forEach>
+            </ul>
+          </nav>
 
           <table class="table">
             <thead>
@@ -55,12 +104,13 @@
                 <th scope="col">time</th>
                 <th scope="col">state</th>
                 <th scope="col">available seats</th>
+                <th> </th>
               </tr>
             </thead>
               <tbody>
               <c:forEach var="screening" items="${screenings}">
                   <tr>
-                      <td>${screening.film}</td>
+                      <td>${screening.film.title}</td>
                       <td>${screening.filmDate}</td>
                       <td>${screening.timeBegin}</td>
                       <td>${screening.state}</td>
@@ -69,13 +119,19 @@
                           <form action="controller" method="POST">
                           <input type="hidden" name="action" value="freeSeats"/>
                           <input type="hidden" name="screening" value=${screening.id} />
-                          <input type="submit" class="btn btn-success" value="View"/>
+                          <input type="submit" class="btn btn-warning" value="View"/>
                           </form>
                       </td>
                   </tr>
               </c:forEach>
               </tbody>
           </table>
+
+          <br>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#addNewSessionForm">
+            Add new session
+          </button>
         </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>

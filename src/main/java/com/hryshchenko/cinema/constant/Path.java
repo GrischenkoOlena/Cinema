@@ -23,6 +23,7 @@ public interface Path {
     String COMMAND_USER_SCHEDULE = "controller?action=schedule";
     String COMMAND_ADMIN_SCREENINGS = "controller?action=screenings";
     String COMMAND_ADMIN_CUSTOMERS = "controller?action=customers";
+    String COMMAND_ADMIN_FILMS = "controller?action=films";
 
 
 

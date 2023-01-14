@@ -37,12 +37,12 @@ public class TicketsCommand implements ICommand {
         Pagination ticketPagination = new Pagination(AppContext.getInstance());
         IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
         try {
-            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(order, user, page);
+            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(order, user.getId(), page);
 
             List<TicketDTO> ticketDTOList = mapperService.getListDTO(ticketList);
             req.setAttribute("tickets", ticketDTOList);
 
-            long countPages = ticketPagination.getCountTicketPagesByUser(user);
+            long countPages = ticketPagination.getCountTicketPagesByUser(user.getId());
             req.setAttribute("countPages", countPages);
         } catch (DAOException | MapperException e) {
             e.printStackTrace();

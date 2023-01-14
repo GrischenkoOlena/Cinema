@@ -18,11 +18,14 @@ public interface Query {
 
     String GET_ALL_FILMS = "SELECT * FROM film orderField LIMIT ?, ?";
     String GET_FILM_BY_ID = "SELECT * FROM film WHERE film_id = ?";
-    String GET_FILM_BY_GENRE = "SELECT * FROM film WHERE genre = ?";
+    String GET_FILM_BY_GENRE = "SELECT * FROM film WHERE genre_id = ? orderField LIMIT ?, ?";
     String CREATE_FILM =
             "INSERT INTO film (title, director, cast, description, genre_id, duration) VALUES (?, ?, ?, ?, ?, ?)";
     String DELETE_FILM = "DELETE FROM film WHERE film_id = ?";
+    String UPDATE_FILM = "UPDATE film SET title = ?, director = ?, cast = ?, description = ?, duration = ? " +
+            "WHERE film_id = ?";
     String COUNT_FILM = "SELECT count(*) FROM film";
+    String COUNT_FILM_BY_GENRE = "SELECT count(*) FROM film WHERE genre_id = ?";
 
     String GET_ALL_GENRES = "SELECT * FROM genre LIMIT ?, ?";
     String GET_GENRE_BY_ID = "SELECT * FROM genre WHERE genre_id = ?";
@@ -43,6 +46,10 @@ public interface Query {
     String DELETE_SCREENING = "DELETE FROM screening WHERE screening_id = ?";
     String UPDATE_SCREENING = "UPDATE screening SET state_id = ? WHERE screening_id = ?";
     String COUNT_SCREENING = "SELECT count(*) FROM screening";
+    String GET_SCREENINGS_BY_AVAILABLE = "SELECT * FROM screening WHERE film_date >= ? " +
+            "AND state_id = (SELECT state_id FROM state WHERE state = 'active') orderField";
+    String COUNT_SCREENING_BY_AVAILABLE = "SELECT count(*) FROM screening WHERE film_date >= ? " +
+            "AND state_id = (SELECT state_id FROM state WHERE state = 'active')";
 
     String GET_TICKET_BY_ID = "SELECT * FROM ticket WHERE ticket_id = ?";
     String GET_TICKETS_BY_USER = "SELECT * FROM ticket WHERE user_id = ? orderField LIMIT ?, ?";
@@ -50,6 +57,10 @@ public interface Query {
     String DELETE_TICKET = "DELETE FROM ticket WHERE ticket_id = ?";
     String UPDATE_TICKET = "UPDATE ticket SET ticket_count = ? WHERE ticket_id = ?";
     String COUNT_TICKETS_BY_USER = "SELECT count(*) FROM ticket WHERE user_id = ?";
+    String GET_TICKETS_BY_USER_DATE = "SELECT * FROM ticket WHERE user_id = ? " +
+                "AND screening_id IN (SELECT screening_id FROM screening WHERE film_date = ?) orderField LIMIT ?, ?";
+    String COUNT_TICKETS_BY_USER_DATE = "SELECT count(*) FROM ticket WHERE user_id = ? " +
+                "AND screening_id IN (SELECT screening_id FROM screening WHERE film_date = ?)";
 
     String CREATE_TICKET_SEAT = "INSERT INTO ticket_seat (ticket_id, seat_id) VALUES (?, ?)";
 

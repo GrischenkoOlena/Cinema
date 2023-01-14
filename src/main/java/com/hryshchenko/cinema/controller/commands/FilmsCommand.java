@@ -4,12 +4,16 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.dto.FilmDTO;
+import com.hryshchenko.cinema.dto.GenreDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
+import com.hryshchenko.cinema.model.dbservices.GenreService;
 import com.hryshchenko.cinema.model.entity.Film;
+import com.hryshchenko.cinema.model.entity.Genre;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperFilm;
+import com.hryshchenko.cinema.service.mapper.MapperGenre;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,14 +35,21 @@ public class FilmsCommand implements ICommand {
         }
 
         Pagination filmsPagination = new Pagination(AppContext.getInstance());
-        IMapperService<Film, FilmDTO> mapperService = new MapperFilm();
+        IMapperService<Film, FilmDTO> mapperServiceFilm = new MapperFilm();
+
+        GenreService genreService = AppContext.getInstance().getGenreService();
+        IMapperService<Genre, GenreDTO> mapperServiceGenre = new MapperGenre();
         try {
             List<Film> filmsList = filmsPagination.getFilmsPage(order, page);
-            List<FilmDTO> films = mapperService.getListDTO(filmsList);
+            List<FilmDTO> films = mapperServiceFilm.getListDTO(filmsList);
             req.setAttribute("films", films);
 
             long countPages = filmsPagination.getCountFilmPages();
             req.setAttribute("countPages", countPages);
+
+            List<Genre> genreList = genreService.getAllGenre();
+            List<GenreDTO> genres = mapperServiceGenre.getListDTO(genreList);
+            req.setAttribute("genres", genres);
         } catch (DAOException | MapperException e) {
             e.printStackTrace();
         }

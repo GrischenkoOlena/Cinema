@@ -8,6 +8,7 @@ import com.hryshchenko.cinema.model.entity.Ticket;
 import com.hryshchenko.cinema.model.entity.User;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,34 +66,56 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         return result;
     }
 
-    public List<Ticket> findTicketsByUser(User user) throws DAOException{
+    public List<Ticket> findTicketsByUser(long userId) throws DAOException{
         List<Ticket> tickets;
         String query = Query.GET_TICKETS_BY_USER.replace("orderField", "");
         try {
-            tickets = ticketQueryBuilder.executeAndReturnList(connection, query, user.getId());
+            tickets = ticketQueryBuilder.executeAndReturnList(connection, query, userId);
         } catch (SQLException e){
             throw new DAOException("problem in find tickets by user", e);
         }
         return tickets;
     }
 
-    public long findCountTicketByUser(User user) throws DAOException {
+    public long findCountTicketByUser(long userId) throws DAOException {
         long result;
         try {
-            result = ticketQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_TICKETS_BY_USER, user.getId());
+            result = ticketQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_TICKETS_BY_USER, userId);
         } catch (SQLException e){
             throw new DAOException("problem in find count of tickets", e);
         }
         return result;
     }
-    public List<Ticket> findPageTickets(String order, User user, long begin, long amount) throws DAOException {
+    public List<Ticket> findPageTickets(String order, long userId, long begin, long amount) throws DAOException {
         List<Ticket> screenings;
         String query = Query.GET_TICKETS_BY_USER.replace("orderField", "ORDER BY " + order);
         try {
             screenings = ticketQueryBuilder.executeAndReturnList(connection, query,
-                    user.getId(), begin-1, amount);
+                    userId, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find tickets by page", e);
+        }
+        return screenings;
+    }
+
+    public long findCountTicketByUserDate(long userId, LocalDate date) throws DAOException {
+        long result;
+        try {
+            result = ticketQueryBuilder.executeAndReturnAggregate(connection,
+                    Query.COUNT_TICKETS_BY_USER_DATE, userId, date);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of tickets by date", e);
+        }
+        return result;
+    }
+    public List<Ticket> findPageTicketsByUserDate(String order, long userId, LocalDate date, long begin, long amount) throws DAOException {
+        List<Ticket> screenings;
+        String query = Query.GET_TICKETS_BY_USER_DATE.replace("orderField", "ORDER BY " + order);
+        try {
+            screenings = ticketQueryBuilder.executeAndReturnList(connection, query,
+                    userId, date, begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find page tickets by date", e);
         }
         return screenings;
     }

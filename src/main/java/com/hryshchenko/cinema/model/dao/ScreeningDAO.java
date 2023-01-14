@@ -109,14 +109,36 @@ public class ScreeningDAO extends AbstractDAO <Long, Screening> {
         return screenings;
     }
 
-    public int findCountFreeSeatsById(long id) throws DAOException {
+    public int findCountFreeSeatsById(long screeningId) throws DAOException {
         int result;
         try {
             result = screeningQueryBuilder.executeAndReturnAggregate(connection,
-                            Query.GET_COUNT_FREE_SEAT_BY_SCREENING, id);
+                            Query.GET_COUNT_FREE_SEAT_BY_SCREENING, screeningId);
         } catch (SQLException e) {
             throw new DAOException("problem with get count free seats", e);
         }
         return result;
+    }
+
+    public long findCountAvailableScreenings(LocalDate filmDate) throws DAOException {
+        long result;
+        try {
+            result = screeningQueryBuilder.executeAndReturnAggregate(connection,
+                    Query.COUNT_SCREENING_BY_AVAILABLE, filmDate);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of available screenings", e);
+        }
+        return result;
+    }
+    public List<Screening> findPageAvailableScreenings(LocalDate filmDate, String order, long begin, long amount)
+                        throws DAOException {
+        List<Screening> screenings;
+        try {
+            String query = Query.GET_SCREENINGS_BY_AVAILABLE.replace("orderField", order);
+            screenings = screeningQueryBuilder.executeAndReturnList(connection, query, filmDate,begin-1, amount);
+        } catch (SQLException e){
+            throw new DAOException("problem in find available screenings by page", e);
+        }
+        return screenings;
     }
 }

@@ -1,14 +1,19 @@
 package com.hryshchenko.cinema.controller.commands;
 
 import com.hryshchenko.cinema.constant.Path;
+import com.hryshchenko.cinema.constant.enums.StateScreening;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
+import com.hryshchenko.cinema.model.dbservices.FilmService;
+import com.hryshchenko.cinema.model.entity.Film;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
+import com.hryshchenko.cinema.service.mapper.MapperFilm;
 import com.hryshchenko.cinema.service.mapper.MapperScreening;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,14 +40,23 @@ public class ScreeningsCommand implements ICommand {
         LocalDate currentDate = LocalDate.now();
 
         Pagination screeningsPagination = new Pagination(AppContext.getInstance());
-        IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
+        FilmService filmService = AppContext.getInstance().getFilmService();
+        IMapperService<Screening, ScreeningDTO> mapperScreening = new MapperScreening();
+        IMapperService<Film, FilmDTO> mapperFilm = new MapperFilm();
+
         try {
             List<Screening> screeningsList = screeningsPagination.getScreeningsPage(order, page);
-            List<ScreeningDTO> screenings = mapperService.getListDTO(screeningsList);
+            List<ScreeningDTO> screenings = mapperScreening.getListDTO(screeningsList);
             req.setAttribute("screenings", screenings);
 
             long countPages = screeningsPagination.getCountScreeningPages();
             req.setAttribute("countPages", countPages);
+
+            List<Film> filmsList = filmService.getAllFilms();
+            List<FilmDTO> films = mapperFilm.getListDTO(filmsList);
+            req.setAttribute("films", films);
+
+            req.setAttribute("states", StateScreening.values());
         } catch (DAOException | MapperException e) {
             e.printStackTrace();
         }

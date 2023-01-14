@@ -60,4 +60,16 @@ public class MapperScreening implements IMapperService<Screening, ScreeningDTO> 
         }
         throw new MapperException("such film is absent in BD");
     }
+
+    public Screening getScreening(ScreeningDTO screeningDTO){
+        Screening screening = new Screening();
+
+        screening.setId(screeningDTO.getId());
+        screening.setFilmId(screeningDTO.getFilm().getId());
+        screening.setFilmDate(screeningDTO.getFilmDate());
+        screening.setTimeBegin(screeningDTO.getTimeBegin());
+        screening.setStateId(screeningDTO.getState().getId());
+
+        return screening;
+    }
 }

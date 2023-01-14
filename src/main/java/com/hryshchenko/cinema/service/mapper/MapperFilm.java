@@ -21,6 +21,7 @@ public class MapperFilm implements IMapperService<Film, FilmDTO> {
                 .director(entity.getDirector())
                 .cast(entity.getCast())
                 .description(entity.getDescription())
+                .duration(entity.getDuration())
                 .genre(getGenreDTO(entity.getGenreID()))
                 .build();
     }
@@ -46,5 +47,16 @@ public class MapperFilm implements IMapperService<Film, FilmDTO> {
             throw new MapperException("problem with mapping genre",e);
         }
         throw new MapperException("such genre is absent in BD");
+    }
+
+    public Film getFilm(FilmDTO filmDTO) throws MapperException {
+        return new Film.FilmBuilder(filmDTO.getId())
+                .title(filmDTO.getTitle())
+                .director(filmDTO.getDirector())
+                .cast(filmDTO.getCast())
+                .description(filmDTO.getDescription())
+                .genreId(filmDTO.getGenre().getId())
+                .duration(filmDTO.getDuration())
+                .build();
     }
 }

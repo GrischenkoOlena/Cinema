@@ -32,6 +32,7 @@ public class UserDAO extends AbstractDAO <String, User> {
         User user;
         try {
             user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_LOGIN, login);
+            user = user.getLogin() != null ? user : null;
         } catch (SQLException e){
             throw new DAOException("problem in find user by login", e);
         }

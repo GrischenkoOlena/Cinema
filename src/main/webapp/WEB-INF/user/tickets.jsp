@@ -15,19 +15,20 @@
     <div class="container">
       <form class="row g-3" action="controller" method="POST">
         <div class="col-auto">
-          <select class="form-select" name="order">
-            <option selected>Sort by</option>
-            <option value="movieAsc">movie title &#8593;</option>
-            <option value="movieDesc">movie title &#8595;</option>
-            <option value="dataAsc">data/time &#8593;</option>
-            <option value="dataDesc">data/time &#8595;</option>
-          </select>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputOrder">Sort by</label>
+            <select class="form-select" id="inputOrder" name="order">
+              <option selected style="display:none;"></option>
+              <option value="movieAsc">movie title &#8593;</option>
+              <option value="movieDesc">movie title &#8595;</option>
+              <option value="dataAsc">data/time &#8593;</option>
+              <option value="dataDesc">data/time &#8595;</option>
+            </select>
+            <button class="btn btn-outline-secondary" type="button">Apply</button>
+          </div>
         </div>
 
-        <div class="col-auto">
-          <input type="hidden" name="action" value="tickets"/>
-          <input type="submit" class="btn btn-success" value="Apply"/>
-        </div>
+        <input type="hidden" name="action" value="tickets"/>
       </form>
 
       <table class="table">
@@ -37,12 +38,13 @@
             <th scope="col">data</th>
             <th scope="col">time</th>
             <th scope="col">seat</th>
+            <th> </th>
           </tr>
         </thead>
           <tbody>
-          <c:forEach var="ticket" items="${tickets}">
+            <c:forEach var="ticket" items="${tickets}">
               <tr>
-                  <td>${ticket.screening.film}</td>
+                  <td>${ticket.screening.film.title}</td>
                   <td>${ticket.screening.filmDate}</td>
                   <td>${ticket.screening.timeBegin}</td>
                   <td>
@@ -58,7 +60,7 @@
                     </form>
                   </td>
               </tr>
-          </c:forEach>
+            </c:forEach>
           </tbody>
       </table>
     </div>

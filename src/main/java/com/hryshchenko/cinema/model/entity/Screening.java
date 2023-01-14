@@ -5,14 +5,14 @@ import java.time.LocalTime;
 
 public class Screening extends Entity {
     private static final long serialVersionUID = 1L;
-    private int filmId;
+    private long filmId;
     private LocalDate filmDate;
     private LocalTime timeBegin;
     private int stateId;
 
     public Screening(){ }
 
-    public Screening(long id, int filmId, LocalDate filmDate, LocalTime timeBegin, int stateId) {
+    public Screening(long id, long filmId, LocalDate filmDate, LocalTime timeBegin, int stateId) {
         super(id);
         this.filmId = filmId;
         this.filmDate = filmDate;
@@ -20,11 +20,11 @@ public class Screening extends Entity {
         this.stateId = stateId;
     }
 
-    public int getFilmId() {
+    public long getFilmId() {
         return filmId;
     }
 
-    public void setFilmId(int filmId) {
+    public void setFilmId(long filmId) {
         this.filmId = filmId;
     }
 

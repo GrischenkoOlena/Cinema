@@ -38,31 +38,31 @@
     <br>
     <h2>Customers</h2>
     <div class="container">
-              <form class="row g-3" action="controller" method="POST">
-                <div class="col-auto">
-                  <select class="form-select" name="order">
-                    <option selected>Sort by</option>
-                    <option value="nameAsc">name &#8593;</option>
-                    <option value="nameDesc">name &#8595;</option>
-                    <option value="balanceAsc">balance &#8593;</option>
-                    <option value="balanceDesc">balance &#8595;</option>
-                  </select>
-                </div>
+      <form class="row g-3" action="controller" method="POST">
+        <div class="col-auto">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputOrder">Sort by</label>
+            <select class="form-select" id="inputOrder" name="order">
+              <option selected style="display:none;"></option>
+              <option value="nameAsc">name &#8593;</option>
+              <option value="nameDesc">name &#8595;</option>
+              <option value="balanceAsc">balance &#8593;</option>
+              <option value="balanceDesc">balance &#8595;</option>
+            </select>
+            <button class="btn btn-outline-secondary" type="button">Apply</button>
+          </div>
+        </div>
+        <input type="hidden" name="action" value="customers"/>
+      </form>
 
-                <div class="col-auto">
-                  <input type="hidden" name="action" value="customers"/>
-                  <input type="submit" class="btn btn-success" value="Apply"/>
-                </div>
-
-                <nav>
-                  <ul class="pagination pagination-sm justify-content-center">
-                    <c:forEach var = "i" begin = "1" end = "${countPages}">
-                      <c:set var="hrefPage" value="controller?action=customers&page=${i}" />
-                      <li class="page-item"><a class="page-link" href="${hrefPage}">${i}</a></li>
-                    </c:forEach>
-                  </ul>
-                </nav>
-              </form>
+      <nav>
+        <ul class="pagination pagination-sm justify-content-center">
+          <c:forEach var = "i" begin = "1" end = "${countPages}">
+            <c:set var="hrefPage" value="controller?action=customers&page=${i}" />
+            <li class="page-item"><a class="page-link" href="${hrefPage}">${i}</a></li>
+          </c:forEach>
+        </ul>
+      </nav>
 
               <table class="table">
                 <thead>
@@ -71,6 +71,7 @@
                     <th scope="col">login</th>
                     <th scope="col">balance</th>
                     <th scope="col">role</th>
+                    <th> </th>
                   </tr>
                 </thead>
                   <tbody>

@@ -61,5 +61,30 @@ public class ScreeningService implements ICinemaService {
         return count;
     }
 
+    public List<Screening> getAvailableScreeningsPage(LocalDate filmDate, String order,long begin, long amount)
+                        throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningDAO.setConnection(conn);
+        List<Screening> screenings = screeningDAO.findPageAvailableScreenings(filmDate, order, begin, amount);
+        dbManager.closeConnection(conn);
+        return screenings;
+    }
+
+    public long getCountAvailableScreening(LocalDate filmDate) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningDAO.setConnection(conn);
+        long count = screeningDAO.findCountAvailableScreenings(filmDate);
+        dbManager.closeConnection(conn);
+        return count;
+    }
+
+    public boolean createScreening(Screening screening) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningDAO.setConnection(conn);
+        boolean result = screeningDAO.create(screening);
+        dbManager.closeConnection(conn);
+        return result;
+    }
+
 }
 

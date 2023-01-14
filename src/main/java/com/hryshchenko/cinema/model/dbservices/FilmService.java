@@ -37,4 +37,44 @@ public class FilmService implements ICinemaService{
         dbManager.closeConnection(conn);
         return count;
     }
+
+    public List<Film> getFilmsPageByGenre(long genreId, String order, long begin, long amount) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        filmDAO.setConnection(conn);
+        List<Film> films = filmDAO.findPageFilmsByGenre(genreId, order, begin, amount);
+        dbManager.closeConnection(conn);
+        return films;
+    }
+
+    public long getCountFilmsByGenre(long genreId) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        filmDAO.setConnection(conn);
+        long count = filmDAO.findCountFilmsByGenre(genreId);
+        dbManager.closeConnection(conn);
+        return count;
+    }
+
+    public boolean updateFilm(Film film) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        filmDAO.setConnection(conn);
+        boolean result = filmDAO.update(film);
+        dbManager.closeConnection(conn);
+        return result;
+    }
+
+    public boolean createFilm(Film film) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        filmDAO.setConnection(conn);
+        boolean result = filmDAO.create(film);
+        dbManager.closeConnection(conn);
+        return result;
+    }
+
+    public List<Film> getAllFilms() throws DAOException {
+        Connection conn = dbManager.getConnection();
+        filmDAO.setConnection(conn);
+        List<Film> films = filmDAO.findAll();
+        dbManager.closeConnection(conn);
+        return films;
+    }
 }
