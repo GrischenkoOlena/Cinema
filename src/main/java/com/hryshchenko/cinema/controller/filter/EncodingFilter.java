@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*", initParams = @WebInitParam(name = "encoding", value = "utf-8"))
+@WebFilter(filterName="encoding", urlPatterns = "/*", initParams = @WebInitParam(name = "encoding", value = "UTF-8"))
 public class EncodingFilter implements Filter {
     private static final Logger log = LogManager.getLogger();
     private String encoding;
