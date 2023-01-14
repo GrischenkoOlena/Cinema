@@ -4,9 +4,11 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.exception.IncorrectPasswordException;
 import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.model.dbservices.UserService;
+import com.hryshchenko.cinema.util.PasswordHashUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +27,7 @@ public class LoginCommand implements ICommand {
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             req.setAttribute("error", "Login or password can't be empty");
-            response = Path.LOGIN;
+            return Path.LOGIN;
         }
 
         UserService userService = AppContext.getInstance().getUserService();
@@ -33,7 +35,8 @@ public class LoginCommand implements ICommand {
             Optional<User> user = userService.getUserByLogin(login);
             if(user.isPresent()) {
                 String forward = Path.ERROR;
-                if (user.get().getPassword().equals(password)) {
+                try {
+                    PasswordHashUtil.verify(user.get().getPassword(), password);
                     UserRole userRole = user.get().getRole();
                     if (userRole == UserRole.ADMIN) {
                         forward = Path.COMMAND_ADMIN_SCREENINGS;
@@ -43,10 +46,9 @@ public class LoginCommand implements ICommand {
                     }
                     resp.sendRedirect(forward);
                     response = Path.COMMAND_REDIRECT;
-
                     session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
-                } else {
+                } catch (IncorrectPasswordException e) {
                     req.setAttribute("login", login);
                     req.setAttribute("error", "Login or password isn't correct");
                     response = Path.LOGIN;
