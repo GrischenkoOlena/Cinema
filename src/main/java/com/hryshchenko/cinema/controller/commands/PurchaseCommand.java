@@ -48,7 +48,7 @@ public class PurchaseCommand implements ICommand {
             session.setAttribute("errorBuyTicket", "You don't have enough money to purchase ticket");
             return Path.TICKER_BASKET;
         } catch (SeatHasSoldException e) {
-            session.setAttribute("errorBuyTicket", "Unfortunately place is sold recently");
+            session.setAttribute("errorBuyTicket", "Unfortunately place has sold recently");
             return Path.TICKER_BASKET;
         } catch (DAOException e) {
             e.printStackTrace();

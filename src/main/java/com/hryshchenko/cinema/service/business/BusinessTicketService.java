@@ -53,7 +53,7 @@ public class BusinessTicketService {
             List<Seat> freeSeats = seatService.getFreeSeatByScreening(ticket.getScreeningId());
             for(Seat seat : seats){
                 if(!freeSeats.contains(seat)) {
-                    throw new SeatHasSoldException("unfortunately place is sold");
+                    throw new SeatHasSoldException("unfortunately place has sold");
                 }
             }
             result = ticketService.createTicket(ticket, ticketHasSeats, user);
