@@ -62,6 +62,8 @@ public interface Query {
     String COUNT_TICKETS_BY_USER_DATE = "SELECT count(*) FROM ticket WHERE user_id = ? " +
                 "AND screening_id IN (SELECT screening_id FROM screening WHERE film_date = ?)";
 
+    String GET_NEXT_AUTOINCREMENT = "SELECT max(ticket_id) FROM ticket";
+
     String CREATE_TICKET_SEAT = "INSERT INTO ticket_seat (ticket_id, seat_id) VALUES (?, ?)";
 
     String GET_SEATS_BY_TICKET = "SELECT * FROM seat " +

@@ -17,7 +17,6 @@ public class MapperUser implements IMapperService<User, UserDTO> {
                 .userRole(entity.getRole())
                 .build();
     }
-
     @Override
     public List<UserDTO> getListDTO(List<User> entities) {
         List<UserDTO> userDTOList = new ArrayList<>();
@@ -25,5 +24,15 @@ public class MapperUser implements IMapperService<User, UserDTO> {
             userDTOList.add(getDTO(user));
         }
         return userDTOList;
+    }
+
+    public User getUser(UserDTO userDTO){
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setLogin(userDTO.getLogin());
+        user.setName(userDTO.getName());
+        user.setBalance(userDTO.getBalance());
+        user.setRole(userDTO.getRole());
+        return user;
     }
 }

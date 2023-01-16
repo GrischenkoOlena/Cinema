@@ -21,14 +21,14 @@
                 <tbody>
                 <c:forEach var="screening" items="${screenings}">
                     <tr>
-                        <td>${screening.film}</td>
+                        <td>${screening.film.title}</td>
                         <td>${screening.filmDate}</td>
                         <td>${screening.timeBegin}</td>
                         <td>${screening.state}</td>
                         <td>
                             <form action="controller" method="POST">
                             <input type="hidden" name="action" value="freeSeats"/>
-                            <input type="hidden" name="screening" value=${screening.id} />
+                            <input type="hidden" name="screeningId" value=${screening.id} />
                             <input type="submit" class="btn btn-success" value="View"/>
                             </form>
                         </td>

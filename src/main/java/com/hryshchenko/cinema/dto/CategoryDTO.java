@@ -2,13 +2,13 @@ package com.hryshchenko.cinema.dto;
 
 public class CategoryDTO implements ISimpleDTO {
     private static final long serialVersionUID = 1L;
-    private long id;
+    private int id;
     private String category;
     private double price;
 
     public CategoryDTO() {}
 
-    public CategoryDTO(long id, String category, double price) {
+    public CategoryDTO(int id, String category, double price) {
         this.id = id;
         this.category = category;
         this.price = price;
@@ -30,11 +30,11 @@ public class CategoryDTO implements ISimpleDTO {
         this.price = price;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

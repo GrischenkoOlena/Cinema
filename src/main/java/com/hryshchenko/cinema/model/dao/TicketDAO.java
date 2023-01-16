@@ -108,7 +108,8 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         }
         return result;
     }
-    public List<Ticket> findPageTicketsByUserDate(String order, long userId, LocalDate date, long begin, long amount) throws DAOException {
+    public List<Ticket> findPageTicketsByUserDate(String order, long userId, LocalDate date, long begin, long amount)
+            throws DAOException {
         List<Ticket> screenings;
         String query = Query.GET_TICKETS_BY_USER_DATE.replace("orderField", "ORDER BY " + order);
         try {
@@ -118,5 +119,15 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
             throw new DAOException("problem in find page tickets by date", e);
         }
         return screenings;
+    }
+
+    public long findNextAutoIncrement() throws DAOException {
+        long result;
+        try {
+            result = ticketQueryBuilder.executeAndReturnAggregate(connection, Query.GET_NEXT_AUTOINCREMENT);
+        } catch (SQLException e){
+            throw new DAOException("problem in find count of tickets by date", e);
+        }
+        return result;
     }
 }

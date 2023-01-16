@@ -13,7 +13,7 @@ public class EntityTransaction {
     private Connection connection;
 
     @SafeVarargs
-    public final void initTransaction(AbstractDAO<Object, Entity> dao, AbstractDAO<Object, Entity>... daos) {
+    public final void initTransaction(AbstractDAO dao, AbstractDAO... daos) {
         if (connection == null) {
             connection = dbManager.getConnection();
         }
@@ -24,7 +24,7 @@ public class EntityTransaction {
         }
         dao.setConnection(connection);
 
-        for (AbstractDAO<Object, Entity> daoElement : daos) {
+        for (AbstractDAO daoElement : daos) {
             daoElement.setConnection(connection);
         }
     }

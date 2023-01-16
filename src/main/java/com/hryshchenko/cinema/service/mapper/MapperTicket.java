@@ -55,7 +55,7 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
         throw new MapperException("such screening is absent in BD");
     }
 
-    private UserDTO getUserDTO(int userId) throws MapperException {
+    private UserDTO getUserDTO(long userId) throws MapperException {
         UserService userService = AppContext.getInstance().getUserService();
         IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
@@ -82,5 +82,16 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
         } catch (DAOException e) {
             throw new MapperException("problem with mapping seat from ticket", e);
         }
+    }
+
+    public Ticket getTicket(TicketDTO ticketDTO){
+        Ticket ticket = new Ticket();
+
+        ticket.setId(ticketDTO.getId());
+        ticket.setUserId(ticketDTO.getUser().getId());
+        ticket.setScreeningId(ticketDTO.getScreening().getId());
+        ticket.setTicketCount(ticketDTO.getTicketCount());
+
+        return ticket;
     }
 }

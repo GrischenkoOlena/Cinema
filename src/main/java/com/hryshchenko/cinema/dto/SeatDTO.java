@@ -2,6 +2,8 @@ package com.hryshchenko.cinema.dto;
 
 import com.hryshchenko.cinema.constant.enums.StatePlace;
 
+import java.util.Objects;
+
 public class SeatDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;
 
@@ -63,5 +65,18 @@ public class SeatDTO implements ISimpleDTO{
                 ", category=" + category +
                 ", state=" + state +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SeatDTO seatDTO = (SeatDTO) o;
+        return id == seatDTO.id && line == seatDTO.line && place == seatDTO.place;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, line, place);
     }
 }

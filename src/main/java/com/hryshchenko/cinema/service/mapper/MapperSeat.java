@@ -49,4 +49,21 @@ public class MapperSeat implements IMapperService<Seat, SeatDTO> {
         }
         throw new MapperException("such category is absent in BD");
     }
+
+    public Seat getSeat(SeatDTO seatDTO) {
+        Seat seat = new Seat();
+        seat.setId(seatDTO.getId());
+        seat.setLine(seatDTO.getLine());
+        seat.setPlace(seatDTO.getPlace());
+        seat.setCategoryId(seatDTO.getCategory().getId());
+        return seat;
+    }
+
+    public List<Seat> getListSeat(List<SeatDTO> seatDTOList){
+        List<Seat> seats = new ArrayList<>();
+        for(SeatDTO seatDTO : seatDTOList){
+            seats.add(getSeat(seatDTO));
+        }
+        return seats;
+    }
 }

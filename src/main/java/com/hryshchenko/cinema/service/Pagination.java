@@ -11,6 +11,7 @@ import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.Ticket;
 import com.hryshchenko.cinema.model.entity.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Pagination {
@@ -37,6 +38,16 @@ public class Pagination {
         return screeningsServ.getScreeningsPage(order, begin, ON_PAGE);
     }
 
+    public long getCountFilterScreeningPages(LocalDate filterDate) throws DAOException {
+        long countValue = screeningsServ.getCountAvailableScreening(filterDate);
+        return getCountPages(countValue);
+    }
+
+    public List<Screening> getFilterScreeningsPage(LocalDate filterDate, String order, long numberPage) throws DAOException {
+        long begin = getBegin(numberPage);
+        return screeningsServ.getAvailableScreeningsPage(filterDate, order, begin, ON_PAGE);
+    }
+
     public long getCountFilmPages() throws DAOException {
         long countValue = filmService.getCountFilms();
         return getCountPages(countValue);
@@ -45,6 +56,16 @@ public class Pagination {
     public List<Film> getFilmsPage(String order, long numberPage) throws DAOException {
         long begin = getBegin(numberPage);
         return filmService.getFilmsPage(order, begin, ON_PAGE);
+    }
+
+    public long getCountFilteredFilmPages(long genreId) throws DAOException {
+        long countValue = filmService.getCountFilmsByGenre(genreId);
+        return getCountPages(countValue);
+    }
+
+    public List<Film> getFilteredFilmsPage(long genreId, String order, long numberPage) throws DAOException {
+        long begin = getBegin(numberPage);
+        return filmService.getFilmsPageByGenre(genreId, order, begin, ON_PAGE);
     }
 
     public long getCountUserPages() throws DAOException {
@@ -57,14 +78,25 @@ public class Pagination {
         return userService.getUsersPage(order, begin, ON_PAGE);
     }
 
-    public long getCountTicketPagesByUser(User user) throws DAOException {
-        long countValue = ticketService.getCountTicketByUser(user);
+    public long getCountTicketPagesByUser(long userId) throws DAOException {
+        long countValue = ticketService.getCountTicketByUser(userId);
         return getCountPages(countValue);
     }
 
-    public List<Ticket> getTicketsPageByUser(String order, User user, long numberPage) throws DAOException {
+    public List<Ticket> getTicketsPageByUser(String order, long userId, long numberPage) throws DAOException {
         long begin = getBegin(numberPage);
-        return ticketService.getTicketsPageByUser(order, user, begin, ON_PAGE);
+        return ticketService.getTicketsPageByUser(order, userId, begin, ON_PAGE);
+    }
+
+    public long getCountTicketPagesByUserDate(long userId, LocalDate date) throws DAOException {
+        long countValue = ticketService.getCountTicketByUserDate(userId, date);
+        return getCountPages(countValue);
+    }
+
+    public List<Ticket> getTicketsPageByUserDate(String order, long userId, LocalDate date, long numberPage)
+            throws DAOException {
+        long begin = getBegin(numberPage);
+        return ticketService.getTicketsPageByUserDate(order, userId, date, begin, ON_PAGE);
     }
 
     private long getCountPages(long countValue) {
