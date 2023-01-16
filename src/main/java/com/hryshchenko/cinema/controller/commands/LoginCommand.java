@@ -46,6 +46,7 @@ public class LoginCommand implements ICommand {
                     }
                     resp.sendRedirect(forward);
                     response = Path.COMMAND_REDIRECT;
+                    session.removeAttribute("errorBuyTicket");
                     session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
                 } catch (IncorrectPasswordException e) {

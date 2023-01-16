@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
                 @WebInitParam(name = "admin",
                         value = "customers screenings films attendance updateBalance addScreening updateScreening addFilm updateFilm"),
                 @WebInitParam(name = "client", value = "tickets schedule"),
-                @WebInitParam(name = "common", value = "logout i18n profile purchase updateProfile"),
-                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty")
+                @WebInitParam(name = "common", value = "logout i18n profile purchase updateProfile basket"),
+                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket")
         })
 public class AuthenticationFilter implements Filter {
     private static final Logger log = LogManager.getLogger();

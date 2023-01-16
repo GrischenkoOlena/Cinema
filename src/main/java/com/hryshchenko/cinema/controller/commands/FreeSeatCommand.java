@@ -17,6 +17,7 @@ import com.hryshchenko.cinema.service.mapper.MapperScreening;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class FreeSeatCommand implements ICommand {
@@ -27,12 +28,15 @@ public class FreeSeatCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        long screeningId = Long.parseLong((req.getParameter("screening")));
+        HttpSession session = req.getSession();
+        long screeningId = Long.parseLong((req.getParameter("screeningId")));
 
         try {
             if(screeningsServ.getScreeningById(screeningId).isPresent()){
                 Screening screening = screeningsServ.getScreeningById(screeningId).get();
-                req.setAttribute("screening", mapperService.getDTO(screening));
+                ScreeningDTO screeningDTO = mapperService.getDTO(screening);
+                req.setAttribute("screening", screeningDTO);
+                session.setAttribute("screening", screeningDTO);
 
                 SeatDTO[][] seats = seatServ.getFullFreeSeats(screening);
                 req.setAttribute("seats", seats);

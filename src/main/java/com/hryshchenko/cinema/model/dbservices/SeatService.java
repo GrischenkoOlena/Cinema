@@ -17,6 +17,7 @@ import com.hryshchenko.cinema.service.mapper.MapperSeat;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class SeatService implements ICinemaService {
     private final SeatDAO seatDAO;
@@ -33,12 +34,20 @@ public class SeatService implements ICinemaService {
         return seats;
     }
 
-    public List<Seat> getFreeSeatByScreening(Screening screening) throws DAOException {
+    public Optional<Seat> getSeatById(int seatId) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        seatDAO.setConnection(conn);
+        Optional<Seat> seat = seatDAO.findEntityByKey(seatId);
+        dbManager.closeConnection(conn);
+        return seat;
+    }
+
+    public List<Seat> getFreeSeatByScreening(long screeningId) throws DAOException {
         List<Seat> seats;
         QueryBuilder<Seat> seatQueryBuilder = new SeatQueryBuilder();
         Connection conn = dbManager.getConnection();
         try {
-            seats = seatQueryBuilder.executeAndReturnList(conn, Query.GET_FREE_SEAT_BY_SCREENING, screening.getId());
+            seats = seatQueryBuilder.executeAndReturnList(conn, Query.GET_FREE_SEAT_BY_SCREENING, screeningId);
         } catch (SQLException e) {
             throw new DAOException("problem with get free seats", e);
         }
@@ -68,7 +77,7 @@ public class SeatService implements ICinemaService {
             int col = seat.getPlace()-1;
             seats[row][col] = mapperService.getDTO(seat);
         }
-        setSoldSeat(screening, seats, allSeats);
+        setSoldSeat(screening.getId(), seats, allSeats);
 
         return seats;
     }
@@ -89,8 +98,8 @@ public class SeatService implements ICinemaService {
         return result;
     }
 
-    private void setSoldSeat(Screening screening, SeatDTO[][] seats, List<Seat> allSeats) throws DAOException {
-        List<Seat> freeSeats = getFreeSeatByScreening(screening);
+    private void setSoldSeat(long screeningId, SeatDTO[][] seats, List<Seat> allSeats) throws DAOException {
+        List<Seat> freeSeats = getFreeSeatByScreening(screeningId);
 
         if (allSeats.size() != freeSeats.size()){
             for (Seat seat : allSeats) {

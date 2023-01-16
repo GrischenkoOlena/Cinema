@@ -31,6 +31,15 @@
         <input type="hidden" name="action" value="tickets"/>
       </form>
 
+           <nav>
+             <ul class="pagination pagination-sm justify-content-center">
+               <c:forEach var = "i" begin = "1" end = "${countPages}">
+                 <c:set var="hrefPage" value="controller?action=tickets&page=${i}" />
+                 <li class="page-item"><a class="page-link" href="${hrefPage}">${i}</a></li>
+               </c:forEach>
+             </ul>
+           </nav>
+
       <table class="table">
         <thead>
           <tr>

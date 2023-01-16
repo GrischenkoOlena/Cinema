@@ -2,7 +2,7 @@ package com.hryshchenko.cinema.model.entity;
 
 public class TicketSeat extends Entity {
     private static final long serialVersionUID = 1L;
-    private int ticketId;
+    private long ticketId;
     private int seatId;
 
     public TicketSeat(){}
@@ -13,11 +13,11 @@ public class TicketSeat extends Entity {
         this.seatId = seatId;
     }
 
-    public int getTicketId() {
+    public long getTicketId() {
         return ticketId;
     }
 
-    public void setTicketId(int ticketId) {
+    public void setTicketId(long ticketId) {
         this.ticketId = ticketId;
     }
 

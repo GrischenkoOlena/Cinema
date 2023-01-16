@@ -16,14 +16,15 @@ public interface Path {
     String ADMIN_FILMS = "/WEB-INF/admin/films.jsp";
     String ADMIN_CUSTOMERS = "/WEB-INF/admin/customers.jsp";
     String ADMIN_ATTENDANCE = "/WEB-INF/admin/attendance.jsp";
-    String ADD_FILM = "/WEB-INF/admin/addFilm.jsp";
-    String ADD_SCREENING = "/WEB-INF/admin/addScreening.jsp";
+    String TICKER_BASKET = "/WEB-INF/user/basket.jsp";
 
     String COMMAND_REDIRECT = "redirect";
     String COMMAND_USER_SCHEDULE = "controller?action=schedule";
     String COMMAND_ADMIN_SCREENINGS = "controller?action=screenings";
     String COMMAND_ADMIN_CUSTOMERS = "controller?action=customers";
     String COMMAND_ADMIN_FILMS = "controller?action=films";
+    String COMMAND_FREE_SEATS = "controller?action=freeSeats";
+    String COMMAND_USER_TICKETS = "controller?action=tickets";
 
 
 

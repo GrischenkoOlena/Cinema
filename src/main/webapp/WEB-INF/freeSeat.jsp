@@ -10,7 +10,7 @@
   <body class="w-50 p-3">
     <jsp:include page="/WEB-INF/templates/menu_main.jsp"></jsp:include>
 
-    <h2> <c:out value = "${screening.film}, ${screening.filmDate}, ${screening.timeBegin}" /> </h2>
+    <h2> <c:out value = "${screening.film.title}, ${screening.filmDate}, ${screening.timeBegin}" /> </h2>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
@@ -23,20 +23,27 @@
                 <div class="row align-items-center">
                     row ${theCount.index + 1}
                     <c:forEach var="place" items="${row}">
+                        <c:set var="hrefPlace" value="controller?action=basket&placeId=${place.id}"/>
                         <div class="col-sm-1 p-3 border">
                             <c:choose>
                                 <c:when test="${place.state.id == 1}">
                                     <c:choose>
                                         <c:when test="${place.category.category == 'premium'}">
-                                            <p class="p-3 mb-2 bg-primary bg-gradient text-white"> ${place.place} </p>
+                                            <p class="p-3 mb-2 bg-primary bg-gradient text-white">
+                                                <a class="page-link" href="${hrefPlace}">${place.place} </a>
+                                            </p>
                                         </c:when>
                                         <c:when test="${place.category.category == 'classic'}">
-                                            <p class="p-3 mb-2 bg-info bg-gradient text-white"> ${place.place} </p>
+                                            <p class="p-3 mb-2 bg-info bg-gradient text-white">
+                                                <a class="page-link" href="${hrefPlace}">${place.place} </a>
+                                            </p>
                                         </c:when>
                                     </c:choose>
                                 </c:when>
                                 <c:when test="${place.state.id == 2}">
-                                    <p class="p-3 mb-2 bg-danger bg-gradient text-white"> ${place.place} </p>
+                                    <p class="p-3 mb-2 bg-danger bg-gradient text-white">
+                                        <a class="page-link" href="${hrefPlace}">${place.place} </a>
+                                    </p>
                                 </c:when>
                             </c:choose>
                         </div>
@@ -57,6 +64,7 @@
                 </c:choose>
             </c:forEach>
         </p>
+        <div> <p class="text-danger"> ${errorUnregister} </p></div>
     </div>
 </body>
 </html>

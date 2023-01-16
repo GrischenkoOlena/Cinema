@@ -11,7 +11,7 @@ public class MapperCategory implements IMapperService<Category, CategoryDTO> {
     @Override
     public CategoryDTO getDTO(Category entity) throws MapperException {
         CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(entity.getId());
+        categoryDTO.setId((int) entity.getId());
         categoryDTO.setCategory(entity.getCategory());
         categoryDTO.setPrice(entity.getPrice());
         return categoryDTO;
