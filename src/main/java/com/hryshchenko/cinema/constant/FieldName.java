@@ -43,4 +43,11 @@ public interface FieldName {
     String TICKET_SEAT_TICKET_ID = "ticket_id";
     String TICKET_SEAT_SEAT_ID = "seat_id";
 
+    String VIEW_SCREENING_ID = "screening_id";
+    String VIEW_FILM_TITLE = "title";
+    String VIEW_FILM_DATE = "film_date";
+    String VIEW_TIME_BEGIN = "time_begin";
+    String VIEW_STATE = "state";
+    String VIEW_AMOUNT_FREE_SEATS = "amount_free_places";
+
 }

@@ -1,15 +1,10 @@
 package com.hryshchenko.cinema.model.dbservices;
 
-import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.builder.QueryBuilder;
-import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
 import com.hryshchenko.cinema.model.dao.ScreeningDAO;
 import com.hryshchenko.cinema.model.entity.Screening;
-import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
