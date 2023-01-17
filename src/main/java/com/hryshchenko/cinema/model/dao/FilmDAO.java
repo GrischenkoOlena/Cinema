@@ -86,15 +86,15 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
         return result;
     }
 
-    public Film findFilmByGenre(long genreId) throws DAOException {
-        Film film;
+    public List<Film> findFilmsByGenre(long genreId) throws DAOException {
+        List<Film> films;
         String query = Query.GET_FILM_BY_GENRE.replace("orderField", "");
         try {
-            film = filmQueryBuilder.executeAndReturnValue(connection, query, genreId);
+            films = filmQueryBuilder.executeAndReturnList(connection, query, genreId);
         } catch (SQLException e){
             throw new DAOException("problem in find film by genre", e);
         }
-        return film;
+        return films;
     }
 
     public long findCountFilms() throws DAOException {

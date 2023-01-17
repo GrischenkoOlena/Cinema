@@ -77,4 +77,11 @@ public interface Query {
             "(SELECT seat_id FROM ticket_seat WHERE ticket_id IN " +
                 "(SELECT ticket_id FROM ticket WHERE screening_id = ?))";
 
+    String COUNT_SCREENING_VIEW = "SELECT count(*) FROM screeningWithSeat";
+    String GET_ALL_SCREENING_VIEW = "SELECT * FROM screeningWithSeat ORDER BY orderField LIMIT ?, ?";
+    String COUNT_SCREENING_VIEWS_BY_AVAILABLE = "SELECT count(*) FROM screeningWithSeat " +
+                                            "WHERE film_date >= ? AND state = 'active'";
+    String GET_SCREENING_VIEWS_BY_AVAILABLE = "SELECT * FROM screeningWithSeat WHERE film_date >= ? " +
+                "AND state = 'active' orderField LIMIT ?, ?";
+
 }
