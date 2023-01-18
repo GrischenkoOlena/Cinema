@@ -7,7 +7,7 @@
   <c:set var="title" value="Administrator" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
-  <body class="w-50 p-3">
+  <body class="w-75 p-3">
     <jsp:include page="/WEB-INF/templates/menu_admin.jsp"></jsp:include>
 
         <!-- Modal -->
@@ -41,15 +41,20 @@
       <form class="row g-3" action="controller" method="POST">
         <div class="col-auto">
           <div class="input-group mb-3">
+          <c:set var="selectedOrder" value="${sessionScope.orderCustomers}" />
             <label class="input-group-text" for="inputOrder">Sort by</label>
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
-              <option value="nameAsc">name &#8593;</option>
-              <option value="nameDesc">name &#8595;</option>
-              <option value="balanceAsc">balance &#8593;</option>
-              <option value="balanceDesc">balance &#8595;</option>
+              <option value="nameAsc" <c:if test="${selectedOrder == 'nameAsc'}"> selected </c:if>>
+                name &#8593;</option>
+              <option value="nameDesc" <c:if test="${selectedOrder == 'nameDesc'}"> selected </c:if>>
+                name &#8595;</option>
+              <option value="balanceAsc" <c:if test="${selectedOrder == 'balanceAsc'}"> selected </c:if>>
+                balance &#8593;</option>
+              <option value="balanceDesc" <c:if test="${selectedOrder == 'balanceDesc'}"> selected </c:if>>
+                balance &#8595;</option>
             </select>
-            <button class="btn btn-outline-secondary" type="button">Apply</button>
+            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
           </div>
         </div>
         <input type="hidden" name="action" value="customers"/>
@@ -105,7 +110,6 @@
         const updateLogin = button.getAttribute('data-bs-updateLogin');
         document.getElementById('paramInput').value = updateBalance;
         document.getElementById('userLogin').value = updateLogin;
-
     })
   </script>
 

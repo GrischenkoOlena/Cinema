@@ -11,6 +11,7 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperTicket;
+import com.hryshchenko.cinema.util.OrderMapUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,10 +24,21 @@ public class TicketsCommand implements ICommand {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        String order = req.getParameter("order");
-        if(order == null){
-            order = "ticket_id";
+        if (req.getParameter("btnApplySort") != null) {
+            session.removeAttribute("orderTickets");
         }
+
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderTickets");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultTicket";
+        } else {
+            session.setAttribute("orderTickets", order);
+        }
+        String orderBD = new OrderMapUtil().getOrderBD(order);
+
         long page;
         try {
             page = Long.parseLong(req.getParameter("page"));
@@ -37,7 +49,7 @@ public class TicketsCommand implements ICommand {
         Pagination ticketPagination = new Pagination(AppContext.getInstance());
         IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
         try {
-            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(order, user.getId(), page);
+            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(orderBD, user.getId(), page);
 
             List<TicketDTO> ticketDTOList = mapperService.getListDTO(ticketList);
             req.setAttribute("tickets", ticketDTOList);

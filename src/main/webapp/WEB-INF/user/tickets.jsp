@@ -7,7 +7,7 @@
   <c:set var="title" value="Cinema" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
-  <body class="w-50 p-3">
+  <body class="w-75 p-3">
     <jsp:include page="/WEB-INF/templates/menu_user.jsp"></jsp:include>
 
     <br>
@@ -16,15 +16,16 @@
       <form class="row g-3" action="controller" method="POST">
         <div class="col-auto">
           <div class="input-group mb-3">
+          <c:set var="selectedOrder" value="${sessionScope.orderTickets}" />
             <label class="input-group-text" for="inputOrder">Sort by</label>
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
-              <option value="movieAsc">movie title &#8593;</option>
-              <option value="movieDesc">movie title &#8595;</option>
-              <option value="dataAsc">data/time &#8593;</option>
-              <option value="dataDesc">data/time &#8595;</option>
+              <option value="dataTicketAsc" <c:if test="${selectedOrder == 'dataTicketAsc'}"> selected </c:if>>
+                data/time &#8593;</option>
+              <option value="dataTicketDesc" <c:if test="${selectedOrder == 'dataTicketDesc'}"> selected </c:if>>
+                data/time &#8595;</option>
             </select>
-            <button class="btn btn-outline-secondary" type="button">Apply</button>
+            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
           </div>
         </div>
 
