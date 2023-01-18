@@ -7,7 +7,7 @@
   <c:set var="title" value="Administrator" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
-  <body class="w-50 p-3">
+  <body class="w-75 p-3">
   <jsp:include page="/WEB-INF/templates/menu_admin.jsp"></jsp:include>
 
   <!-- Modal add new film -->
@@ -112,28 +112,35 @@
           <form class="row g-3" action="controller" method="POST">
             <div class="col-auto">
               <div class="input-group mb-3">
+                <c:set var="selectedOrder" value="${sessionScope.orderFilms}" />
                 <label class="input-group-text" for="inputOrder">Sort by</label>
                 <select class="form-select" id="inputOrder" name="order">
                   <option selected style="display:none;"></option>
-                  <option value="nameAsc">name &#8593;</option>
-                  <option value="nameDesc">name &#8595;</option>
-                  <option value="durationAsc">duration &#8593;</option>
-                  <option value="durationDesc">duration &#8595;</option>
+                  <option value="titleAsc" <c:if test="${selectedOrder == 'titleAsc'}"> selected </c:if>>
+                    name &#8593;</option>
+                  <option value="titleDesc" <c:if test="${selectedOrder == 'titleDesc'}"> selected </c:if>>
+                    name &#8595;</option>
+                  <option value="durationAsc" <c:if test="${selectedOrder == 'durationAsc'}"> selected </c:if>>
+                   duration &#8593;</option>
+                  <option value="durationDesc"<c:if test="${selectedOrder == 'durationDesc'}"> selected </c:if>>
+                    duration &#8595;</option>
                 </select>
-                <button class="btn btn-outline-secondary" type="button">Apply</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
               </div>
             </div>
 
             <div class="col-auto">
               <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGenre">Genre</label>
-                <select class="form-select" id="inputGenre" name="genreFilter">
-                  <option selected style="display:none;"></option>
+                <c:set var="selectedFilter" value="${sessionScope.genreFilter}" />
+                <select class="form-select" id="inputGenre" name="filter">
+                  <option selected></option>
                   <c:forEach var="genre" items="${genres}">
-                    <option value="${genre.id}"><a class="dropdown-item" href="#">${genre.genre}</a></option>
+                    <option value="${genre.id}" <c:if test="${selectedFilter == genre.id}"> selected </c:if>>
+                        ${genre.genre}</option>
                   </c:forEach>
                 </select> 
-                <button class="btn btn-outline-secondary" type="button">Filter</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnFilter">Filter</button>
               </div>
             </div>
             <input type="hidden" name="action" value="films">

@@ -91,7 +91,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     }
     public List<User> findPageUsers(String order, long begin, long amount) throws DAOException {
         List<User> screenings;
-        String query = Query.GET_ALL_USERS.replace("orderField", "ORDER BY " + order);
+        String query = Query.GET_ALL_USERS.replace("orderField", order);
         try {
             screenings = userQueryBuilder.executeAndReturnList(connection, query, begin-1, amount);
         } catch (SQLException e){

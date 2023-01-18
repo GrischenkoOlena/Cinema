@@ -2,14 +2,8 @@ package com.hryshchenko.cinema.service;
 
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.dbservices.FilmService;
-import com.hryshchenko.cinema.model.dbservices.ScreeningService;
-import com.hryshchenko.cinema.model.dbservices.TicketService;
-import com.hryshchenko.cinema.model.dbservices.UserService;
-import com.hryshchenko.cinema.model.entity.Film;
-import com.hryshchenko.cinema.model.entity.Screening;
-import com.hryshchenko.cinema.model.entity.Ticket;
-import com.hryshchenko.cinema.model.entity.User;
+import com.hryshchenko.cinema.model.dbservices.*;
+import com.hryshchenko.cinema.model.entity.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,12 +14,14 @@ public class Pagination {
     private final ScreeningService screeningsServ;
     private final FilmService filmService;
     private final UserService userService;
+    private final ScreeningViewService screeningViewServ;
 
     public Pagination(AppContext appContext) {
         ticketService = appContext.getTicketService();
         screeningsServ = appContext.getScreeningService();
         filmService = appContext.getFilmService();
         userService = appContext.getUserService();
+        screeningViewServ = appContext.getScreeningViewService();
     }
 
     public long getCountScreeningPages() throws DAOException {
@@ -97,6 +93,27 @@ public class Pagination {
             throws DAOException {
         long begin = getBegin(numberPage);
         return ticketService.getTicketsPageByUserDate(order, userId, date, begin, ON_PAGE);
+    }
+
+    public long getCountScreeningViewPages() throws DAOException {
+        long countValue = screeningViewServ.getCountScreeningView();
+        return getCountPages(countValue);
+    }
+
+    public List<ScreeningView> getScreeningViewsPage(String order, long numberPage) throws DAOException {
+        long begin = getBegin(numberPage);
+        return screeningViewServ.getScreeningViewsPage(order, begin, ON_PAGE);
+    }
+
+    public long getCountFilterScreeningViewPages(LocalDate filterDate) throws DAOException {
+        long countValue = screeningViewServ.getCountAvailableScreeningView(filterDate);
+        return getCountPages(countValue);
+    }
+
+    public List<ScreeningView> getFilterScreeningViewsPage(LocalDate filterDate, String order, long numberPage)
+                    throws DAOException {
+        long begin = getBegin(numberPage);
+        return screeningViewServ.getAvailableScreeningViewsPage(filterDate, order, begin, ON_PAGE);
     }
 
     private long getCountPages(long countValue) {

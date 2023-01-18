@@ -88,7 +88,7 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
     }
     public List<Ticket> findPageTickets(String order, long userId, long begin, long amount) throws DAOException {
         List<Ticket> screenings;
-        String query = Query.GET_TICKETS_BY_USER.replace("orderField", "ORDER BY " + order);
+        String query = Query.GET_TICKETS_BY_USER.replace("orderField", order);
         try {
             screenings = ticketQueryBuilder.executeAndReturnList(connection, query,
                     userId, begin-1, amount);

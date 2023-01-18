@@ -42,7 +42,7 @@
                                 </c:when>
                                 <c:when test="${place.state.id == 2}">
                                     <p class="p-3 mb-2 bg-danger bg-gradient text-white">
-                                        <a class="page-link" href="${hrefPlace}">${place.place} </a>
+                                        ${place.place}
                                     </p>
                                 </c:when>
                             </c:choose>

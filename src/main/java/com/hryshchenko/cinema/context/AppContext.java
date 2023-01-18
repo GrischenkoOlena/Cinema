@@ -11,6 +11,7 @@ public class AppContext {
     private final SeatService seatService = new SeatService();
     private final TicketService ticketService = new TicketService();
     private final GenreService genreService = new GenreService();
+    private final ScreeningViewService screeningViewService = new ScreeningViewService();
 
     public static AppContext getInstance() {
         return appContext;
@@ -42,5 +43,9 @@ public class AppContext {
 
     public GenreService getGenreService() {
         return genreService;
+    }
+
+    public ScreeningViewService getScreeningViewService() {
+        return screeningViewService;
     }
 }

@@ -10,18 +10,31 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperUser;
+import com.hryshchenko.cinema.util.OrderMapUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class CustomersCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String order = req.getParameter("order");
-        if(order == null){
-            order = "user_id";
+        HttpSession session = req.getSession();
+        if (req.getParameter("btnApplySort") != null) {
+            session.removeAttribute("orderCustomers");
         }
+
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderCustomers");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultCustomer";
+        } else {
+            session.setAttribute("orderCustomers", order);
+        }
+        String orderBD = new OrderMapUtil().getOrderBD(order);
 
         long page;
         try {
@@ -33,7 +46,7 @@ public class CustomersCommand implements ICommand {
         Pagination usersPagination = new Pagination(AppContext.getInstance());
         IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
-            List<User> usersList = usersPagination.getUsersPage(order, page);
+            List<User> usersList = usersPagination.getUsersPage(orderBD, page);
             List<UserDTO> users = mapperService.getListDTO(usersList);
             req.setAttribute("users", users);
 

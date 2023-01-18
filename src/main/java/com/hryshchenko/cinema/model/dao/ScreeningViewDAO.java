@@ -43,7 +43,7 @@ public class ScreeningViewDAO extends AbstractDAO <Long, ScreeningView> {
         List<ScreeningView> screenings;
         String query = Query.GET_ALL_SCREENING_VIEW.replace("orderField", order);
         try {
-            screenings = screeningViewQueryBuilder.executeAndReturnList(connection, query, begin, amount);
+            screenings = screeningViewQueryBuilder.executeAndReturnList(connection, query, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find page screenings from view", e);
         }
@@ -66,7 +66,8 @@ public class ScreeningViewDAO extends AbstractDAO <Long, ScreeningView> {
         List<ScreeningView> screenings;
         String query = Query.GET_SCREENING_VIEWS_BY_AVAILABLE.replace("orderField", order);
         try {
-            screenings = screeningViewQueryBuilder.executeAndReturnList(connection, query, filmDate, begin, amount);
+            screenings = screeningViewQueryBuilder
+                    .executeAndReturnList(connection, query, filmDate, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find page available screenings from view", e);
         }
