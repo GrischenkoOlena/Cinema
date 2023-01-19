@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 
 <%@ include file="/WEB-INF/templates/taglib.jspf" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <html lang="en">
   <c:set var="title" value="Cinema" scope="session"/>
@@ -23,29 +24,8 @@
                 <div class="row align-items-center">
                     row ${theCount.index + 1}
                     <c:forEach var="place" items="${row}">
-                        <c:set var="hrefPlace" value="controller?action=basket&placeId=${place.id}"/>
                         <div class="col-sm-1 p-3 border">
-                            <c:choose>
-                                <c:when test="${place.state.id == 1}">
-                                    <c:choose>
-                                        <c:when test="${place.category.category == 'premium'}">
-                                            <p class="p-3 mb-2 bg-primary bg-gradient text-white">
-                                                <a class="page-link" href="${hrefPlace}">${place.place} </a>
-                                            </p>
-                                        </c:when>
-                                        <c:when test="${place.category.category == 'classic'}">
-                                            <p class="p-3 mb-2 bg-info bg-gradient text-white">
-                                                <a class="page-link" href="${hrefPlace}">${place.place} </a>
-                                            </p>
-                                        </c:when>
-                                    </c:choose>
-                                </c:when>
-                                <c:when test="${place.state.id == 2}">
-                                    <p class="p-3 mb-2 bg-danger bg-gradient text-white">
-                                        ${place.place}
-                                    </p>
-                                </c:when>
-                            </c:choose>
+                            <tags:viewSeat placeAttr="${place}"/>
                         </div>
                     </c:forEach>
                 </div>
