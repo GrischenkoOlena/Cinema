@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
-public class FilmQueryBuilder extends QueryBuilder <Film>{
+public class FilmQueryExecutor extends QueryExecutor<Film> {
     @Override
     public Film getResult(ResultSet rs) throws SQLException {
         Film film = null;

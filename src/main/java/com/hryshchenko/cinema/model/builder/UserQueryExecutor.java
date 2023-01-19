@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
-public class UserQueryBuilder extends QueryBuilder<User> {
+public class UserQueryExecutor extends QueryExecutor<User> {
 
     @Override
     public User getResult(ResultSet rs) throws SQLException {
