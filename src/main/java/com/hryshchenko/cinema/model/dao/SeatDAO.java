@@ -2,8 +2,8 @@ package com.hryshchenko.cinema.model.dao;
 
 import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.builder.QueryBuilder;
-import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
+import com.hryshchenko.cinema.model.builder.QueryExecutor;
+import com.hryshchenko.cinema.model.builder.SeatQueryExecutor;
 import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.sql.SQLException;
@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class SeatDAO extends AbstractDAO <Integer, Seat> {
-    private final QueryBuilder<Seat> seatQueryBuilder = new SeatQueryBuilder();
+    private final QueryExecutor<Seat> seatQueryExecutor = new SeatQueryExecutor();
 
     @Override
     public List<Seat> findAll() throws DAOException {
         List<Seat> seats;
         try {
-            seats = seatQueryBuilder.executeAndReturnList(connection, Query.GET_ALL_SEATS);
+            seats = seatQueryExecutor.executeAndReturnList(connection, Query.GET_ALL_SEATS);
         } catch (SQLException e){
             throw new DAOException("problem in find all seats", e);
         }
@@ -28,7 +28,7 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     public Optional<Seat> findEntityByKey(Integer id) throws DAOException {
         Seat seat;
         try {
-            seat = seatQueryBuilder.executeAndReturnValue(connection, Query.GET_SEAT_BY_ID, id);
+            seat = seatQueryExecutor.executeAndReturnValue(connection, Query.GET_SEAT_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find seat by id", e);
         }
@@ -49,7 +49,7 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     public boolean update(Seat seat) throws DAOException {
         boolean result;
         try {
-            result = seatQueryBuilder.execute(connection, Query.UPDATE_SEAT, seat.getCategoryId(), seat.getId());
+            result = seatQueryExecutor.execute(connection, Query.UPDATE_SEAT, seat.getCategoryId(), seat.getId());
         } catch (SQLException e){
             throw new DAOException("problem in update seat", e);
         }
@@ -59,7 +59,7 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     public int findMaxRow() throws DAOException {
         int rowCount;
         try {
-            rowCount = seatQueryBuilder.executeAndReturnAggregate(connection, Query.GET_MAX_ROW);
+            rowCount = seatQueryExecutor.executeAndReturnAggregate(connection, Query.GET_MAX_ROW);
         } catch (SQLException e){
             throw new DAOException("problem in find max row", e);
         }
@@ -69,7 +69,7 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     public int findMaxPlace() throws DAOException {
         int placeCount;
         try {
-            placeCount = seatQueryBuilder.executeAndReturnAggregate(connection, Query.GET_MAX_PLACE);
+            placeCount = seatQueryExecutor.executeAndReturnAggregate(connection, Query.GET_MAX_PLACE);
         } catch (SQLException e){
             throw new DAOException("problem in find max place", e);
         }
@@ -79,7 +79,7 @@ public class SeatDAO extends AbstractDAO <Integer, Seat> {
     public List<Seat> getSeatByTicket(long ticketId) throws DAOException{
         List<Seat> seats;
         try {
-            seats = seatQueryBuilder.executeAndReturnList(connection, Query.GET_SEATS_BY_TICKET, ticketId);
+            seats = seatQueryExecutor.executeAndReturnList(connection, Query.GET_SEATS_BY_TICKET, ticketId);
         } catch (SQLException e){
             throw new DAOException("problem in find seats by ticket", e);
         }

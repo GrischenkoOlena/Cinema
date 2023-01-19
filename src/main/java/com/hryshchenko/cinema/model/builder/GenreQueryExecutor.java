@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
-public class GenreQueryBuilder extends QueryBuilder <Genre> {
+public class GenreQueryExecutor extends QueryExecutor<Genre> {
     @Override
     public Genre getResult(ResultSet rs) throws SQLException {
         Genre genre = new Genre();

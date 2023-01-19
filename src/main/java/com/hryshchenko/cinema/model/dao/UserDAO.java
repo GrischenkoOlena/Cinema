@@ -2,8 +2,8 @@ package com.hryshchenko.cinema.model.dao;
 
 import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.builder.QueryBuilder;
-import com.hryshchenko.cinema.model.builder.UserQueryBuilder;
+import com.hryshchenko.cinema.model.builder.QueryExecutor;
+import com.hryshchenko.cinema.model.builder.UserQueryExecutor;
 import com.hryshchenko.cinema.model.entity.User;
 
 import java.sql.SQLException;
@@ -13,14 +13,14 @@ import java.util.Optional;
 
 public class UserDAO extends AbstractDAO <String, User> {
 
-    private final QueryBuilder<User> userQueryBuilder = new UserQueryBuilder();
+    private final QueryExecutor<User> userQueryExecutor = new UserQueryExecutor();
 
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users;
         String query = Query.GET_ALL_USERS.replace("orderField", "");
         try {
-            users = userQueryBuilder.executeAndReturnList(connection, query, 0,10);
+            users = userQueryExecutor.executeAndReturnList(connection, query, 0,10);
         } catch (SQLException e){
             throw new DAOException("problem in find all user", e);
         }
@@ -31,7 +31,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public Optional<User> findEntityByKey(String login) throws DAOException {
         User user;
         try {
-            user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_LOGIN, login);
+            user = userQueryExecutor.executeAndReturnValue(connection, Query.GET_USER_BY_LOGIN, login);
             user = user.getLogin() != null ? user : null;
         } catch (SQLException e){
             throw new DAOException("problem in find user by login", e);
@@ -50,7 +50,7 @@ public class UserDAO extends AbstractDAO <String, User> {
             params.add(user.getBalance());
             params.add(user.getRole().getId());
 
-            result = userQueryBuilder.execute(connection, Query.CREATE_USER, params.toArray());
+            result = userQueryExecutor.execute(connection, Query.CREATE_USER, params.toArray());
         } catch (SQLException e){
             throw new DAOException("problem in create user", e);
         }
@@ -61,7 +61,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public boolean delete(User user) throws DAOException {
         boolean result;
         try {
-            result = userQueryBuilder.execute(connection, Query.DELETE_USER, user.getLogin());
+            result = userQueryExecutor.execute(connection, Query.DELETE_USER, user.getLogin());
         } catch (SQLException e){
             throw new DAOException("problem in delete user", e);
         }
@@ -72,7 +72,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public boolean update(User user) throws DAOException {
         boolean result;
         try {
-            result = userQueryBuilder.execute(connection, Query.UPDATE_USER,
+            result = userQueryExecutor.execute(connection, Query.UPDATE_USER,
                                 user.getLogin(), user.getName(), user.getBalance(), user.getId());
         } catch (SQLException e){
             throw new DAOException("problem in update user", e);
@@ -83,7 +83,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public long findCountUsers() throws DAOException {
         long result;
         try {
-            result = userQueryBuilder.executeAndReturnAggregate(connection,Query.COUNT_USER);
+            result = userQueryExecutor.executeAndReturnAggregate(connection,Query.COUNT_USER);
         } catch (SQLException e){
             throw new DAOException("problem in find count of users", e);
         }
@@ -93,7 +93,7 @@ public class UserDAO extends AbstractDAO <String, User> {
         List<User> screenings;
         String query = Query.GET_ALL_USERS.replace("orderField", order);
         try {
-            screenings = userQueryBuilder.executeAndReturnList(connection, query, begin-1, amount);
+            screenings = userQueryExecutor.executeAndReturnList(connection, query, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find users by page", e);
         }
@@ -103,7 +103,7 @@ public class UserDAO extends AbstractDAO <String, User> {
     public Optional<User> findUserById(long id) throws DAOException {
         User user;
         try {
-            user = userQueryBuilder.executeAndReturnValue(connection, Query.GET_USER_BY_ID, id);
+            user = userQueryExecutor.executeAndReturnValue(connection, Query.GET_USER_BY_ID, id);
         } catch (SQLException e){
             throw new DAOException("problem in find user by id", e);
         }

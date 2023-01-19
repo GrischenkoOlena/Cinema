@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
-public class TicketQueryBuilder extends QueryBuilder<Ticket> {
+public class TicketQueryExecutor extends QueryExecutor<Ticket> {
     @Override
     public Ticket getResult(ResultSet rs) throws SQLException {
         Ticket ticket = new Ticket();

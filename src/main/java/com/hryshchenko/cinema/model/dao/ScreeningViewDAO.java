@@ -2,7 +2,7 @@ package com.hryshchenko.cinema.model.dao;
 
 import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.builder.QueryBuilder;
+import com.hryshchenko.cinema.model.builder.QueryExecutor;
 import com.hryshchenko.cinema.model.entity.ScreeningView;
 
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
 public class ScreeningViewDAO extends AbstractDAO <Long, ScreeningView> {
-    ScreeningViewQueryBuilder screeningViewQueryBuilder = new ScreeningViewQueryBuilder();
+    ScreeningViewQueryExecutor screeningViewQueryBuilder = new ScreeningViewQueryExecutor();
 
     @Override
     public List<ScreeningView> findAll() throws DAOException {
@@ -95,7 +95,7 @@ public class ScreeningViewDAO extends AbstractDAO <Long, ScreeningView> {
     }
 
 
-    private class ScreeningViewQueryBuilder extends QueryBuilder<ScreeningView>{
+    private class ScreeningViewQueryExecutor extends QueryExecutor<ScreeningView> {
         @Override
         public ScreeningView getResult(ResultSet rs) throws SQLException {
             ScreeningView screening = new ScreeningView();

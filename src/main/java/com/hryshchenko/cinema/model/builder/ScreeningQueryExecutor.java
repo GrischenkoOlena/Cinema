@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
-public class ScreeningQueryBuilder extends QueryBuilder <Screening> {
+public class ScreeningQueryExecutor extends QueryExecutor<Screening> {
     @Override
     public Screening getResult(ResultSet rs) throws SQLException {
         Screening screening = new Screening();

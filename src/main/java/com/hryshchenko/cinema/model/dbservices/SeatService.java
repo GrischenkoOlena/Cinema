@@ -4,8 +4,8 @@ import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.constant.enums.StatePlace;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
-import com.hryshchenko.cinema.model.builder.QueryBuilder;
-import com.hryshchenko.cinema.model.builder.SeatQueryBuilder;
+import com.hryshchenko.cinema.model.builder.QueryExecutor;
+import com.hryshchenko.cinema.model.builder.SeatQueryExecutor;
 import com.hryshchenko.cinema.model.dao.SeatDAO;
 import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.model.entity.Screening;
@@ -44,10 +44,10 @@ public class SeatService implements ICinemaService {
 
     public List<Seat> getFreeSeatByScreening(long screeningId) throws DAOException {
         List<Seat> seats;
-        QueryBuilder<Seat> seatQueryBuilder = new SeatQueryBuilder();
+        QueryExecutor<Seat> seatQueryExecutor = new SeatQueryExecutor();
         Connection conn = dbManager.getConnection();
         try {
-            seats = seatQueryBuilder.executeAndReturnList(conn, Query.GET_FREE_SEAT_BY_SCREENING, screeningId);
+            seats = seatQueryExecutor.executeAndReturnList(conn, Query.GET_FREE_SEAT_BY_SCREENING, screeningId);
         } catch (SQLException e) {
             throw new DAOException("problem with get free seats", e);
         }

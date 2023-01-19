@@ -5,7 +5,7 @@ import com.hryshchenko.cinema.model.entity.Entity;
 import java.sql.*;
 import java.util.List;
 
-public abstract class QueryBuilder <T extends Entity> {
+public abstract class QueryExecutor<T extends Entity> {
 
     public abstract T getResult (ResultSet rs) throws SQLException;
     public abstract List<T> getListOfResult (ResultSet rs) throws SQLException;
