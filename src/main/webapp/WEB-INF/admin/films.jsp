@@ -210,6 +210,7 @@
                     data-bs-target="#addNewFilmForm">
              <fmt:message key="admin.films.button.add"/>
           </button>
+          <div> <p class="text-danger"> ${errorAddFilm} </p></div>
         </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>

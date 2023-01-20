@@ -31,7 +31,7 @@
                 </div>
             </c:forEach>
         </div>
-        <div class="col-sm-2 mb-2 bg-danger border text-white"> <fmt:message key="main.button.schedule"/>sold</div>
+        <div class="col-sm-2 mb-2 bg-danger border text-white"> <fmt:message key="freeSeat.sold"/></div>
         <p><fmt:message key="freeSeat.price"/>
             <c:forEach var="category" items="${categories}">
                 <c:choose>
