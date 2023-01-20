@@ -1,14 +1,17 @@
 package com.hryshchenko.cinema.model.entity;
 
+import java.util.Objects;
+
 public class Film extends Entity{
     private static final long serialVersionUID = 1L;
-    private final String title;
-    private final String director;
-    private final String cast;
-    private final String description;
-    private final long genreId;
-    private final int duration;
+    private String title;
+    private String director;
+    private String cast;
+    private String description;
+    private long genreId;
+    private int duration;
 
+    public Film(){}
 
     private Film (FilmBuilder filmBuilder){
         super(filmBuilder.id);
@@ -54,6 +57,21 @@ public class Film extends Entity{
                 ", genre=" + genreId +
                 ", duration=" + duration +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Film film = (Film) o;
+        return genreId == film.genreId && duration == film.duration && Objects.equals(title, film.title)
+                && Objects.equals(director, film.director) && Objects.equals(cast, film.cast)
+                && Objects.equals(description, film.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, director, cast, description, genreId, duration);
     }
 
     public static class FilmBuilder{

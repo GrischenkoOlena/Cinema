@@ -2,6 +2,8 @@ package com.hryshchenko.cinema.model.entity;
 
 import com.hryshchenko.cinema.constant.enums.UserRole;
 
+import java.util.Objects;
+
 public class User extends Entity{
     private static final long serialVersionUID = 1L;
     private String login;
@@ -68,5 +70,21 @@ public class User extends Entity{
                 ", balance=" + balance +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Double.compare(user.balance, balance) == 0
+                && Objects.equals(login, user.login)
+                && Objects.equals(password, user.password)
+                && Objects.equals(name, user.name) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, name, balance, role);
     }
 }

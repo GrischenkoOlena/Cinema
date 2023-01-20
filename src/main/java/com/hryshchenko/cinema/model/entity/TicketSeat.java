@@ -1,5 +1,7 @@
 package com.hryshchenko.cinema.model.entity;
 
+import java.util.Objects;
+
 public class TicketSeat extends Entity {
     private static final long serialVersionUID = 1L;
     private long ticketId;
@@ -35,5 +37,18 @@ public class TicketSeat extends Entity {
                 "ticketId=" + ticketId +
                 ", seatId=" + seatId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TicketSeat that = (TicketSeat) o;
+        return ticketId == that.ticketId && seatId == that.seatId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ticketId, seatId);
     }
 }
