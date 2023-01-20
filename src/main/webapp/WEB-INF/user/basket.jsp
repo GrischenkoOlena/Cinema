@@ -37,7 +37,7 @@
                   <td>
                     <form action="controller" method="POST">
                       <input type="hidden" name="action" value="deleteFromBasket"/>
-                      <input type="hidden" name="seatId" value=${seat.id} />
+                      <input type="hidden" name="deleteSeatId" value=${seat.id} />
                       <button class="btn btn-success" type="submit"/>
                         <fmt:message key="user.basket.table.button"/>
                     </button>
