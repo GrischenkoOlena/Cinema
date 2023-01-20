@@ -1,5 +1,7 @@
 package com.hryshchenko.cinema.model.entity;
 
+import java.util.Objects;
+
 public class Category extends Entity{
     private static final long serialVersionUID = 1L;
     private String category;
@@ -35,5 +37,18 @@ public class Category extends Entity{
                 "category='" + category + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category other = (Category) o;
+        return Double.compare(other.price, price) == 0 && Objects.equals(other.category, category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(category, price);
     }
 }

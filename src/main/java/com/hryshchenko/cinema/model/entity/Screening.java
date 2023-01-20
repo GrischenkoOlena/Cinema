@@ -2,6 +2,7 @@ package com.hryshchenko.cinema.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Screening extends Entity {
     private static final long serialVersionUID = 1L;
@@ -60,5 +61,19 @@ public class Screening extends Entity {
                 ", timeBegin=" + timeBegin +
                 ", stateId=" + stateId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Screening screening = (Screening) o;
+        return filmId == screening.filmId && stateId == screening.stateId
+                && Objects.equals(filmDate, screening.filmDate) && Objects.equals(timeBegin, screening.timeBegin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(filmId, filmDate, timeBegin, stateId);
     }
 }

@@ -2,6 +2,7 @@ package com.hryshchenko.cinema.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class ScreeningView extends Entity{
     private static final long serialVersionUID = 1L;
@@ -71,5 +72,22 @@ public class ScreeningView extends Entity{
                 ", state='" + state + '\'' +
                 ", freePlaces=" + freePlaces +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScreeningView that = (ScreeningView) o;
+        return freePlaces == that.freePlaces
+                && Objects.equals(filmTitle, that.filmTitle)
+                && Objects.equals(filmDate, that.filmDate)
+                && Objects.equals(timeBegin, that.timeBegin)
+                && Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(filmTitle, filmDate, timeBegin, state, freePlaces);
     }
 }
