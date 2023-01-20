@@ -35,6 +35,7 @@ public class CommandFactory {
         commands.put("schedule", new ScheduleCommand());
         commands.put("purchase", new PurchaseCommand());
         commands.put("basket", new BasketCommand());
+        commands.put("deleteFromBasket", new DeleteBasketCommand());
 
         commands.put("empty", new EmptyCommand());
     }
