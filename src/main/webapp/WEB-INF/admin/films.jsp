@@ -16,30 +16,30 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addNewFilmLabel">New movie</h1>
+          <h1 class="modal-title fs-5" id="addNewFilmLabel"><fmt:message key="admin.films.modal.add.header"/></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form action="controller?action=addFilm" method="POST">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
+              <label for="title" class="form-label"><fmt:message key="admin.films.modal.label.title"/></label>
               <input type="input" id="title" name="title" class="form-control" required>
             </div>
             <div class="mb-3">
-              <label for="director" class="form-label">Director</label>
+              <label for="director" class="form-label"><fmt:message key="admin.films.modal.label.director"/></label>
               <input type="input" id="director" name="director" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="cast" class="form-label">Cast</label>
+              <label for="cast" class="form-label"><fmt:message key="admin.films.modal.label.cast"/></label>
               <input type="input" id="cast" name="cast" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
+                <label for="description" class="form-label"><fmt:message key="admin.films.modal.label.description"/></label>
                 <input type="input" id="description" name="description" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="genre" class="form-label">Genre</label>
+                <label for="genre" class="form-label"><fmt:message key="admin.films.modal.label.genre"/></label>
                 <select class="form-select" id="genre" name="genre">
                   <option selected style="display:none;"></option>
                   <c:forEach var="genre" items="${genres}">
@@ -48,14 +48,18 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="duration" class="form-label">Duration</label>
+                <label for="duration" class="form-label"><fmt:message key="admin.films.modal.label.duration"/></label>
                 <input type="input" id="duration" name="duration" class="form-control">
             </div>
           </div>
 
           <div class="modal-footer">
-            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="btnAddFilm" class="btn btn-dark">Add new movie</button>
+            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">
+                <fmt:message key="button.close"/>
+            </button>
+            <button type="submit" name="btnAddFilm" class="btn btn-dark">
+                <fmt:message key="admin.films.modal.add.button"/>
+            </button>
           </div>
         </form>
       </div>
@@ -68,38 +72,42 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="updateFilmLabel">Update movie</h1>
+          <h1 class="modal-title fs-5" id="updateFilmLabel"><fmt:message key="admin.films.modal.update.header"/></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form action="controller?action=updateFilm" method="POST">
           <div class="modal-body">
             <div class="mb-3">
-               <label for="titleUpdate" class="form-label">Director</label>
+               <label for="titleUpdate" class="form-label"><fmt:message key="admin.films.modal.label.title"/></label>
                <input type="input" id="titleUpdate" name="title" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="directorUpdate" class="form-label">Director</label>
+              <label for="directorUpdate" class="form-label"><fmt:message key="admin.films.modal.label.director"/></label>
               <input type="input" id="directorUpdate" name="director" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="castUpdate" class="form-label">Cast</label>
+              <label for="castUpdate" class="form-label"><fmt:message key="admin.films.modal.label.cast"/></label>
               <input type="input" id="castUpdate" name="cast" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="descriptionUpdate" class="form-label">Description</label>
+                <label for="descriptionUpdate" class="form-label"><fmt:message key="admin.films.modal.label.description"/></label>
                 <input type="input" id="descriptionUpdate" name="description" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="durationUpdate" class="form-label">Duration</label>
+                <label for="durationUpdate" class="form-label"><fmt:message key="admin.films.modal.label.duration"/></label>
                 <input type="input" id="durationUpdate" name="duration" class="form-control">
             </div>
             <input type="hidden" id="hiddenFilmId" name="filmId">
           </div>
 
           <div class="modal-footer">
-            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="btnUpdateFilm" class="btn btn-dark">Update movie</button>
+            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">
+                <fmt:message key="button.close"/>
+             </button>
+            <button type="submit" name="btnUpdateFilm" class="btn btn-dark">
+                <fmt:message key="admin.films.modal.update.button"/>
+            </button>
           </div>
         </form>
       </div>
@@ -107,13 +115,13 @@
   </div>
 
     <br>
-    <h2>Movies</h2>
+    <h2><fmt:message key="admin.films.header"/></h2>
         <div class="container">
           <form class="row g-3" action="controller" method="POST">
             <div class="col-auto">
               <div class="input-group mb-3">
                 <c:set var="selectedOrder" value="${sessionScope.orderFilms}" />
-                <label class="input-group-text" for="inputOrder">Sort by</label>
+                <label class="input-group-text" for="inputOrder"><fmt:message key="admin.films.sort.label"/></label>
                 <select class="form-select" id="inputOrder" name="order">
                   <option selected style="display:none;"></option>
                   <option value="titleAsc" <c:if test="${selectedOrder == 'titleAsc'}"> selected </c:if>>
@@ -125,13 +133,15 @@
                   <option value="durationDesc"<c:if test="${selectedOrder == 'durationDesc'}"> selected </c:if>>
                     duration &#8595;</option>
                 </select>
-                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
+                    <fmt:message key="admin.films.sort.button"/>
+                </button>
               </div>
             </div>
 
             <div class="col-auto">
               <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGenre">Genre</label>
+                <label class="input-group-text" for="inputGenre"><fmt:message key="admin.films.filter.label"/></label>
                 <c:set var="selectedFilter" value="${sessionScope.genreFilter}" />
                 <select class="form-select" id="inputGenre" name="filter">
                   <option selected></option>
@@ -140,7 +150,9 @@
                         ${genre.genre}</option>
                   </c:forEach>
                 </select> 
-                <button class="btn btn-outline-secondary" type="submit" name="btnFilter">Filter</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnFilter">
+                    <fmt:message key="admin.films.filter.button"/>
+                </button>
               </div>
             </div>
             <input type="hidden" name="action" value="films">
@@ -158,12 +170,12 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">title</th>
-                <th scope="col">director</th>
-                <th scope="col">cast</th>
-                <th scope="col">description</th>
-                <th scope="col">genre</th>
-                <th scope="col">duration</th>
+                <th scope="col"><fmt:message key="admin.films.table.title"/></th>
+                <th scope="col"><fmt:message key="admin.films.table.director"/></th>
+                <th scope="col"><fmt:message key="admin.films.table.cast"/></th>
+                <th scope="col"><fmt:message key="admin.films.table.description"/></th>
+                <th scope="col"><fmt:message key="admin.films.table.genre"/></th>
+                <th scope="col"><fmt:message key="admin.films.table.duration"/></th>
                 <th> </th>
               </tr>
             </thead>
@@ -185,7 +197,7 @@
                                           data-bs-castUpdate="${film.cast}"
                                           data-bs-descriptionUpdate="${film.description}"
                                           data-bs-durationUpdate="${film.duration}">
-                         Update movie
+                         <fmt:message key="admin.films.table.button"/>
                      </button>
                   </td>
                 </tr>
@@ -196,7 +208,7 @@
           <br>
           <button type="button" class="btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#addNewFilmForm">
-            Add new movie
+             <fmt:message key="admin.films.button.add"/>
           </button>
         </div>
 

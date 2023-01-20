@@ -15,14 +15,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addNewSessionLabel">New session</h1>
+          <h1 class="modal-title fs-5" id="addNewSessionLabel"> <fmt:message key="admin.main.new.header"/></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <form action="controller?action=addScreening" method="POST">
           <div class="modal-body">
             <div class="mb-3">
-              <label for="film" class="form-label">Film</label>
+              <label for="film" class="form-label"> <fmt:message key="admin.main.new.label.film"/></label>
               <select class="form-select" id="film" name="film">
                 <option selected style="display:none;"></option>
                 <c:forEach var="film" items="${films}">
@@ -31,15 +31,15 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="date" class="form-label">Date</label>
+              <label for="date" class="form-label"> <fmt:message key="admin.main.new.label.date"/></label>
               <input type="input" id="date" name="date" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="time" class="form-label">Time</label>
+              <label for="time" class="form-label"> <fmt:message key="admin.main.new.label.time"/></label>
               <input type="input" id="time" name="time" class="form-control">
             </div>
             <div class="mb-3">
-              <label for="state" class="form-label">State</label>
+              <label for="state" class="form-label"> <fmt:message key="admin.main.new.label.state"/></label>
               <select class="form-select" id="state" name="state">
                 <option selected style="display:none;"></option>
                 <c:forEach var="state" items="${states}">
@@ -50,8 +50,12 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="btnAddSession" class="btn btn-dark">Add new session</button>
+            <button type="button" name="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">
+                <fmt:message key="button.close"/>
+            </button>
+            <button type="submit" name="btnAddSession" class="btn btn-dark">
+                <fmt:message key="admin.main.new.button"/>
+            </button>
           </div>
         </form>
       </div>
@@ -59,13 +63,13 @@
   </div>
 
         <br>
-        <h2> Sessions </h2>
+        <h2> <fmt:message key="admin.main.schedule"/> </h2>
         <div class="container">
           <form class="row g-3" action="controller" method="POST">
             <div class="col-auto">
               <div class="input-group mb-3">
                 <c:set var="selectedOrder" value="${sessionScope.orderScreening}" />
-                <label class="input-group-text" for="inputOrder">Sort by</label>
+                <label class="input-group-text" for="inputOrder"> <fmt:message key="admin.main.sort.label"/></label>
                 <select class="form-select" id="inputOrder" name="order">
                   <option <c:if test="${selectedOrder == ''}"> selected </c:if> style="display:none;"></option>
                   <option value="movieAsc" <c:if test="${selectedOrder == 'movieAsc'}"> selected </c:if>>
@@ -81,7 +85,9 @@
                   <option value="availableDesc" <c:if test="${selectedOrder == 'availableDesc'}"> selected </c:if>>
                     available seats &#8595;</option>
                 </select>
-                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
+                     <fmt:message key="admin.main.sort.button"/>
+                </button>
               </div>
             </div>
 
@@ -90,7 +96,7 @@
               <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheck"
                             name="filter" <c:if test="${filterScreening == 'checked'}" > checked </c:if>>
-                 the movies available for viewing
+                  <fmt:message key="admin.main.filter.label"/>
               </label>
             </div>
             <input type="hidden" name="action" value="screenings">
@@ -108,11 +114,11 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">movie</th>
-                <th scope="col">data</th>
-                <th scope="col">time</th>
-                <th scope="col">state</th>
-                <th scope="col">available seats</th>
+                <th scope="col"> <fmt:message key="admin.main.table.movie"/></th>
+                <th scope="col"> <fmt:message key="admin.main.table.data"/></th>
+                <th scope="col"> <fmt:message key="admin.main.table.time"/></th>
+                <th scope="col"> <fmt:message key="admin.main.table.state"/></th>
+                <th scope="col"> <fmt:message key="admin.main.table.freeSeat"/></th>
                 <th> </th>
               </tr>
             </thead>
@@ -128,7 +134,9 @@
                           <form action="controller" method="POST">
                           <input type="hidden" name="action" value="freeSeats"/>
                           <input type="hidden" name="screeningId" value=${screening.id} />
-                          <input type="submit" class="btn btn-warning" value="View"/>
+                          <button class="btn btn-warning" type="submit">
+                            <fmt:message key="admin.main.table.button"/>
+                          </button>
                           </form>
                       </td>
                   </tr>
@@ -139,7 +147,7 @@
           <br>
           <button type="button" class="btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#addNewSessionForm">
-            Add new session
+             <fmt:message key="admin.main.button.add"/>
           </button>
         </div>
 

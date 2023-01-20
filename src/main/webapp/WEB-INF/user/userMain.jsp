@@ -10,13 +10,13 @@
   <body class="w-75 p-3">
     <jsp:include page="/WEB-INF/templates/menu_user.jsp"></jsp:include>
     <br>
-    <h2>Schedule</h2>
+    <h2><fmt:message key="user.main.header"/></h2>
         <div class="container">
           <form class="row g-3" action="controller" method="POST">
             <div class="col-auto">
               <div class="input-group mb-3">
                 <c:set var="selectedOrder" value="${sessionScope.orderScreening}" />
-                <label class="input-group-text" for="inputOrder">Sort by</label>
+                <label class="input-group-text" for="inputOrder"><fmt:message key="user.main.label.sort"/></label>
                 <select class="form-select" id="inputOrder" name="order">
                   <option <c:if test="${selectedOrder == ''}"> selected </c:if> style="display:none;"></option>
                   <option value="movieAsc" <c:if test="${selectedOrder == 'movieAsc'}"> selected </c:if>>
@@ -32,7 +32,7 @@
                   <option value="availableDesc" <c:if test="${selectedOrder == 'availableAsc'}"> selected </c:if>>
                     available seats &#8595;</option>
                 </select>
-                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
+                <button class="btn btn-outline-secondary" type="submit" name="btnApplySort"><fmt:message key="user.main.button.sort"/></button>
               </div>
             </div>
 
@@ -41,7 +41,7 @@
               <label class="form-check-label" for="flexCheck">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheck"
                 name="filter" <c:if test="${filterScreening == 'checked'}" > checked </c:if>>
-                 the movies available for viewing
+                <fmt:message key="user.main.label.filter"/>
               </label>
             </div>
             <input type="hidden" name="action" value="schedule">
@@ -59,11 +59,11 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">movie</th>
-                <th scope="col">data</th>
-                <th scope="col">time</th>
-                <th scope="col">state</th>
-                <th scope="col">available seats</th>
+                <th scope="col"><fmt:message key="user.main.table.movie"/></th>
+                <th scope="col"><fmt:message key="user.main.table.data"/></th>
+                <th scope="col"><fmt:message key="user.main.table.time"/></th>
+                <th scope="col"><fmt:message key="user.main.table.state"/></th>
+                <th scope="col"><fmt:message key="user.main.table.free"/></th>
               </tr>
             </thead>
               <tbody>
@@ -75,11 +75,13 @@
                       <td>${screening.state}</td>
                       <td>${screening.freePlaces}</td>
                       <td>
-                          <form action="controller" method="POST">
+                        <form action="controller" method="POST">
                           <input type="hidden" name="action" value="freeSeats"/>
                           <input type="hidden" name="screeningId" value=${screening.id} />
-                          <input type="submit" class="btn btn-success" value="View"/>
-                          </form>
+                          <button class="btn btn-success" type="submit"/>
+                            <fmt:message key="user.main.table.button"/>
+                          </button>
+                        </form>
                       </td>
                   </tr>
               </c:forEach>

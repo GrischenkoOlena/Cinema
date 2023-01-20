@@ -3,5 +3,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="uk" />
+<fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />

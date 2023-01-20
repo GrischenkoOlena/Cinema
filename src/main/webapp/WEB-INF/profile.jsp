@@ -23,20 +23,22 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="editUserModalLabel">Your change</h1>
+            <h1 class="modal-title fs-5" id="editUserModalLabel"><fmt:message key="profile.update.header"/></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <form action="controller?action=updateProfile" method="POST">
             <div class="modal-body">
-              <label for="updateName" class="form-label">Name</label>
+              <label for="updateName" class="form-label"><fmt:message key="profile.update.name"/></label>
               <input class="form-control" type="text" id="updateName" name="updateName">
-              <label for="updateBalance" class="form-label">Balance</label>
+              <label for="updateBalance" class="form-label"><fmt:message key="profile.update.balance"/></label>
               <input class="form-control" type="text" id="updateBalance" name="updateBalance">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" name="btnChangeUser" class="btn btn-dark">Save change</button>
+              <button type="submit" name="btnChangeUser" class="btn btn-dark">
+                <fmt:message key="profile.update.button"/>
+              </button>
             </div>
           </form>
         </div>
@@ -44,23 +46,23 @@
     </div>
 
     <br>
-    <h2>Your profile</h2>
+    <h2><fmt:message key="profile.header"/></h2>
     <table class="w-50 table table-primary table-sm">
       <tbody>
         <tr>
-          <th scope="row" class="col-md-3">Login</th>
+          <th scope="row" class="col-md-3"><fmt:message key="profile.login"/>Login</th>
           <td class="col-md-6">${user.login}</td>
         </tr>
         <tr>
-          <th scope="row" class="col-md-3">Name</th>
+          <th scope="row" class="col-md-3"><fmt:message key="profile.name"/></th>
           <td class="col-md-6">${user.name}</td>
         </tr>
         <tr>
-          <th scope="row" class="col-md-3">Balance</th>
+          <th scope="row" class="col-md-3"><fmt:message key="profile.balance"/></th>
           <td class="col-md-6">${user.balance}</td>
         </tr>
         <tr>
-          <th scope="row" class="col-md-3">Role</th>
+          <th scope="row" class="col-md-3"><fmt:message key="profile.role"/></th>
           <td class="col-md-6">${user.role}</td>
         </tr>
       </tbody>
@@ -68,7 +70,7 @@
     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal"
             data-bs-target="#editUserAttribute"
             data-bs-updateName="${user.name}" data-bs-updateBalance="${user.balance}">
-       Update profile
+       <fmt:message key="profile.button"/>
     </button>
   </div>
 

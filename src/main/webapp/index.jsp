@@ -3,7 +3,7 @@
 
 <%@ include file="/WEB-INF/templates/taglib.jspf" %>
 
-<html lang="uk">
+<html lang="${sessionScope.lang}">
   <c:set var="title" value="Cinema" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
 
@@ -41,7 +41,7 @@
       </div>
       <br><br>
 
-      <form name="simple" action="controller" method="POST">
+      <form name="simple" action="controller" method="GET">
         <input type="hidden" name="action" value="main"/>
         <input type="hidden" name="scheduleDate" id="sendDate" value=""/>
          <button type="submit" class="btn btn-success">

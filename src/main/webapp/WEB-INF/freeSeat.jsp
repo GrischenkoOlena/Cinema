@@ -18,11 +18,11 @@
     </script>
 
     <div class="container">
-        <p>Free places </p>
+        <p><fmt:message key="freeSeat.header"/></p>
         <div class="container text-center">
             <c:forEach var="row" items="${seats}" varStatus="theCount">
                 <div class="row align-items-center">
-                    row ${theCount.index + 1}
+                    <fmt:message key="freeSeat.row"/> ${theCount.index + 1}
                     <c:forEach var="place" items="${row}">
                         <div class="col-sm-1 p-3 border">
                             <tags:viewSeat placeAttr="${place}"/>
@@ -31,8 +31,8 @@
                 </div>
             </c:forEach>
         </div>
-        <div class="col-sm-2 mb-2 bg-danger border text-white"> sold</div>
-        <p>Price 
+        <div class="col-sm-2 mb-2 bg-danger border text-white"> <fmt:message key="main.button.schedule"/>sold</div>
+        <p><fmt:message key="freeSeat.price"/>
             <c:forEach var="category" items="${categories}">
                 <c:choose>
                     <c:when test="${category.category == 'premium'}">

@@ -11,7 +11,7 @@
     <jsp:include page="/WEB-INF/templates/menu_user.jsp"></jsp:include>
 
     <br>
-    <h2>You want to buy seats</h2>
+    <h2><fmt:message key="user.basket.header"/></h2>
     <div class="container">
       <div> <p class="text-info">
         <c:out value = "${screening.film.title}, ${screening.filmDate}, ${screening.timeBegin}" />
@@ -20,10 +20,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">row</th>
-            <th scope="col">place</th>
-            <th scope="col">category</th>
-            <th scope="col">price</th>
+            <th scope="col"> <fmt:message key="user.basket.table.row"/></th>
+            <th scope="col"> <fmt:message key="user.basket.table.place"/></th>
+            <th scope="col"> <fmt:message key="user.basket.table.category"/></th>
+            <th scope="col"> <fmt:message key="user.basket.table.price"/></th>
+            <th></th>
           </tr>
         </thead>
           <tbody>
@@ -33,11 +34,19 @@
                   <td>${seat.place}</td>
                   <td>${seat.category.category}</td>
                   <td>${seat.category.price}</td>
+                  <td>
+                    <form action="controller" method="POST">
+                      <input type="hidden" name="action" value="deleteFromBasket"/>
+                      <input type="hidden" name="seatId" value=${seat.id} />
+                      <button class="btn btn-success" type="submit"/>
+                        <fmt:message key="user.basket.table.button"/>
+                    </button>
+                    </form>
               </tr>
             </c:forEach>
           </tbody>
           <tfoot>
-            <td colspan="3">general cost</td>
+            <td colspan="3"> <fmt:message key="user.basket.table.cost"/></td>
             <td>${cost}</td>
           </tfoot>
       </table>
@@ -45,9 +54,11 @@
       <form action="controller" method="POST">
         <button type="button" name="btnNextSeat" class="btn btn-primary" >
             <c:set var="hrefNextSeat" value="controller?action=freeSeats&screeningId=${screening.id}"/>
-            <a class="page-link" href="${hrefNextSeat}">Next seat</a>
+            <a class="page-link" href="${hrefNextSeat}"> <fmt:message key="user.basket.button.next"/></a>
         </button>
-        <button type="submit" name="btnBuy" class="btn btn-success">Buy</button>
+        <button type="submit" name="btnBuy" class="btn btn-success">
+            <fmt:message key="user.basket.button.buy"/>
+        </button>
         <input type="hidden" name="action" value="purchase">
       </form>
 

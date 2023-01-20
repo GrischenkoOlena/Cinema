@@ -16,19 +16,27 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editUserModalLabel">Your change</h1>
+                <h1 class="modal-title fs-5" id="editUserModalLabel">
+                    <fmt:message key="admin.customers.modal.header"/>
+                </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
               <form action="controller?action=updateBalance" method="POST">
                 <div class="modal-body">
-                  <label for="paramInput" class="form-label">Balance</label>
+                  <label for="paramInput" class="form-label">
+                    <fmt:message key="admin.customers.modal.label.balance"/>
+                  </label>
                   <input class="form-control" type="text" id="paramInput" name="updateValue">
                   <input type="hidden" id="userLogin" name="userLogin">
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" name="btnChangeUser" class="btn btn-dark">Save change</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <fmt:message key="button.close"/>
+                  </button>
+                  <button type="submit" name="btnChangeUser" class="btn btn-dark">
+                    <fmt:message key="admin.customers.modal.button"/>
+                  </button>
                 </div>
               </form>
             </div>
@@ -36,13 +44,13 @@
         </div>
 
     <br>
-    <h2>Customers</h2>
+    <h2><fmt:message key="admin.customers.header"/></h2>
     <div class="container">
       <form class="row g-3" action="controller" method="POST">
         <div class="col-auto">
           <div class="input-group mb-3">
           <c:set var="selectedOrder" value="${sessionScope.orderCustomers}" />
-            <label class="input-group-text" for="inputOrder">Sort by</label>
+            <label class="input-group-text" for="inputOrder"> <fmt:message key="admin.customers.sort.label"/></label>
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
               <option value="nameAsc" <c:if test="${selectedOrder == 'nameAsc'}"> selected </c:if>>
@@ -54,7 +62,9 @@
               <option value="balanceDesc" <c:if test="${selectedOrder == 'balanceDesc'}"> selected </c:if>>
                 balance &#8595;</option>
             </select>
-            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
+            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
+                <fmt:message key="admin.customers.sort.button"/>
+            </button>
           </div>
         </div>
         <input type="hidden" name="action" value="customers"/>
@@ -72,10 +82,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">name</th>
-                    <th scope="col">login</th>
-                    <th scope="col">balance</th>
-                    <th scope="col">role</th>
+                    <th scope="col"><fmt:message key="admin.customers.table.name"/></th>
+                    <th scope="col"><fmt:message key="admin.customers.table.login"/></th>
+                    <th scope="col"><fmt:message key="admin.customers.table.balance"/></th>
+                    <th scope="col"><fmt:message key="admin.customers.table.role"/></th>
                     <th> </th>
                   </tr>
                 </thead>
@@ -91,7 +101,7 @@
                                           data-bs-target="#updateBalanceForm"
                                           data-bs-updateBalance="${user.balance}"
                                           data-bs-updateLogin="${user.login}">
-                                   Change balance
+                                    <fmt:message key="admin.customers.table.button"/>
                               </button>
                           </td>
                       </tr>
