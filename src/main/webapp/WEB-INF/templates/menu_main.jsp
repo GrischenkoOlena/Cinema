@@ -24,21 +24,20 @@
         </c:if>
       </ul>
 
-      <div class="justify-content-end">
-        <form class="form-inline col-md-auto mb-2 justify-content-end" method="post" action="controller?action=i18n">
-          <select class="form-select" name="language" aria-label="Default select example">
-             <option value="en">
-                <a href="?sessionLocale=en">en</a>
-             </option>
-             <option value="ua">
-                <a href="?sessionLocale=uk">uk</a>
-             </option>
-          </select>
-        </form>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ${sessionScope.lang}
+        </button>
+        <div class="dropdown-menu">
+           <form class="form-inline" method="post" action="?${pageContext.request.queryString}">
+              <button type="submit" name="sessionLocale" class="dropdown-item" value="en">en</button>
+              <button type="submit" name="sessionLocale" class="dropdown-item" value="uk">uk</button>
+           </form>
+        </div>
       </div>
 
       <div class="col-md-auto text-end">
-        <form name="header" action="controller" method="POST">
+        <form name="header" action="controller" method="GET">
           <c:set var="actionName" value="enter"/>
           <button type="submit" name="page" value="login" class="btn btn-outline-primary me-2">
             <c:choose>

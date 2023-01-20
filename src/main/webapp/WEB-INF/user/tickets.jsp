@@ -11,13 +11,13 @@
     <jsp:include page="/WEB-INF/templates/menu_user.jsp"></jsp:include>
 
     <br>
-    <h2>Your tickets</h2>
+    <h2><fmt:message key="user.tickets.header"/></h2>
     <div class="container">
       <form class="row g-3" action="controller" method="POST">
         <div class="col-auto">
           <div class="input-group mb-3">
           <c:set var="selectedOrder" value="${sessionScope.orderTickets}" />
-            <label class="input-group-text" for="inputOrder">Sort by</label>
+            <label class="input-group-text" for="inputOrder"><fmt:message key="user.tickets.label.sort"/></label>
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
               <option value="dataTicketAsc" <c:if test="${selectedOrder == 'dataTicketAsc'}"> selected </c:if>>
@@ -25,7 +25,9 @@
               <option value="dataTicketDesc" <c:if test="${selectedOrder == 'dataTicketDesc'}"> selected </c:if>>
                 data/time &#8595;</option>
             </select>
-            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">Apply</button>
+            <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
+                <fmt:message key="user.tickets.button.sort"/>
+            </button>
           </div>
         </div>
 
@@ -44,10 +46,10 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">movie</th>
-            <th scope="col">data</th>
-            <th scope="col">time</th>
-            <th scope="col">seat</th>
+            <th scope="col"><fmt:message key="user.tickets.table.movie"/></th>
+            <th scope="col"><fmt:message key="user.tickets.table.data"/></th>
+            <th scope="col"><fmt:message key="user.tickets.table.time"/></th>
+            <th scope="col"><fmt:message key="user.tickets.table.seat"/></th>
             <th> </th>
           </tr>
         </thead>
@@ -66,7 +68,9 @@
                     <form action="controller" method="POST">
                       <input type="hidden" name="action" value="turnTicket"/>
                       <input type="hidden" name="ticket" value=${ticket.id} />
-                      <input type="submit" class="btn btn-success" value="Turn ticket"/>
+                      <button class="btn btn-success" type="submit">
+                        <fmt:message key="user.tickets.table.button"/>
+                      </button>
                     </form>
                   </td>
               </tr>
