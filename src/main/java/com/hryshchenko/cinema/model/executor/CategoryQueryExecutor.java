@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.model.builder;
+package com.hryshchenko.cinema.model.executor;
 
 import com.hryshchenko.cinema.model.entity.Category;
 

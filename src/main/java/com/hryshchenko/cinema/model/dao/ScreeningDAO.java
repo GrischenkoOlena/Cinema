@@ -2,8 +2,8 @@ package com.hryshchenko.cinema.model.dao;
 
 import com.hryshchenko.cinema.constant.Query;
 import com.hryshchenko.cinema.exception.DAOException;
-import com.hryshchenko.cinema.model.builder.QueryExecutor;
-import com.hryshchenko.cinema.model.builder.ScreeningQueryExecutor;
+import com.hryshchenko.cinema.model.executor.QueryExecutor;
+import com.hryshchenko.cinema.model.executor.ScreeningQueryExecutor;
 import com.hryshchenko.cinema.model.entity.Screening;
 
 import java.sql.SQLException;
