@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 public class DataValidator {
     private final static String REGEX_CHECK_FOR_LOGIN_AS_EMAIL = "^([\\w\\-\\.]+)@([\\w\\-\\.]+)\\.([a-zA-Z]{2,5})$";
     private final static String REGEX_CHECK_FOR_PASSWORD = "^([\\wа-яА-Я]{4,10})$";
-    private final static String REGEX_CHECK_FOR_NAME = "^[a-zA-Zа-яА-Я\\\\s]{2,120}$";
+    private final static String REGEX_CHECK_FOR_NAME = "^[a-zA-ZЄ-Яа-ї' ]{2,120}$";
     private final static String REGEX_CHECK_FOR_TITLE = "^.{2,250}";
     private final static String REGEX_CHECK_FOR_DIRECTOR = "^.{2,250}";
-    private final static String REGEX_CHECK_FOR_CAST = "^.{2,400}";
+    private final static String REGEX_CHECK_FOR_CAST = "^.{5,400}";
 
 
     private final static Integer MIN_DURATION = 10;
@@ -20,8 +20,8 @@ public class DataValidator {
     private final static Integer MIN_BALANCE = 0;
     private final static Integer MAX_BALANCE = 2000;
     private final static LocalTime MIN_TIME_SCREENING = LocalTime.of(8, 59);
-    private final static LocalTime MAX_TIME_SCREENING = LocalTime.of(22, 01);
-    private final static LocalDate CURRENT_DATE = LocalDate.now();
+    private final static LocalTime MAX_TIME_SCREENING = LocalTime.of(22, 1);
+    private final static LocalDate CURRENT_DATE = LocalDate.now().minusDays(1);
 
     public static boolean validateLogin(String login) throws FieldValidatorException {
         if (!Pattern.matches(REGEX_CHECK_FOR_LOGIN_AS_EMAIL, login))
