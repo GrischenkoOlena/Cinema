@@ -5,6 +5,7 @@ import com.hryshchenko.cinema.constant.enums.StateScreening;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class ScreeningDTO implements ISimpleDTO {
     private static final long serialVersionUID = 1L;
@@ -75,5 +76,21 @@ public class ScreeningDTO implements ISimpleDTO {
                 ", state=" + state +
                 ", availableSeats=" + availableSeats +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScreeningDTO that = (ScreeningDTO) o;
+        return id == that.id && availableSeats == that.availableSeats
+                && Objects.equals(film, that.film)
+                && Objects.equals(filmDate, that.filmDate)
+                && Objects.equals(timeBegin, that.timeBegin) && state == that.state;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, film, filmDate, timeBegin, state, availableSeats);
     }
 }

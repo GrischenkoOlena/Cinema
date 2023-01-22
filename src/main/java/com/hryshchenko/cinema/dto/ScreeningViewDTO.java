@@ -2,6 +2,7 @@ package com.hryshchenko.cinema.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class ScreeningViewDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;
@@ -72,5 +73,22 @@ public class ScreeningViewDTO implements ISimpleDTO{
                 ", state='" + state + '\'' +
                 ", freePlaces=" + freePlaces +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScreeningViewDTO that = (ScreeningViewDTO) o;
+        return id == that.id && freePlaces == that.freePlaces
+                && Objects.equals(filmTitle, that.filmTitle)
+                && Objects.equals(filmDate, that.filmDate)
+                && Objects.equals(timeBegin, that.timeBegin)
+                && Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, filmTitle, filmDate, timeBegin, state, freePlaces);
     }
 }

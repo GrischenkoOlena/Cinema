@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.dto;
 import com.hryshchenko.cinema.model.entity.Seat;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TicketDTO implements ISimpleDTO {
     private long id;
@@ -61,5 +62,21 @@ public class TicketDTO implements ISimpleDTO {
                 ", user=" + user +
                 ", ticketCount=" + ticketCount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TicketDTO ticketDTO = (TicketDTO) o;
+        return id == ticketDTO.id && ticketCount == ticketDTO.ticketCount
+                && Objects.equals(screening, ticketDTO.screening)
+                && Objects.equals(user, ticketDTO.user)
+                && Objects.equals(seats, ticketDTO.seats);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, screening, user, ticketCount, seats);
     }
 }

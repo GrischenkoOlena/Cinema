@@ -1,5 +1,7 @@
 package com.hryshchenko.cinema.dto;
 
+import java.util.Objects;
+
 public class CategoryDTO implements ISimpleDTO {
     private static final long serialVersionUID = 1L;
     private int id;
@@ -44,5 +46,18 @@ public class CategoryDTO implements ISimpleDTO {
                 "category='" + category + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryDTO that = (CategoryDTO) o;
+        return id == that.id && Double.compare(that.price, price) == 0 && Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category, price);
     }
 }

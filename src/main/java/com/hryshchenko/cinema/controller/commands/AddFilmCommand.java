@@ -22,10 +22,10 @@ import java.io.IOException;
 
 public class AddFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private FilmService filmService = AppContext.getInstance().getFilmService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         FilmDTO filmDTO;
-        FilmService filmService = AppContext.getInstance().getFilmService();
         MapperFilm mapperService = new MapperFilm();
 
         String forward = Path.COMMAND_ADMIN_FILMS;

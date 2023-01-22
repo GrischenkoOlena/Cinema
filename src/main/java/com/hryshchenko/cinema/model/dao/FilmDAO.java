@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FilmDAO extends AbstractDAO <Long, Film>{
-    private final QueryExecutor<Film> filmQueryExecutor = new FilmQueryExecutor();
+    private QueryExecutor<Film> filmQueryExecutor = new FilmQueryExecutor();
 
     @Override
     public List<Film> findAll() throws DAOException {
@@ -106,15 +106,16 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
         }
         return result;
     }
+
     public List<Film> findPageFilms(String order, long begin, long amount) throws DAOException {
-        List<Film> screenings;
+        List<Film> films;
         String query = Query.GET_ALL_FILMS.replace("orderField", order);
         try {
-            screenings = filmQueryExecutor.executeAndReturnList(connection, query,begin-1, amount);
+            films = filmQueryExecutor.executeAndReturnList(connection, query,begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find movies by page", e);
         }
-        return screenings;
+        return films;
     }
 
     public long findCountFilmsByGenre(long genreId) throws DAOException {
@@ -126,14 +127,15 @@ public class FilmDAO extends AbstractDAO <Long, Film>{
         }
         return result;
     }
+
     public List<Film> findPageFilmsByGenre(long genreId, String order, long begin, long amount) throws DAOException {
-        List<Film> screenings;
+        List<Film> films;
         String query = Query.GET_FILM_BY_GENRE.replace("orderField", order);
         try {
-            screenings = filmQueryExecutor.executeAndReturnList(connection, query, genreId, begin-1, amount);
+            films = filmQueryExecutor.executeAndReturnList(connection, query, genreId, begin-1, amount);
         } catch (SQLException e){
             throw new DAOException("problem in find page movies by genre", e);
         }
-        return screenings;
+        return films;
     }
 }

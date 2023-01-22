@@ -10,7 +10,7 @@ public abstract class QueryExecutor<T extends Entity> {
     public abstract T getResult (ResultSet rs) throws SQLException;
     public abstract List<T> getListOfResult (ResultSet rs) throws SQLException;
 
-    public final boolean execute(final Connection conn, String query, Object... params) throws SQLException{
+    public boolean execute(final Connection conn, String query, Object... params) throws SQLException{
         boolean res;
         try (PreparedStatement prepareStatement = conn.prepareStatement(query)) {
             insertSQLParams(prepareStatement, params);
@@ -19,7 +19,7 @@ public abstract class QueryExecutor<T extends Entity> {
         }
         return res;
     }
-    public final T executeAndReturnValue(final Connection conn, String query, Object... params) throws SQLException{
+    public T executeAndReturnValue(final Connection conn, String query, Object... params) throws SQLException{
         T value;
         try (PreparedStatement prepareStatement = conn.prepareStatement(query)) {
             insertSQLParams(prepareStatement, params);
@@ -28,7 +28,7 @@ public abstract class QueryExecutor<T extends Entity> {
         }
         return value;
     }
-    public final int executeAndReturnAggregate(final Connection conn, String query, Object... params) throws SQLException{
+    public int executeAndReturnAggregate(final Connection conn, String query, Object... params) throws SQLException{
         int value = 0;
         try (PreparedStatement prepareStatement = conn.prepareStatement(query)) {
             insertSQLParams(prepareStatement, params);
@@ -40,7 +40,7 @@ public abstract class QueryExecutor<T extends Entity> {
         return value;
     }
 
-    public final List<T> executeAndReturnList(final Connection conn, String query, Object... params) throws SQLException{
+    public List<T> executeAndReturnList(final Connection conn, String query, Object... params) throws SQLException{
         List<T> values;
         try (PreparedStatement prepareStatement = conn.prepareStatement(query)) {
             insertSQLParams(prepareStatement, params);

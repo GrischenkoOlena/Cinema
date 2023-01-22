@@ -79,12 +79,11 @@ public class User extends Entity{
         User user = (User) o;
         return Double.compare(user.balance, balance) == 0
                 && Objects.equals(login, user.login)
-                && Objects.equals(password, user.password)
                 && Objects.equals(name, user.name) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, name, balance, role);
+        return Objects.hash(login, name, balance, role);
     }
 }

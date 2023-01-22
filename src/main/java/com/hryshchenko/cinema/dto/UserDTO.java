@@ -2,6 +2,8 @@ package com.hryshchenko.cinema.dto;
 
 import com.hryshchenko.cinema.constant.enums.UserRole;
 
+import java.util.Objects;
+
 public class UserDTO implements ISimpleDTO{
     private static final long serialVersionUID = 1L;
     private final long id;
@@ -52,6 +54,23 @@ public class UserDTO implements ISimpleDTO{
                 ", balance=" + balance +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return id == userDTO.id
+                && Double.compare(userDTO.balance, balance) == 0
+                && Objects.equals(login, userDTO.login)
+                && Objects.equals(password, userDTO.password)
+                && Objects.equals(name, userDTO.name) && role == userDTO.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, name, balance, role);
     }
 
     public static class UserDTOBuilder{
