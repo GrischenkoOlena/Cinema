@@ -1,5 +1,7 @@
 package com.hryshchenko.cinema.dto;
 
+import java.util.Objects;
+
 public class GenreDTO implements ISimpleDTO {
     private static final long serialVersionUID = 1L;
     private long id;
@@ -33,5 +35,18 @@ public class GenreDTO implements ISimpleDTO {
         return "Genre{" +
                 "genre='" + genre + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GenreDTO genreDTO = (GenreDTO) o;
+        return id == genreDTO.id && Objects.equals(genre, genreDTO.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, genre);
     }
 }
