@@ -15,12 +15,11 @@
             <h6>Поверниться на <a href="index.jsp">Головну</a></h6>
         </div>
         <div>
-            You have problem with
-            <p class="p-3 mb-2 bg-danger bg-gradient text-white"> ${error} </p>
+            Your problem is
+            <p class="text-danger"> ${error} </p>
         </div>
         <div class="col-md-5 col-middle text-center">
-            <img src="https://a0.muscache.com/airbnb/static/error_pages/404-Airbnb_final-d652ff855b1335dd3eedc3baa8dc8b69.gif"
-            width="313" height="428" class="hide-sm" alt="Девочка уронила свое мороженое.">
+            <img src="static/error500.png" width="308" height="311" class="hide-sm" alt="Помилка">
         </div>
     </div>
 </div>
