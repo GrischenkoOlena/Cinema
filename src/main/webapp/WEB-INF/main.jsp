@@ -29,9 +29,9 @@
                             <form action="controller" method="POST">
                             <input type="hidden" name="action" value="freeSeats"/>
                             <input type="hidden" name="screeningId" value=${screening.id} />
-                            <input type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success">
                                 <fmt:message key="main.schedule.button"/>
-                             </input>
+                             </button>
                             </form>
                         </td>
                     </tr>

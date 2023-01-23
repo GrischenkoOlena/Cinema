@@ -1,10 +1,12 @@
 package com.hryshchenko.cinema.model.dao;
 
 import com.hryshchenko.cinema.constant.Query;
+import com.hryshchenko.cinema.dto.AttendanceDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.executor.QueryExecutor;
 import com.hryshchenko.cinema.model.entity.ScreeningView;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -92,6 +94,39 @@ public class ScreeningViewDAO extends AbstractDAO <Long, ScreeningView> {
     @Override
     public boolean update(ScreeningView screeningView) throws DAOException {
         return false;
+    }
+
+    public int findCountAttendances() throws DAOException {
+        int result;
+        try {
+            result = screeningViewQueryBuilder.executeAndReturnAggregate(connection,
+                    Query.COUNT_DATE_ATTENDANCE);
+        } catch (SQLException e) {
+            throw new DAOException("problem in find count rows for attendance", e);
+        }
+        return result;
+    }
+
+    public List<AttendanceDTO> findPageAttendance(long begin, long amount) throws DAOException {
+        List<AttendanceDTO> attendanceDTOList = new ArrayList<>();
+        try (PreparedStatement prepareStatement = connection.prepareStatement(Query.GET_ATTENDANCE)) {
+            prepareStatement.setLong(1, begin-1);
+            prepareStatement.setLong(2, amount);
+            ResultSet rs = prepareStatement.executeQuery();
+
+            while (rs.next()){
+                int k = 0;
+                AttendanceDTO attendance = new AttendanceDTO();
+                attendance.setDate(rs.getDate(++k).toLocalDate());
+                attendance.setCountSessions(rs.getInt(++k));
+                attendance.setCountFilms(rs.getInt(++k));
+                attendance.setCountFreeSeats(rs.getInt(++k));
+                attendanceDTOList.add(attendance);
+            }
+        } catch (SQLException e){
+            throw new DAOException("problem in find attendance", e);
+        }
+        return attendanceDTOList;
     }
 
 

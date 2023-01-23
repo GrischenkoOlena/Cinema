@@ -1,6 +1,7 @@
 package com.hryshchenko.cinema.service;
 
 import com.hryshchenko.cinema.context.AppContext;
+import com.hryshchenko.cinema.dto.AttendanceDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dbservices.*;
 import com.hryshchenko.cinema.model.entity.*;
@@ -114,6 +115,16 @@ public class Pagination {
                     throws DAOException {
         long begin = getBegin(numberPage);
         return screeningViewServ.getAvailableScreeningViewsPage(filterDate, order, begin, ON_PAGE);
+    }
+
+    public long getCountAttendancesPages() throws DAOException {
+        long countValue = screeningViewServ.getCountAttendance();
+        return getCountPages(countValue);
+    }
+
+    public List<AttendanceDTO> getAttendancePage(long numberPage) throws DAOException {
+        long begin = getBegin(numberPage);
+        return screeningViewServ.getAttendancePage(begin, ON_PAGE);
     }
 
     private long getCountPages(long countValue) {
