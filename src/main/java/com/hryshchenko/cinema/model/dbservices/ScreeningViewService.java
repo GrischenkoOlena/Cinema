@@ -1,5 +1,6 @@
 package com.hryshchenko.cinema.model.dbservices;
 
+import com.hryshchenko.cinema.dto.AttendanceDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dao.ScreeningViewDAO;
 import com.hryshchenko.cinema.model.entity.ScreeningView;
@@ -47,4 +48,19 @@ public class ScreeningViewService implements ICinemaService {
         return count;
     }
 
+    public List<AttendanceDTO> getAttendancePage(long begin, long amount) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningViewDAO.setConnection(conn);
+        List<AttendanceDTO> screenings = screeningViewDAO.findPageAttendance(begin, amount);
+        dbManager.closeConnection(conn);
+        return screenings;
+    }
+
+    public long getCountAttendance() throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningViewDAO.setConnection(conn);
+        long count = screeningViewDAO.findCountAttendances();
+        dbManager.closeConnection(conn);
+        return count;
+    }
 }

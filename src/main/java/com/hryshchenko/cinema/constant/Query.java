@@ -84,4 +84,9 @@ public interface Query {
     String GET_SCREENING_VIEWS_BY_AVAILABLE = "SELECT * FROM screeningWithSeat WHERE film_date >= ? " +
                 "AND state = 'active' orderField LIMIT ?, ?";
 
+    String GET_ATTENDANCE = "SELECT film_date, count(*), count(distinct title), sum(amount_free_places) " +
+            "FROM screeningWithSeat GROUP BY film_date LIMIT ?, ?";
+
+    String COUNT_DATE_ATTENDANCE = "SELECT count(distinct film_date) FROM screeningWithSeat";
+
 }

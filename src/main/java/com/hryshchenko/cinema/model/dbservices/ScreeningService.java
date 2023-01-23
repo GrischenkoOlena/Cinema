@@ -81,5 +81,13 @@ public class ScreeningService implements ICinemaService {
         return result;
     }
 
+    public boolean updateScreening(Screening screening) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        screeningDAO.setConnection(conn);
+        boolean result = screeningDAO.update(screening);
+        dbManager.closeConnection(conn);
+        return result;
+    }
+
 }
 

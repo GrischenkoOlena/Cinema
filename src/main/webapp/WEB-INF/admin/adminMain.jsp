@@ -3,7 +3,7 @@
 
 <%@ include file="/WEB-INF/templates/taglib.jspf" %>
 
-<html lang="en">
+<html lang="${sessionScope.lang}">
   <c:set var="title" value="Administrator" scope="session"/>
   <jsp:include page="/WEB-INF/templates/head.jsp"></jsp:include>
   <body class="w-75 p-3">
@@ -118,6 +118,7 @@
                 <th scope="col"> <fmt:message key="admin.main.table.data"/></th>
                 <th scope="col"> <fmt:message key="admin.main.table.time"/></th>
                 <th scope="col"> <fmt:message key="admin.main.table.state"/></th>
+                <th> </th>
                 <th scope="col"> <fmt:message key="admin.main.table.freeSeat"/></th>
                 <th> </th>
               </tr>
@@ -129,6 +130,16 @@
                       <td>${screening.filmDate}</td>
                       <td>${screening.timeBegin}</td>
                       <td>${screening.state}</td>
+                      <td>
+                          <form action="controller" method="POST">
+                            <input type="hidden" name="action" value="updateScreening"/>
+                            <input type="hidden" name="state" value=${screening.state} />
+                            <input type="hidden" name="screeningId" value=${screening.id} />
+                            <button class="btn btn-success" type="submit">
+                              <fmt:message key="admin.main.table.button.update"/>
+                            </button>
+                          </form>
+                      </td>
                       <td>${screening.freePlaces}</td>
                       <td>
                           <form action="controller" method="POST">
