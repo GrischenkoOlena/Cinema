@@ -211,6 +211,7 @@
              <fmt:message key="admin.films.button.add"/>
           </button>
           <div> <p class="text-danger"> ${errorAddFilm} </p></div>
+          <c:set var="errorAddFilm" value="" scope="session"/>
         </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>

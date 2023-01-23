@@ -8,15 +8,17 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.model.dbservices.UserService;
 import com.hryshchenko.cinema.util.PasswordHashUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SignUpCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String response;
         HttpSession session = req.getSession();
 
         String login = req.getParameter("login");
@@ -32,12 +34,12 @@ public class SignUpCommand implements ICommand {
             req.setAttribute("error", "Passwords must be identical");
             return Path.SIGN_UP;
         }
-        response = registerUser(session, login, password, userName);
-        return response;
+        log.info("New user is registered");
+        return registerUser(session, login, password, userName);
     }
 
     private String registerUser(HttpSession session, String login, String password, String userName) {
-        String response = Path.ERROR;
+        String response;
         UserService userService = AppContext.getInstance().getUserService();
 
         User newUser = new User();
@@ -56,7 +58,8 @@ public class SignUpCommand implements ICommand {
             }
         } catch (DAOException e) {
             session.setAttribute("error", e.getMessage());
-            e.printStackTrace();
+            log.error(e.getMessage());
+            response = Path.ERROR;
         }
         return response;
     }

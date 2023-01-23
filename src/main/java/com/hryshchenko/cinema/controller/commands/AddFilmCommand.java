@@ -25,27 +25,27 @@ public class AddFilmCommand implements ICommand {
     private FilmService filmService = AppContext.getInstance().getFilmService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        FilmDTO filmDTO;
         MapperFilm mapperService = new MapperFilm();
 
         String forward = Path.COMMAND_ADMIN_FILMS;
         try {
-            filmDTO = getFilmDTO(req);
+            FilmDTO filmDTO = getFilmDTO(req);
             Film film = mapperService.getFilm(filmDTO);
             if(!filmService.createFilm(film)){
-                forward = Path.ERROR;
-                req.setAttribute("error","error in create new movie");
+                forward = Path.COMMAND_ERROR;
+                req.getSession().setAttribute("error", "error in create new movie on level BD");
             }
         } catch (DAOException | MapperException | FieldValidatorException e) {
             log.error(e.getMessage());
-            req.setAttribute("errorAddFilm",e.getMessage());
+            req.getSession().setAttribute("errorAddFilm",e.getMessage());
         }
 
-        sendRedirectRequest(resp, forward);
+        sendRedirectResponse(resp, forward);
+        log.info("new movies was added");
         return Path.COMMAND_REDIRECT;
     }
 
-    private void sendRedirectRequest(HttpServletResponse resp, String forward) {
+    private void sendRedirectResponse(HttpServletResponse resp, String forward) {
         try {
             resp.sendRedirect(forward);
         } catch (IOException e) {
@@ -66,8 +66,8 @@ public class AddFilmCommand implements ICommand {
         String descriptionUpdate = req.getParameter("description");
         long genreUpdate = Long.parseLong(req.getParameter("genre"));
 
+        validateDuration(req.getParameter("duration"));
         int durationUpdate = Integer.parseInt(req.getParameter("duration"));
-        validateDuration(durationUpdate);
 
         return new FilmDTO.FilmDTOBuilder(0)
                 .title(titleUpdate)

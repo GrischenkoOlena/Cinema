@@ -38,6 +38,7 @@ public class CommandFactory {
         commands.put("deleteFromBasket", new DeleteBasketCommand());
 
         commands.put("empty", new EmptyCommand());
+        commands.put("error", new ErrorCommand());
     }
 
     private CommandFactory() {}

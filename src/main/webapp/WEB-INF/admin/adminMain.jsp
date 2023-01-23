@@ -32,7 +32,7 @@
             </div>
             <div class="mb-3">
               <label for="date" class="form-label"> <fmt:message key="admin.main.new.label.date"/></label>
-              <input type="input" id="date" name="date" class="form-control">
+              <input type="date" id="date" name="date" class="form-control">
             </div>
             <div class="mb-3">
               <label for="time" class="form-label"> <fmt:message key="admin.main.new.label.time"/></label>
@@ -149,6 +149,8 @@
                     data-bs-target="#addNewSessionForm">
              <fmt:message key="admin.main.button.add"/>
           </button>
+          <div> <p class="text-danger"> ${errorAddScreening} </p></div>
+          <c:set var="errorAddScreening" value="" scope="session"/>
         </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>

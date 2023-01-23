@@ -59,13 +59,26 @@ public class DataValidator {
         return true;
     }
 
-    public static boolean validateDuration(Integer duration) throws FieldValidatorException {
+    public static boolean validateDuration(String durationString) throws FieldValidatorException {
+        int duration;
+        try {
+            duration = Integer.parseInt(durationString);
+        } catch (NumberFormatException e) {
+            throw new FieldValidatorException("field duration contents bad symbols");
+        }
         if(!(duration >= MIN_DURATION && duration <= MAX_DURATION))
             throw new FieldValidatorException("don't correct duration movie");
         return true;
     }
 
-    public static boolean validateBalance(Double balance) throws FieldValidatorException {
+    public static boolean validateBalance(String balanceString) throws FieldValidatorException {
+        double balance;
+        try {
+            balance = Double.parseDouble(balanceString);
+        } catch (NumberFormatException e) {
+            throw new FieldValidatorException("field balance contents bad symbols");
+        }
+
         if(!(balance >= MIN_BALANCE && balance <= MAX_BALANCE))
             throw new FieldValidatorException("don't correct balance user");
         return true;

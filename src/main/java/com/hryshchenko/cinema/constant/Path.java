@@ -26,6 +26,6 @@ public interface Path {
     String COMMAND_FREE_SEATS = "controller?action=freeSeats";
     String COMMAND_USER_TICKETS = "controller?action=tickets";
 
-
+    String COMMAND_ERROR = "controller?action=error";
 
 }

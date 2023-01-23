@@ -10,6 +10,8 @@ import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.dbservices.SeatService;
 import com.hryshchenko.cinema.service.mapper.MapperSeat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -32,7 +35,7 @@ public class BasketCommand implements ICommand {
         try {
             seat = new MapperSeat().getDTO(seatService.getSeatById(placeId).get());
         } catch (MapperException | DAOException e) {
-           e.printStackTrace();
+           log.error(e.getMessage());
         }
 
         String response = "";
@@ -45,10 +48,7 @@ public class BasketCommand implements ICommand {
             if(!seats.contains(seat)){
                 seats.add(seat);
             }
-            double cost = 0;
-            for(SeatDTO temp : seats){
-                cost += temp.getCategory().getPrice();
-            }
+            double cost = seats.stream().mapToDouble(temp -> temp.getCategory().getPrice()).sum();
             session.setAttribute("seats", seats);
             req.setAttribute("cost", cost);
             response = Path.TICKER_BASKET;
@@ -62,7 +62,7 @@ public class BasketCommand implements ICommand {
                 resp.sendRedirect(forward);
                 response = Path.COMMAND_REDIRECT;
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         return response;
