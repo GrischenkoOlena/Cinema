@@ -9,6 +9,8 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.model.dbservices.UserService;
 import com.hryshchenko.cinema.util.PasswordHashUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class LoginCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
+    private UserService userService = AppContext.getInstance().getUserService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -30,7 +34,6 @@ public class LoginCommand implements ICommand {
             return Path.LOGIN;
         }
 
-        UserService userService = AppContext.getInstance().getUserService();
         try {
             Optional<User> user = userService.getUserByLogin(login);
             if(user.isPresent()) {
@@ -59,7 +62,7 @@ public class LoginCommand implements ICommand {
                 response = Path.SIGN_UP;
             }
         } catch (DAOException | IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return response;
     }

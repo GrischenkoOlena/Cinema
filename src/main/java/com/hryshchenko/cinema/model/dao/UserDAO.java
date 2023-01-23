@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class UserDAO extends AbstractDAO <String, User> {
 
-    private final QueryExecutor<User> userQueryExecutor = new UserQueryExecutor();
+    private QueryExecutor<User> userQueryExecutor = new UserQueryExecutor();
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -89,6 +89,7 @@ public class UserDAO extends AbstractDAO <String, User> {
         }
         return result;
     }
+
     public List<User> findPageUsers(String order, long begin, long amount) throws DAOException {
         List<User> screenings;
         String query = Query.GET_ALL_USERS.replace("orderField", order);

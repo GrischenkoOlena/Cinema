@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TicketSeatDAO extends AbstractDAO <Integer, TicketSeat> {
-    private final QueryExecutor<TicketSeat> ticketSeatQueryExecutor = new TicketSeatQueryExecutor();
+    private QueryExecutor<TicketSeat> ticketSeatQueryExecutor = new TicketSeatQueryExecutor();
     @Override
     public List<TicketSeat> findAll() throws DAOException {
         return null;

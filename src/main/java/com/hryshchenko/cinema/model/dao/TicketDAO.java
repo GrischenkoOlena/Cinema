@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class TicketDAO extends AbstractDAO <Integer, Ticket> {
 
-    private final QueryExecutor<Ticket> ticketQueryExecutor = new TicketQueryExecutor();
+    private QueryExecutor<Ticket> ticketQueryExecutor = new TicketQueryExecutor();
     @Override
     public List<Ticket> findAll() throws DAOException {
         return null;
@@ -85,6 +85,7 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         }
         return result;
     }
+
     public List<Ticket> findPageTickets(String order, long userId, long begin, long amount) throws DAOException {
         List<Ticket> screenings;
         String query = Query.GET_TICKETS_BY_USER.replace("orderField", order);
@@ -107,6 +108,7 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         }
         return result;
     }
+
     public List<Ticket> findPageTicketsByUserDate(String order, long userId, LocalDate date, long begin, long amount)
             throws DAOException {
         List<Ticket> screenings;
@@ -125,7 +127,7 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
         try {
             result = ticketQueryExecutor.executeAndReturnAggregate(connection, Query.GET_NEXT_AUTOINCREMENT);
         } catch (SQLException e){
-            throw new DAOException("problem in find count of tickets by date", e);
+            throw new DAOException("problem in find next auto increment", e);
         }
         return result;
     }
