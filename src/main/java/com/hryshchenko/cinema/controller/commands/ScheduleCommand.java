@@ -11,6 +11,8 @@ import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperScreeningView;
 import com.hryshchenko.cinema.util.OrderMapUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ScheduleCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -71,7 +74,7 @@ public class ScheduleCommand implements ICommand {
             req.setAttribute("screenings", screenings);
             req.setAttribute("countPages", countPages);
         } catch (DAOException | MapperException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return Path.USER_MAIN;
     }

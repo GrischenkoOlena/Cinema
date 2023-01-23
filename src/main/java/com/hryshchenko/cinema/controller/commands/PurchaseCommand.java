@@ -13,6 +13,8 @@ import com.hryshchenko.cinema.model.dbservices.UserService;
 import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.business.BusinessTicketService;
 import com.hryshchenko.cinema.service.mapper.MapperUser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PurchaseCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -51,14 +54,15 @@ public class PurchaseCommand implements ICommand {
             session.setAttribute("errorBuyTicket", "Unfortunately place has sold recently");
             return Path.TICKER_BASKET;
         } catch (DAOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         try {
             resp.sendRedirect(Path.COMMAND_USER_TICKETS);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
+        log.info("Purchase ticket");
         return Path.COMMAND_REDIRECT;
     }
 }

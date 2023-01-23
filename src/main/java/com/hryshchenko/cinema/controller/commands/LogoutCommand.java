@@ -17,7 +17,7 @@ public class LogoutCommand implements ICommand {
         if (session != null) {
             session.invalidate();
         }
-        log.debug("Logout finished");
+        log.info("Logout finished");
         return Path.HOME;
     }
 }

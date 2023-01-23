@@ -11,6 +11,8 @@ import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperUser;
 import com.hryshchenko.cinema.util.OrderMapUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class CustomersCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -53,7 +56,7 @@ public class CustomersCommand implements ICommand {
             long countPages = usersPagination.getCountUserPages();
             req.setAttribute("countPages", countPages);
         } catch (DAOException | MapperException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return Path.ADMIN_CUSTOMERS;
     }

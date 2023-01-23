@@ -5,26 +5,69 @@ import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.exception.FieldValidatorException;
 import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.dbservices.FilmService;
 import com.hryshchenko.cinema.model.entity.Film;
 import com.hryshchenko.cinema.service.mapper.MapperFilm;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.hryshchenko.cinema.util.DataValidator.*;
+
 
 public class UpdateFilmCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        String forward = Path.COMMAND_ADMIN_FILMS;
+
+        FilmService filmService = AppContext.getInstance().getFilmService();
+        MapperFilm mapperService = new MapperFilm();
+        try {
+            FilmDTO filmDTO = getFilmDTO(req);
+            Film film = mapperService.getFilm(filmDTO);
+            if(!filmService.updateFilm(film)){
+                forward = Path.COMMAND_ERROR;
+                req.setAttribute("error","error in update film");
+            }
+        } catch (DAOException | MapperException | FieldValidatorException e) {
+            log.error(e.getMessage());
+        }
+
+        sendRedirectResponse(resp, forward);
+        return Path.COMMAND_REDIRECT;
+    }
+
+    private void sendRedirectResponse(HttpServletResponse resp, String forward) {
+        try {
+            resp.sendRedirect(forward);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private FilmDTO getFilmDTO(HttpServletRequest req) throws FieldValidatorException {
         long filmId = Long.parseLong(req.getParameter("filmId"));
         String titleUpdate = req.getParameter("title");
+        validateTitle(titleUpdate);
+
         String directorUpdate = req.getParameter("director");
+        validateDirector(directorUpdate);
+
         String castUpdate = req.getParameter("cast");
+        validateCast(castUpdate);
+
         String descriptionUpdate = req.getParameter("description");
+
+        validateDuration(req.getParameter("duration"));
         int durationUpdate = Integer.parseInt(req.getParameter("duration"));
-        FilmDTO filmDTO = new FilmDTO
+
+        return new FilmDTO
                 .FilmDTOBuilder(filmId)
                 .title(titleUpdate)
                 .director(directorUpdate)
@@ -32,26 +75,5 @@ public class UpdateFilmCommand implements ICommand {
                 .description(descriptionUpdate)
                 .duration(durationUpdate)
                 .build();
-
-        String forward = Path.COMMAND_ADMIN_FILMS;
-
-        FilmService filmService = AppContext.getInstance().getFilmService();
-        MapperFilm mapperService = new MapperFilm();
-        try {
-            Film film = mapperService.getFilm(filmDTO);
-            if(!filmService.updateFilm(film)){
-                forward = Path.ERROR;
-                req.setAttribute("error","error in update film");
-            }
-        } catch (DAOException | MapperException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Path.COMMAND_REDIRECT;
     }
 }

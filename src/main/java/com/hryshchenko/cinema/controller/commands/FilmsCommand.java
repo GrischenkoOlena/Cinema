@@ -15,6 +15,8 @@ import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperFilm;
 import com.hryshchenko.cinema.service.mapper.MapperGenre;
 import com.hryshchenko.cinema.util.OrderMapUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class FilmsCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -89,7 +92,7 @@ public class FilmsCommand implements ICommand {
             List<GenreDTO> genres = mapperServiceGenre.getListDTO(genreList);
             req.setAttribute("genres", genres);
         } catch (DAOException | MapperException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return Path.ADMIN_FILMS;

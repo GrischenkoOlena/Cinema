@@ -52,13 +52,18 @@ public class LoginCommand implements ICommand {
                     session.removeAttribute("errorBuyTicket");
                     session.setAttribute("user", user.get());
                     session.setAttribute("userRole", userRole);
+                    log.info("user " + login + " is login");
                 } catch (IncorrectPasswordException e) {
                     req.setAttribute("login", login);
-                    req.setAttribute("error", "Login or password isn't correct");
+                    String errorMessage = "Login or password isn't correct";
+                    req.setAttribute("error", errorMessage);
+                    log.error(errorMessage);
                     response = Path.LOGIN;
                 }
             } else {
-                req.setAttribute("error", "Login isn't exists");
+                String errorMessage = "Login isn't exists";
+                req.setAttribute("error", errorMessage);
+                log.error(errorMessage);
                 response = Path.SIGN_UP;
             }
         } catch (DAOException | IOException e) {

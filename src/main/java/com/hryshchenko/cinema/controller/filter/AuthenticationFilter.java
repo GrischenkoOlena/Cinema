@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
                         value = "customers screenings films attendance updateBalance addScreening updateScreening addFilm updateFilm"),
                 @WebInitParam(name = "client", value = "tickets schedule"),
                 @WebInitParam(name = "common", value = "logout i18n profile purchase updateProfile basket deleteFromBasket"),
-                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket")
+                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket error")
         })
 public class AuthenticationFilter implements Filter {
     private static final Logger log = LogManager.getLogger();

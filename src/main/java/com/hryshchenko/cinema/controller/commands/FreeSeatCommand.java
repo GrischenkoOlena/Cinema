@@ -14,6 +14,8 @@ import com.hryshchenko.cinema.model.dbservices.ScreeningService;
 import com.hryshchenko.cinema.model.dbservices.SeatService;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperScreening;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class FreeSeatCommand implements ICommand {
+    private static final Logger log = LogManager.getLogger();
     private final ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
     private final SeatService seatServ = AppContext.getInstance().getSeatService();
     private final CategoryService categoryServ = AppContext.getInstance().getCategoryService();
@@ -45,7 +48,7 @@ public class FreeSeatCommand implements ICommand {
             req.setAttribute("categories", categories);
 
         } catch (DAOException | MapperException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return Path.FREE_SEAT;
     }

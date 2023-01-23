@@ -78,25 +78,24 @@ public class DataValidatorTest {
 
     @Test
     public void validateDurationTest() throws FieldValidatorException {
-        int duration = 15;
-        assertTrue(DataValidator.validateDuration(duration));
+        assertTrue(DataValidator.validateDuration("15"));
     }
     @Test
     public void validateBadDurationTest() {
-        int duration = 5;
-        assertThrows(FieldValidatorException.class, ()->DataValidator.validateDuration(duration));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateDuration("5"));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateDuration("-10"));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateDuration("abc"));
     }
 
     @Test
     public void validateBalanceTest() throws FieldValidatorException {
-        double balance = 250.0;
-        assertTrue(DataValidator.validateBalance(balance));
+        assertTrue(DataValidator.validateBalance("250.0"));
     }
     @Test
     public void validateBadBalanceTest() {
-        double balance = 25000.0;
-        assertThrows(FieldValidatorException.class, ()->DataValidator.validateBalance(balance));
-        assertThrows(FieldValidatorException.class, ()->DataValidator.validateBalance(-1.0));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateBalance("25000.0"));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateBalance("-1.0"));
+        assertThrows(FieldValidatorException.class, ()->DataValidator.validateBalance("abc"));
     }
 
 
