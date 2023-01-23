@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryDAO extends AbstractDAO <Integer, Category> {
-    private final QueryExecutor<Category> categoryQueryExecutor = new CategoryQueryExecutor();
+    private QueryExecutor<Category> categoryQueryExecutor = new CategoryQueryExecutor();
 
     @Override
     public List<Category> findAll() throws DAOException {

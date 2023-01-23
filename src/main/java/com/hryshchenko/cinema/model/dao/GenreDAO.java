@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class GenreDAO extends AbstractDAO<Integer, Genre>{
 
-    private final QueryExecutor<Genre> genreQueryExecutor = new GenreQueryExecutor();
+    private QueryExecutor<Genre> genreQueryExecutor = new GenreQueryExecutor();
 
     @Override
     public List<Genre> findAll() throws DAOException {

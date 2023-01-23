@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class ScreeningDAO extends AbstractDAO <Long, Screening> {
 
-    private final QueryExecutor<Screening> screeningQueryExecutor = new ScreeningQueryExecutor();
+    private QueryExecutor<Screening> screeningQueryExecutor = new ScreeningQueryExecutor();
     @Override
     public List<Screening> findAll() throws DAOException {
         List<Screening> screenings;
