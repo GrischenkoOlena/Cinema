@@ -61,17 +61,18 @@
                   <td>${ticket.screening.timeBegin}</td>
                   <td>
                     <c:forEach var="seat" items="${ticket.seats}">
-                      seat (${seat.line}, ${seat.place}), ${seat.category} <br>
+                      <fmt:message key="user.tickets.table.content.seat"/>(${seat.line}, ${seat.place}),
+                      <fmt:message key="user.tickets.table.content.price"/>=${seat.category.price} <br>
                     </c:forEach>
                   </td>
                   <td>
-                    <form action="controller" method="POST">
+                    <!--<form action="controller" method="POST">
                       <input type="hidden" name="action" value="turnTicket"/>
                       <input type="hidden" name="ticket" value=${ticket.id} />
                       <button class="btn btn-success" type="submit">
                         <fmt:message key="user.tickets.table.button"/>
                       </button>
-                    </form>
+                    </form>-->
                   </td>
               </tr>
             </c:forEach>
