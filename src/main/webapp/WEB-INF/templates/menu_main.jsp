@@ -10,9 +10,9 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary"><fmt:message key="main.menu.home"/></a></li>
-        <li><a href="#" class="nav-link px-2 link-dark"><fmt:message key="main.menu.pricing"/></a></li>
-        <li><a href="#" class="nav-link px-2 link-dark"><fmt:message key="main.menu.about"/></a></li>
+       <!-- <li><a href="#" class="nav-link px-2 link-secondary"><fmt:message key="main.menu.home"/></a></li>
+        <li><a href="static/price.jsp" class="nav-link px-2 link-dark"><fmt:message key="main.menu.pricing"/></a></li>
+        <li><a href="static/about.jsp" class="nav-link px-2 link-dark"><fmt:message key="main.menu.about"/></a></li>-->
         <c:if test = "${not empty user}">
             <c:if test="${userRole.id == 1}">
               <c:set var="hrefAccount" value="controller?action=screenings"/>
@@ -26,7 +26,8 @@
 
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            ${sessionScope.lang}
+            <c:if test="${not empty sessionScope.lang}"> ${sessionScope.lang}</c:if>
+            <c:if test="${empty sessionScope.lang}">en</c:if>
         </button>
         <div class="dropdown-menu">
            <form class="form-inline" method="post" action="?${pageContext.request.queryString}">
