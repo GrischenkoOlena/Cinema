@@ -27,7 +27,7 @@
                   <label for="paramInput" class="form-label">
                     <fmt:message key="admin.customers.modal.label.balance"/>
                   </label>
-                  <input class="form-control" type="text" id="paramInput" name="updateValue">
+                  <input class="form-control" type="text" id="paramInput" name="updateBalance">
                   <input type="hidden" id="userLogin" name="userLogin">
                 </div>
                 <div class="modal-footer">
