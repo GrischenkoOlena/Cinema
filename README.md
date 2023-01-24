@@ -13,3 +13,5 @@ The registered user must be able to purchase a ticket for the selected session.
 
 The administrator can schedule a new movie, cancel the movie, view the attendance of the
 hall.
+
+![img_1.png](img_1.png)
