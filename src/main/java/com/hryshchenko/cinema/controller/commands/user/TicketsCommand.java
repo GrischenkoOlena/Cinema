@@ -1,15 +1,16 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.user;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
-import com.hryshchenko.cinema.dto.UserDTO;
+import com.hryshchenko.cinema.dto.TicketDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
+import com.hryshchenko.cinema.model.entity.Ticket;
 import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
-import com.hryshchenko.cinema.service.mapper.MapperUser;
+import com.hryshchenko.cinema.service.mapper.MapperTicket;
 import com.hryshchenko.cinema.util.OrderMapUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,23 +20,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class CustomersCommand implements ICommand {
+public class TicketsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+
         if (req.getParameter("btnApplySort") != null) {
-            session.removeAttribute("orderCustomers");
+            session.removeAttribute("orderTickets");
         }
 
         String order = req.getParameter("order");
-        String orderSession = (String) session.getAttribute("orderCustomers");
+        String orderSession = (String) session.getAttribute("orderTickets");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
-            order = "defaultCustomer";
+            order = "defaultTicket";
         } else {
-            session.setAttribute("orderCustomers", order);
+            session.setAttribute("orderTickets", order);
         }
         String orderBD = new OrderMapUtil().getOrderBD(order);
 
@@ -46,18 +49,20 @@ public class CustomersCommand implements ICommand {
             page = 1;
         }
 
-        Pagination usersPagination = new Pagination(AppContext.getInstance());
-        IMapperService<User, UserDTO> mapperService = new MapperUser();
+        Pagination ticketPagination = new Pagination(AppContext.getInstance());
+        IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
         try {
-            List<User> usersList = usersPagination.getUsersPage(orderBD, page);
-            List<UserDTO> users = mapperService.getListDTO(usersList);
-            req.setAttribute("users", users);
+            List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(orderBD, user.getId(), page);
 
-            long countPages = usersPagination.getCountUserPages();
+            List<TicketDTO> ticketDTOList = mapperService.getListDTO(ticketList);
+            req.setAttribute("tickets", ticketDTOList);
+
+            long countPages = ticketPagination.getCountTicketPagesByUser(user.getId());
             req.setAttribute("countPages", countPages);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
-        return Path.ADMIN_CUSTOMERS;
+
+        return Path.USER_TICKETS;
     }
 }

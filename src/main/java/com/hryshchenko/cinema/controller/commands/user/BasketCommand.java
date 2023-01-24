@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.user;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.constant.enums.UserRole;
@@ -30,13 +30,7 @@ public class BasketCommand implements ICommand {
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
         int placeId = Integer.parseInt(req.getParameter("placeId"));
 
-        SeatService seatService = AppContext.getInstance().getSeatService();
-        SeatDTO seat = new SeatDTO();
-        try {
-            seat = new MapperSeat().getDTO(seatService.getSeatById(placeId).get());
-        } catch (MapperException | DAOException e) {
-           log.error(e.getMessage());
-        }
+        SeatDTO seat = getSeatDTO(placeId);
 
         String response = "";
         if(userRole != null){
@@ -56,7 +50,7 @@ public class BasketCommand implements ICommand {
             try {
                 String message = "You have to register to buy ticket";
                 req.setAttribute("errorUnregister", message);
-                session.setAttribute("error",message);
+                session.setAttribute("errorUnregister",message);
                 long screeningId = screening.getId();
                 String forward = Path.COMMAND_FREE_SEATS + "&screeningId=" + screeningId;
                 resp.sendRedirect(forward);
@@ -66,5 +60,16 @@ public class BasketCommand implements ICommand {
             }
         }
         return response;
+    }
+
+    private SeatDTO getSeatDTO(int placeId) {
+        SeatService seatService = AppContext.getInstance().getSeatService();
+        SeatDTO seat = new SeatDTO();
+        try {
+            seat = new MapperSeat().getDTO(seatService.getSeatById(placeId).get());
+        } catch (MapperException | DAOException e) {
+           log.error(e.getMessage());
+        }
+        return seat;
     }
 }
