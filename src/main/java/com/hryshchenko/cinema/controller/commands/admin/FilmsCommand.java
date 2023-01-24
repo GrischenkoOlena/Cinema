@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.admin;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;

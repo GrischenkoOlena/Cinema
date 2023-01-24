@@ -1,6 +1,8 @@
 package com.hryshchenko.cinema.controller.commandFactory;
 
 import com.hryshchenko.cinema.controller.commands.*;
+import com.hryshchenko.cinema.controller.commands.admin.*;
+import com.hryshchenko.cinema.controller.commands.user.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class CommandFactory {
         commands.put("purchase", new PurchaseCommand());
         commands.put("basket", new BasketCommand());
         commands.put("deleteFromBasket", new DeleteBasketCommand());
+        commands.put("turnTicket", new TurnTicketCommand());
 
         commands.put("empty", new EmptyCommand());
         commands.put("error", new ErrorCommand());

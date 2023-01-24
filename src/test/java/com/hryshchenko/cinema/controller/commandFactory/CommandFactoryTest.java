@@ -1,6 +1,7 @@
 package com.hryshchenko.cinema.controller.commandFactory;
 
 import com.hryshchenko.cinema.controller.commands.*;
+import com.hryshchenko.cinema.controller.commands.admin.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
