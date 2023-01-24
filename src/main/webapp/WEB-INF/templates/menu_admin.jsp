@@ -34,7 +34,8 @@
 
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            ${sessionScope.lang}
+            <c:if test="${not empty sessionScope.lang}"> ${sessionScope.lang}</c:if>
+            <c:if test="${empty sessionScope.lang}">en</c:if>
         </button>
         <div class="dropdown-menu">
            <form class="form-inline" method="post" action="?${pageContext.request.queryString}">

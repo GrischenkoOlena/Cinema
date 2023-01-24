@@ -16,7 +16,8 @@
     </script>
 
     <div class="container">
-        <p><fmt:message key="main.schedule.message"/></p>
+        <p><c:if test="${not empty screenings}"><fmt:message key="main.schedule.message"/></c:if></p>
+        <p><c:if test="${empty screenings}"><fmt:message key="main.schedule.message.without"/></c:if></p>
             <table class="table table-striped">
                 <tbody>
                 <c:forEach var="screening" items="${screenings}">

@@ -45,6 +45,7 @@
             </c:forEach>
         </p>
         <div> <p class="text-danger"> ${errorUnregister} </p></div>
+        <c:set var="errorUnregister" value="" scope="session"/>
     </div>
 </body>
 </html>
