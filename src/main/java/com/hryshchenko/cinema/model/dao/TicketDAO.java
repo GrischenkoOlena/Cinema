@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class TicketDAO extends AbstractDAO <Integer, Ticket> {
+public class TicketDAO extends AbstractDAO <Long, Ticket> {
 
     private QueryExecutor<Ticket> ticketQueryExecutor = new TicketQueryExecutor();
     @Override
@@ -20,7 +20,7 @@ public class TicketDAO extends AbstractDAO <Integer, Ticket> {
     }
 
     @Override
-    public Optional<Ticket> findEntityByKey(Integer id) throws DAOException {
+    public Optional<Ticket> findEntityByKey(Long id) throws DAOException {
         Ticket ticket;
         try {
             ticket = ticketQueryExecutor.executeAndReturnValue(connection, Query.GET_TICKET_BY_ID, id);

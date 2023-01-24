@@ -2,15 +2,13 @@ package com.hryshchenko.cinema.model.dbservices;
 
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dao.TicketDAO;
-import com.hryshchenko.cinema.model.dao.TicketSeatDAO;
-import com.hryshchenko.cinema.model.dao.UserDAO;
 import com.hryshchenko.cinema.model.entity.Ticket;
-import com.hryshchenko.cinema.model.entity.TicketSeat;
-import com.hryshchenko.cinema.model.entity.User;
 
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 public class TicketService implements ICinemaService {
     private final TicketDAO ticketDAO;
@@ -52,34 +50,11 @@ public class TicketService implements ICinemaService {
         return count;
     }
 
-    public boolean createTicket(Ticket ticket, List<TicketSeat> seats, User user) throws DAOException {
-        UserDAO userDAO = new UserDAO();
-        TicketSeatDAO ticketSeatDAO = new TicketSeatDAO();
-
-        EntityTransaction entityTransaction = new EntityTransaction();
-
-        entityTransaction.initTransaction(ticketDAO, userDAO, ticketSeatDAO);
-        if (!ticketDAO.create(ticket)){
-            entityTransaction.rollback();
-            entityTransaction.endTransaction();
-            return false;
-        }
-        long ticket_id = ticketDAO.findNextAutoIncrement();
-        for(TicketSeat seat : seats){
-            seat.setTicketId(ticket_id);
-            if(!ticketSeatDAO.create(seat)){
-                entityTransaction.rollback();
-                entityTransaction.endTransaction();
-                return false;
-            }
-        }
-        if(!userDAO.update(user)){
-            entityTransaction.rollback();
-            entityTransaction.endTransaction();
-            return false;
-        }
-        entityTransaction.commit();
-        entityTransaction.endTransaction();
-        return true;
+    public Optional<Ticket> getTicketById(long ticketId) throws DAOException {
+        Connection conn = dbManager.getConnection();
+        ticketDAO.setConnection(conn);
+        Optional<Ticket> ticket = ticketDAO.findEntityByKey(ticketId);
+        dbManager.closeConnection(conn);
+        return ticket;
     }
 }

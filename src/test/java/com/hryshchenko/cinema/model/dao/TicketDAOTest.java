@@ -40,8 +40,8 @@ class TicketDAOTest {
         Mockito.when(queryExecutor
                         .executeAndReturnValue(Mockito.any(), Mockito.anyString(), Mockito.anyInt()))
                         .thenReturn(testTicket);
-        assertTrue(dao.findEntityByKey(1).isPresent());
-        assertEquals(testTicket, dao.findEntityByKey(1).get());
+        assertTrue(dao.findEntityByKey(1L).isPresent());
+        assertEquals(testTicket, dao.findEntityByKey(1L).get());
     }
 
     @Test

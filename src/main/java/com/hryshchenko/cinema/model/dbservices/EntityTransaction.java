@@ -14,9 +14,8 @@ public class EntityTransaction {
 
     @SafeVarargs
     public final void initTransaction(AbstractDAO dao, AbstractDAO... daos) {
-        if (connection == null) {
-            connection = dbManager.getConnection();
-        }
+        connection = dbManager.getConnection();
+
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -31,7 +30,7 @@ public class EntityTransaction {
     public void endTransaction() {
         try {
             connection.setAutoCommit(true);
-            connection.close();
+            dbManager.closeConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }

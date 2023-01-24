@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
         initParams = {
                 @WebInitParam(name = "admin",
                         value = "customers screenings films attendance updateBalance addScreening updateScreening addFilm updateFilm"),
-                @WebInitParam(name = "client", value = "tickets schedule"),
-                @WebInitParam(name = "common", value = "logout i18n profile purchase updateProfile basket deleteFromBasket"),
+                @WebInitParam(name = "client", value = "tickets schedule purchase basket deleteFromBasket turnTicket"),
+                @WebInitParam(name = "common", value = "logout i18n profile updateProfile"),
                 @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket error")
         })
 public class AuthenticationFilter implements Filter {

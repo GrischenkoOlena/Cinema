@@ -24,6 +24,7 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
     public TicketDTO getDTO(Ticket entity) throws MapperException {
         TicketDTO ticketDTO = new TicketDTO();
 
+        ticketDTO.setId(entity.getId());
         ticketDTO.setScreening(getScreeningDTO(entity.getScreeningId()));
         ticketDTO.setUser(getUserDTO(entity.getUserId()));
 

@@ -65,6 +65,7 @@ public interface Query {
     String GET_NEXT_AUTOINCREMENT = "SELECT max(ticket_id) FROM ticket";
 
     String CREATE_TICKET_SEAT = "INSERT INTO ticket_seat (ticket_id, seat_id) VALUES (?, ?)";
+    String DELETE_TICKET_SEAT = "DELETE FROM ticket_seat WHERE ticket_id = ?";
 
     String GET_SEATS_BY_TICKET = "SELECT * FROM seat " +
             "WHERE seat_id IN (SELECT seat_id from ticket_seat WHERE ticket_id = ?)";

@@ -29,25 +29,32 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BusinessTicketService {
     private static final Logger log = LogManager.getLogger();
     private static final Lock MUTEX = new ReentrantLock();
-    public boolean buyTicket(TicketDTO ticketDTO) throws NotEnoughMoneyException, SeatHasSoldException {
-        double cost = ticketDTO.getSeats().stream().mapToDouble(temp -> temp.getCategory().getPrice()).sum();
 
-        Ticket ticket = new MapperTicket().getTicket(ticketDTO);
-        User user = new MapperUser().getUser(ticketDTO.getUser());
+    private TicketDAO ticketDAO = new TicketDAO();
+    private UserDAO userDAO = new UserDAO();
+    private TicketSeatDAO ticketSeatDAO = new TicketSeatDAO();
+    private EntityTransaction entityTransaction = new EntityTransaction();
+
+    private MapperTicket mapperTicket = new MapperTicket();
+    private MapperUser mapperUser = new MapperUser();
+    private MapperSeat mapperSeat = new MapperSeat();
+
+    private SeatService seatService = AppContext.getInstance().getSeatService();
+
+    public boolean buyTicket(TicketDTO ticketDTO) throws NotEnoughMoneyException, SeatHasSoldException {
+        double cost = getCost(ticketDTO);
+
+        Ticket ticket = mapperTicket.getTicket(ticketDTO);
+        User user = mapperUser.getUser(ticketDTO.getUser());
         if(user.getBalance() > cost){
             user.setBalance(user.getBalance() - cost);
         } else {
             throw new NotEnoughMoneyException("you don't have enough money to buy ticket");
         }
-        List<TicketSeat> ticketHasSeats = new ArrayList<>();
-        for(SeatDTO seatDTO : ticketDTO.getSeats()){
-            TicketSeat ticketSeat = new TicketSeat();
-            ticketSeat.setSeatId((int) seatDTO.getId());
-            ticketHasSeats.add(ticketSeat);
-        }
-        List<Seat> seats = new MapperSeat().getListSeat(ticketDTO.getSeats());
 
-        SeatService seatService = AppContext.getInstance().getSeatService();
+        List<TicketSeat> ticketHasSeats = getTicketHasSeats(ticketDTO);
+        List<Seat> seats = mapperSeat.getListSeat(ticketDTO.getSeats());
+
         boolean result;
         try {
             MUTEX.lock();
@@ -67,13 +74,38 @@ public class BusinessTicketService {
         return result;
     }
 
+    public boolean turnTicket(TicketDTO ticketDTO){
+        Ticket ticket = mapperTicket.getTicket(ticketDTO);
+
+        User user = mapperUser.getUser(ticketDTO.getUser());
+        double cost = getCost(ticketDTO);
+        user.setBalance(user.getBalance() + cost);
+
+        boolean result;
+        try {
+            result = deleteTicket(ticket, user);
+        } catch (DAOException e) {
+            log.error(e.getMessage());
+            return false;
+        }
+        return result;
+    }
+
+    private List<TicketSeat> getTicketHasSeats(TicketDTO ticketDTO) {
+        List<TicketSeat> ticketHasSeats = new ArrayList<>();
+        for(SeatDTO seatDTO : ticketDTO.getSeats()){
+            TicketSeat ticketSeat = new TicketSeat();
+            ticketSeat.setSeatId((int) seatDTO.getId());
+            ticketHasSeats.add(ticketSeat);
+        }
+        return ticketHasSeats;
+    }
+
+    private double getCost(TicketDTO ticketDTO) {
+        return ticketDTO.getSeats().stream().mapToDouble(temp -> temp.getCategory().getPrice()).sum();
+    }
+
     private boolean createTicket(Ticket ticket, List<TicketSeat> seats, User user) throws DAOException{
-        TicketDAO ticketDAO = new TicketDAO();
-        UserDAO userDAO = new UserDAO();
-        TicketSeatDAO ticketSeatDAO = new TicketSeatDAO();
-
-        EntityTransaction entityTransaction = new EntityTransaction();
-
         entityTransaction.initTransaction(ticketDAO, userDAO, ticketSeatDAO);
         if (!ticketDAO.create(ticket)){
             entityTransaction.rollback();
@@ -88,6 +120,31 @@ public class BusinessTicketService {
                 entityTransaction.endTransaction();
                 return false;
             }
+        }
+        if(!userDAO.update(user)){
+            entityTransaction.rollback();
+            entityTransaction.endTransaction();
+            return false;
+        }
+        entityTransaction.commit();
+        entityTransaction.endTransaction();
+        return true;
+    }
+
+    private boolean deleteTicket(Ticket ticket, User user) throws DAOException {
+        entityTransaction.initTransaction(ticketDAO, userDAO, ticketSeatDAO);
+
+        TicketSeat ticketSeat = new TicketSeat();
+        ticketSeat.setTicketId(ticket.getId());
+        if (!ticketSeatDAO.delete(ticketSeat)) {
+            entityTransaction.rollback();
+            entityTransaction.endTransaction();
+            return false;
+        }
+        if (!ticketDAO.delete(ticket)){
+            entityTransaction.rollback();
+            entityTransaction.endTransaction();
+            return false;
         }
         if(!userDAO.update(user)){
             entityTransaction.rollback();
