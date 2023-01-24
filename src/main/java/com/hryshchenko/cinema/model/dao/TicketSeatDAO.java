@@ -24,7 +24,13 @@ public class TicketSeatDAO extends AbstractDAO <Integer, TicketSeat> {
 
     @Override
     public boolean delete(TicketSeat ticketSeat) throws DAOException {
-        return false;
+        boolean result;
+        try {
+            result = ticketSeatQueryExecutor.execute(connection, Query.DELETE_TICKET_SEAT, ticketSeat.getTicketId());
+        } catch (SQLException e){
+            throw new DAOException("problem in delete ticket", e);
+        }
+        return result;
     }
 
     @Override

@@ -66,18 +66,19 @@
                     </c:forEach>
                   </td>
                   <td>
-                    <!--<form action="controller" method="POST">
+                    <form action="controller" method="POST">
                       <input type="hidden" name="action" value="turnTicket"/>
-                      <input type="hidden" name="ticket" value=${ticket.id} />
+                      <input type="hidden" name="ticketId" value="${ticket.id}" />
                       <button class="btn btn-success" type="submit">
                         <fmt:message key="user.tickets.table.button"/>
                       </button>
-                    </form>-->
+                    </form>
                   </td>
               </tr>
             </c:forEach>
           </tbody>
       </table>
+      <c:set var="tickets" value="${tickets}" scope="session"/>
     </div>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
