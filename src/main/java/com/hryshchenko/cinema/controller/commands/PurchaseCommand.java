@@ -34,11 +34,7 @@ public class PurchaseCommand implements ICommand {
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
 
-        TicketDTO ticketDTO = new TicketDTO();
-        ticketDTO.setUser(new MapperUser().getDTO(user));
-        ticketDTO.setScreening(screening);
-        ticketDTO.setTicketCount(seats.size());
-        ticketDTO.setSeats(seats);
+        TicketDTO ticketDTO = getTicketDTO(user, screening, seats);
 
         BusinessTicketService ticketService = new BusinessTicketService();
         try {
@@ -62,7 +58,17 @@ public class PurchaseCommand implements ICommand {
             log.error(e.getMessage());
         }
 
+        session.removeAttribute("seats");
         log.info("Purchase ticket");
         return Path.COMMAND_REDIRECT;
+    }
+
+    private TicketDTO getTicketDTO(User user, ScreeningDTO screening, List<SeatDTO> seats) {
+        TicketDTO ticketDTO = new TicketDTO();
+        ticketDTO.setUser(new MapperUser().getDTO(user));
+        ticketDTO.setScreening(screening);
+        ticketDTO.setTicketCount(seats.size());
+        ticketDTO.setSeats(seats);
+        return ticketDTO;
     }
 }
