@@ -38,7 +38,7 @@ class TicketDAOTest {
     @Test
     void findEntityByKeyTest() throws SQLException, DAOException {
         Mockito.when(queryExecutor
-                        .executeAndReturnValue(Mockito.any(), Mockito.anyString(), Mockito.anyInt()))
+                        .executeAndReturnValue(Mockito.any(), Mockito.anyString(), Mockito.anyLong()))
                         .thenReturn(testTicket);
         assertTrue(dao.findEntityByKey(1L).isPresent());
         assertEquals(testTicket, dao.findEntityByKey(1L).get());

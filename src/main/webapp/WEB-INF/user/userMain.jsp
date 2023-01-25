@@ -36,14 +36,14 @@
               </div>
             </div>
 
-            <c:set var="checkedFilter" value="${sessionScope.filter}" />
+            <!--<c:set var="checkedFilter" value="${sessionScope.filter}" />
             <div class="form-check col-auto">
               <label class="form-check-label" for="flexCheck">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheck"
                 name="filter" <c:if test="${filterScreening == 'checked'}" > checked </c:if>>
                 <fmt:message key="user.main.label.filter"/>
               </label>
-            </div>
+            </div>-->
             <input type="hidden" name="action" value="schedule">
           </form>
 
