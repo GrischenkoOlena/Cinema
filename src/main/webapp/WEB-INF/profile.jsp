@@ -50,7 +50,7 @@
     <table class="w-50 table table-primary table-sm">
       <tbody>
         <tr>
-          <th scope="row" class="col-md-3"><fmt:message key="profile.login"/>Login</th>
+          <th scope="row" class="col-md-3"><fmt:message key="profile.login"/></th>
           <td class="col-md-6">${user.login}</td>
         </tr>
         <tr>

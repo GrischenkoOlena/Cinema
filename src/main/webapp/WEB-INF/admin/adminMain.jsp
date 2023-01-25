@@ -155,7 +155,6 @@
               </tbody>
           </table>
 
-          <br>
           <button type="button" class="btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#addNewSessionForm">
              <fmt:message key="admin.main.button.add"/>
