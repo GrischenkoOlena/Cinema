@@ -86,7 +86,7 @@ public interface Query {
                 "AND state = 'active' orderField LIMIT ?, ?";
 
     String GET_ATTENDANCE = "SELECT film_date, count(*), count(distinct title), sum(amount_free_places) " +
-            "FROM screeningWithSeat GROUP BY film_date LIMIT ?, ?";
+            "FROM screeningWithSeat GROUP BY film_date ORDER BY film_date DESC LIMIT ?, ?";
 
     String COUNT_DATE_ATTENDANCE = "SELECT count(distinct film_date) FROM screeningWithSeat";
 
