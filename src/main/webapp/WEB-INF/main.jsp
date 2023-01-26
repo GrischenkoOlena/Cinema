@@ -27,7 +27,7 @@
                         <td>${screening.timeBegin}</td>
                         <td>${screening.state}</td>
                         <td>
-                            <form action="controller" method="POST">
+                            <form action="controller" method="GET">
                             <input type="hidden" name="action" value="freeSeats"/>
                             <input type="hidden" name="screeningId" value=${screening.id} />
                             <button type="submit" class="btn btn-success">

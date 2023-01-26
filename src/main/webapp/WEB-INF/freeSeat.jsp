@@ -24,7 +24,7 @@
                 <div class="row align-items-center">
                     <fmt:message key="freeSeat.row"/> ${theCount.index + 1}
                     <c:forEach var="place" items="${row}">
-                        <div class="col-sm-1 p-3 border">
+                        <div class="col-sm-1 p-2 border">
                             <tags:viewSeat placeAttr="${place}"/>
                         </div>
                     </c:forEach>
