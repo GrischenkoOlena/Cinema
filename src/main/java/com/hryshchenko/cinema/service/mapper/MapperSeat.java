@@ -7,6 +7,7 @@ import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.dbservices.CategoryService;
+import com.hryshchenko.cinema.model.dbservices.SeatService;
 import com.hryshchenko.cinema.model.entity.Category;
 import com.hryshchenko.cinema.model.entity.Seat;
 
@@ -15,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class MapperSeat implements IMapperService<Seat, SeatDTO> {
+    private SeatService seatService = AppContext.getInstance().getSeatService();
+    private CategoryService categoryService = AppContext.getInstance().getCategoryService();
+    private IMapperService<Category, CategoryDTO> mapperService = new MapperCategory();
     @Override
     public SeatDTO getDTO(Seat entity) throws MapperException {
         SeatDTO seatDTO = new SeatDTO();
@@ -36,9 +40,6 @@ public class MapperSeat implements IMapperService<Seat, SeatDTO> {
     }
 
     private CategoryDTO getCategoryById(int id) throws MapperException {
-        CategoryService categoryService = AppContext.getInstance().getCategoryService();
-        IMapperService<Category, CategoryDTO> mapperService = new MapperCategory();
-
         try {
             Optional<Category> category = categoryService.getCategoryByID(id);
             if (category.isPresent()) {
@@ -65,5 +66,17 @@ public class MapperSeat implements IMapperService<Seat, SeatDTO> {
             seats.add(getSeat(seatDTO));
         }
         return seats;
+    }
+
+    public SeatDTO getSeatDTObyID(int seatId) throws MapperException {
+        try {
+            Optional<Seat> seat = seatService.getSeatById(seatId);
+            if(seat.isPresent()){
+                return getDTO(seat.get());
+            }
+        } catch (DAOException e) {
+            throw new MapperException("problem with mapping seat by Id", e);
+        }
+        throw new MapperException("such seatId is absent in BD");
     }
 }
