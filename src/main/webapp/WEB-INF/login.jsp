@@ -14,7 +14,7 @@
       <form action="controller" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label"><fmt:message key="login.label.email"/></label>
-          <input type="email" name="login" class="form-control" id="email" aria-describedby="emailHelp">
+          <input type="email" name="login" class="form-control" id="email" aria-describedby="emailHelp" value="${login}">
           <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         </div>
         <div class="mb-3">
@@ -26,6 +26,7 @@
         </button>
 
         <input type="hidden" name="error"/>
+        <div> <p class="text-danger"> ${error} </p></div>
       </form>
      </div>
      
