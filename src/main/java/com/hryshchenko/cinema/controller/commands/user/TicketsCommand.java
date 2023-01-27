@@ -22,6 +22,9 @@ import java.util.List;
 
 public class TicketsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private Pagination ticketPagination = new Pagination(AppContext.getInstance());
+    private IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -31,26 +34,9 @@ public class TicketsCommand implements ICommand {
             session.removeAttribute("orderTickets");
         }
 
-        String order = req.getParameter("order");
-        String orderSession = (String) session.getAttribute("orderTickets");
-        order = orderSession != null ? orderSession : order;
+        String orderBD = getOrderBD(req, session);
+        long page = getPage(req);
 
-        if(order == null || order.isEmpty()){
-            order = "defaultTicket";
-        } else {
-            session.setAttribute("orderTickets", order);
-        }
-        String orderBD = new OrderMapUtil().getOrderBD(order);
-
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-
-        Pagination ticketPagination = new Pagination(AppContext.getInstance());
-        IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
         try {
             List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(orderBD, user.getId(), page);
 
@@ -64,5 +50,28 @@ public class TicketsCommand implements ICommand {
         }
 
         return Path.USER_TICKETS;
+    }
+
+    private long getPage(HttpServletRequest req) {
+        long page;
+        try {
+            page = Long.parseLong(req.getParameter("page"));
+        } catch (NumberFormatException e){
+            page = 1;
+        }
+        return page;
+    }
+
+    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderTickets");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultTicket";
+        } else {
+            session.setAttribute("orderTickets", order);
+        }
+        return new OrderMapUtil().getOrderBD(order);
     }
 }

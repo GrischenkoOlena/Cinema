@@ -26,6 +26,9 @@ import java.util.Optional;
 
 public class PurchaseCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private UserService userService = AppContext.getInstance().getUserService();
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -39,7 +42,6 @@ public class PurchaseCommand implements ICommand {
         BusinessTicketService ticketService = new BusinessTicketService();
         try {
             if(ticketService.buyTicket(ticketDTO)){
-                UserService userService = AppContext.getInstance().getUserService();
                 Optional<User> userUpdate = userService.getUserByLogin(user.getLogin());
                 userUpdate.ifPresent(value -> session.setAttribute("user", value));
             }

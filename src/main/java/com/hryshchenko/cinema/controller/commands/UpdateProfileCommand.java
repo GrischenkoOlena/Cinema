@@ -18,12 +18,13 @@ import javax.xml.crypto.Data;
 
 public class UpdateProfileCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private UserService userService = AppContext.getInstance().getUserService();
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        UserService userService = AppContext.getInstance().getUserService();
         try {
             updateUserInfo(req, user);
             if (userService.updateUser(user)) {

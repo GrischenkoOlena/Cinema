@@ -20,13 +20,15 @@ import java.util.List;
 
 public class MainCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
+    private IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String scheduleDate = req.getParameter("scheduleDate");
         LocalDate date = getScheduleDate(scheduleDate);
 
-        ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
-        IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
         try {
             List<Screening> screeningsList = screeningsServ.getScreeningByDate(date);
             List<ScreeningDTO> screenings = mapperService.getListDTO(screeningsList);
