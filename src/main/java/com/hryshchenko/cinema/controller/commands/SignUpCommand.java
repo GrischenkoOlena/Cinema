@@ -4,9 +4,11 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.exception.DAOException;
+import com.hryshchenko.cinema.exception.FieldValidatorException;
 import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.model.dbservices.UserService;
+import com.hryshchenko.cinema.util.DataValidator;
 import com.hryshchenko.cinema.util.PasswordHashUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 public class SignUpCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private  UserService userService = AppContext.getInstance().getUserService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -34,13 +37,25 @@ public class SignUpCommand implements ICommand {
             req.setAttribute("error", "Passwords must be identical");
             return Path.SIGN_UP;
         }
+        try {
+            validateField(login, password, userName);
+        } catch (FieldValidatorException e){
+            req.setAttribute("error", e.getMessage());
+            return Path.SIGN_UP;
+        }
+
         log.info("New user is registered");
         return registerUser(session, login, password, userName);
     }
 
+    private void validateField(String login, String password, String userName) throws FieldValidatorException {
+        DataValidator.validateLogin(login);
+        DataValidator.validatePassword(password);
+        DataValidator.validateName(userName);
+    }
+
     private String registerUser(HttpSession session, String login, String password, String userName) {
         String response;
-        UserService userService = AppContext.getInstance().getUserService();
 
         User newUser = new User();
         newUser.setLogin(login);
