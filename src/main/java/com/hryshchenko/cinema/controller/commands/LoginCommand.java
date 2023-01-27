@@ -37,38 +37,57 @@ public class LoginCommand implements ICommand {
         try {
             Optional<User> user = userService.getUserByLogin(login);
             if(user.isPresent()) {
-                String forward = Path.ERROR;
                 try {
-                    PasswordHashUtil.verify(user.get().getPassword(), password);
-                    UserRole userRole = user.get().getRole();
-                    if (userRole == UserRole.ADMIN) {
-                        forward = Path.COMMAND_ADMIN_SCREENINGS;
-                    }
-                    if (userRole == UserRole.CLIENT) {
-                        forward = Path.COMMAND_USER_SCHEDULE;
-                    }
-                    resp.sendRedirect(forward);
-                    response = Path.COMMAND_REDIRECT;
-                    session.removeAttribute("errorBuyTicket");
-                    session.setAttribute("user", user.get());
-                    session.setAttribute("userRole", userRole);
-                    log.info("user " + login + " is login");
+                    response = getResponseLoginExistsUser(resp, session, login, password, user.get());
                 } catch (IncorrectPasswordException e) {
-                    req.setAttribute("login", login);
-                    String errorMessage = "Login or password isn't correct";
-                    req.setAttribute("error", errorMessage);
-                    log.error(errorMessage);
-                    response = Path.LOGIN;
+                    response = getResponseBadPassword(req, login);
                 }
             } else {
-                String errorMessage = "Login isn't exists";
-                req.setAttribute("error", errorMessage);
-                log.error(errorMessage);
-                response = Path.SIGN_UP;
+                response = getResponseNotExistsUser(req);
             }
-        } catch (DAOException | IOException e) {
+        } catch (DAOException e) {
             log.error(e.getMessage());
         }
         return response;
+    }
+
+    private String getResponseLoginExistsUser(HttpServletResponse resp, HttpSession session,
+                                              String login, String password, User user)
+            throws IncorrectPasswordException {
+
+        String forward = Path.ERROR;
+        PasswordHashUtil.verify(user.getPassword(), password);
+        UserRole userRole = user.getRole();
+        if (userRole == UserRole.ADMIN) {
+            forward = Path.COMMAND_ADMIN_SCREENINGS;
+        }
+        if (userRole == UserRole.CLIENT) {
+            forward = Path.COMMAND_USER_SCHEDULE;
+        }
+        try {
+            resp.sendRedirect(forward);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        session.removeAttribute("errorBuyTicket");
+        session.setAttribute("user", user);
+        session.setAttribute("userRole", userRole);
+        log.info("user " + login + " is login");
+        return Path.COMMAND_REDIRECT;
+    }
+
+    private String getResponseBadPassword(HttpServletRequest req, String login) {
+        req.setAttribute("login", login);
+        String errorMessage = "Login or password isn't correct";
+        req.setAttribute("error", errorMessage);
+        log.error(errorMessage);
+        return Path.LOGIN;
+    }
+
+    private String getResponseNotExistsUser(HttpServletRequest req) {
+        String errorMessage = "Login isn't exists";
+        req.setAttribute("error", errorMessage);
+        log.error(errorMessage);
+        return Path.SIGN_UP;
     }
 }
