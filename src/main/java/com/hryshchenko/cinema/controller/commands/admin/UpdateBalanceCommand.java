@@ -18,11 +18,11 @@ import java.util.Optional;
 
 public class UpdateBalanceCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private final UserService userService = AppContext.getInstance().getUserService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String userLogin = req.getParameter("userLogin");
 
-        UserService userService = AppContext.getInstance().getUserService();
         try {
             Optional<User> user = userService.getUserByLogin(userLogin);
             if(user.isPresent()){

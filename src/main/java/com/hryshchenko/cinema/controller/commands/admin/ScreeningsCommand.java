@@ -27,6 +27,11 @@ import java.util.List;
 
 public class ScreeningsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private final Pagination screeningsPagination = new Pagination(AppContext.getInstance());
+    private final IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
+    private final FilmService filmService = AppContext.getInstance().getFilmService();
+    private final IMapperService<Film, FilmDTO> mapperFilm = new MapperFilm();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -36,38 +41,11 @@ public class ScreeningsCommand implements ICommand {
             session.removeAttribute("filterScreening");
         }
 
-        String order = req.getParameter("order");
-        String orderSession = (String) session.getAttribute("orderScreening");
-        order = orderSession != null ? orderSession : order;
-
-        if(order == null || order.isEmpty()){
-            order = "defaultScreening";
-        } else {
-            session.setAttribute("orderScreening", order);
-        }
-        String orderBD = new OrderMapUtil().getOrderBD(order);
-
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-
-        String filter = req.getParameter("filter");
-        String filterScreening = (String) session.getAttribute("filterScreening");
-        filter = filterScreening != null ? filterScreening : filter;
-        if(filter != null){
-            session.setAttribute("filterScreening", "checked");
-        }
+        String orderBD = getOrderBD(req, session);
+        long page = getPage(req);
+        String filter = getFilter(req, session);
 
         LocalDate currentDate = LocalDate.now();
-
-        Pagination screeningsPagination = new Pagination(AppContext.getInstance());
-        IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
-
-        FilmService filmService = AppContext.getInstance().getFilmService();
-        IMapperService<Film, FilmDTO> mapperFilm = new MapperFilm();
 
         try {
             List<ScreeningView> screeningsList;
@@ -94,5 +72,38 @@ public class ScreeningsCommand implements ICommand {
         }
 
         return Path.ADMIN_MAIN;
+    }
+
+    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderScreening");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultScreening";
+        } else {
+            session.setAttribute("orderScreening", order);
+        }
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private String getFilter(HttpServletRequest req, HttpSession session) {
+        String filter = req.getParameter("filter");
+        String filterScreening = (String) session.getAttribute("filterScreening");
+        filter = filterScreening != null ? filterScreening : filter;
+        if(filter != null){
+            session.setAttribute("filterScreening", "checked");
+        }
+        return filter;
+    }
+
+    private long getPage(HttpServletRequest req) {
+        long page;
+        try {
+            page = Long.parseLong(req.getParameter("page"));
+        } catch (NumberFormatException e){
+            page = 1;
+        }
+        return page;
     }
 }

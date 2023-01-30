@@ -21,6 +21,8 @@ import java.util.List;
 
 public class CustomersCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private final Pagination usersPagination = new Pagination(AppContext.getInstance());
+    private final IMapperService<User, UserDTO> mapperService = new MapperUser();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -28,26 +30,9 @@ public class CustomersCommand implements ICommand {
             session.removeAttribute("orderCustomers");
         }
 
-        String order = req.getParameter("order");
-        String orderSession = (String) session.getAttribute("orderCustomers");
-        order = orderSession != null ? orderSession : order;
+        String orderBD = getOrderBD(req, session);
+        long page = getPage(req);
 
-        if(order == null || order.isEmpty()){
-            order = "defaultCustomer";
-        } else {
-            session.setAttribute("orderCustomers", order);
-        }
-        String orderBD = new OrderMapUtil().getOrderBD(order);
-
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-
-        Pagination usersPagination = new Pagination(AppContext.getInstance());
-        IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
             List<User> usersList = usersPagination.getUsersPage(orderBD, page);
             List<UserDTO> users = mapperService.getListDTO(usersList);
@@ -59,5 +44,28 @@ public class CustomersCommand implements ICommand {
             log.error(e.getMessage());
         }
         return Path.ADMIN_CUSTOMERS;
+    }
+
+    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderCustomers");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultCustomer";
+        } else {
+            session.setAttribute("orderCustomers", order);
+        }
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private long getPage(HttpServletRequest req) {
+        long page;
+        try {
+            page = Long.parseLong(req.getParameter("page"));
+        } catch (NumberFormatException e){
+            page = 1;
+        }
+        return page;
     }
 }

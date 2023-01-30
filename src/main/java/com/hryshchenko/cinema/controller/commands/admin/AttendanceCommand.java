@@ -15,16 +15,11 @@ import java.util.List;
 
 public class AttendanceCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private final Pagination attendancePagination = new Pagination(AppContext.getInstance());
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
+        long page = getPage(req);
 
-        Pagination attendancePagination = new Pagination(AppContext.getInstance());
         try {
             List<AttendanceDTO> attendances = attendancePagination.getAttendancePage(page);
             req.setAttribute("attendances", attendances);
@@ -35,5 +30,15 @@ public class AttendanceCommand implements ICommand {
             log.error(e.getMessage());
         }
         return Path.ADMIN_ATTENDANCE;
+    }
+
+    private long getPage(HttpServletRequest req) {
+        long page;
+        try {
+            page = Long.parseLong(req.getParameter("page"));
+        } catch (NumberFormatException e){
+            page = 1;
+        }
+        return page;
     }
 }

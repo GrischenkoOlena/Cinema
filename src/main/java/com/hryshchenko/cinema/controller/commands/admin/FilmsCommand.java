@@ -25,6 +25,12 @@ import java.util.List;
 
 public class FilmsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private final Pagination filmsPagination = new Pagination(AppContext.getInstance());
+    private final IMapperService<Film, FilmDTO> mapperServiceFilm = new MapperFilm();
+    private final GenreService genreService = AppContext.getInstance().getGenreService();
+    private final IMapperService<Genre, GenreDTO> mapperServiceGenre = new MapperGenre();
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
@@ -32,47 +38,16 @@ public class FilmsCommand implements ICommand {
             session.removeAttribute("orderFilms");
         }
 
-        String order = req.getParameter("order");
-        String orderSession = (String) session.getAttribute("orderFilms");
-        order = orderSession != null ? orderSession : order;
-
-        if(order == null || order.isEmpty()){
-            order = "defaultFilm";
-        } else {
-            session.setAttribute("orderFilms", order);
-        }
-        String orderBD = new OrderMapUtil().getOrderBD(order);
+        String orderBD = getOrderBD(req, session);
 
         if(req.getParameter("btnFilter") != null){
             session.removeAttribute("genreFilter");
         }
-        Long filter;
-        try {
-            filter = Long.parseLong(req.getParameter("filter"));
-        } catch (NumberFormatException e) {
-            filter = null;
-        }
-        Long filterSession;
-        try {
-            filterSession = Long.parseLong((String) session.getAttribute("genreFilter"));
-        } catch (NumberFormatException e) {
-            filterSession = null;
-        }
-        filter = filterSession != null ? filterSession : filter;
+        Long filter = getFilter(req, session);
         session.setAttribute("genreFilter", filter);
 
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
+        long page = getPage(req);
 
-        Pagination filmsPagination = new Pagination(AppContext.getInstance());
-        IMapperService<Film, FilmDTO> mapperServiceFilm = new MapperFilm();
-
-        GenreService genreService = AppContext.getInstance().getGenreService();
-        IMapperService<Genre, GenreDTO> mapperServiceGenre = new MapperGenre();
         try {
             List<Film> filmsList;
             long countPages;
@@ -96,5 +71,45 @@ public class FilmsCommand implements ICommand {
         }
 
         return Path.ADMIN_FILMS;
+    }
+
+    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+        String order = req.getParameter("order");
+        String orderSession = (String) session.getAttribute("orderFilms");
+        order = orderSession != null ? orderSession : order;
+
+        if(order == null || order.isEmpty()){
+            order = "defaultFilm";
+        } else {
+            session.setAttribute("orderFilms", order);
+        }
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private Long getFilter(HttpServletRequest req, HttpSession session) {
+        Long filter;
+        try {
+            filter = Long.parseLong(req.getParameter("filter"));
+        } catch (NumberFormatException e) {
+            filter = null;
+        }
+        Long filterSession;
+        try {
+            filterSession = Long.parseLong((String) session.getAttribute("genreFilter"));
+        } catch (NumberFormatException e) {
+            filterSession = null;
+        }
+        filter = filterSession != null ? filterSession : filter;
+        return filter;
+    }
+
+    private long getPage(HttpServletRequest req) {
+        long page;
+        try {
+            page = Long.parseLong(req.getParameter("page"));
+        } catch (NumberFormatException e){
+            page = 1;
+        }
+        return page;
     }
 }
