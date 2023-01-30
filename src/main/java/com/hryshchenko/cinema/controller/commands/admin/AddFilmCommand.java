@@ -23,9 +23,9 @@ import java.io.IOException;
 public class AddFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private FilmService filmService = AppContext.getInstance().getFilmService();
+    private MapperFilm mapperService = new MapperFilm();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        MapperFilm mapperService = new MapperFilm();
 
         String forward = Path.COMMAND_ADMIN_FILMS;
         try {

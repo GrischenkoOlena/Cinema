@@ -23,10 +23,11 @@ import java.time.LocalTime;
 
 public class AddScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+
+    private ScreeningService screeningService = AppContext.getInstance().getScreeningService();
+    private MapperScreening mapperService = new MapperScreening();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        ScreeningService screeningService = AppContext.getInstance().getScreeningService();
-        MapperScreening mapperService = new MapperScreening();
 
         String forward = Path.COMMAND_ADMIN_SCREENINGS;
         try {

@@ -22,12 +22,13 @@ import static com.hryshchenko.cinema.util.DataValidator.*;
 
 public class UpdateFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private final FilmService filmService = AppContext.getInstance().getFilmService();
+    private final MapperFilm mapperService = new MapperFilm();
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String forward = Path.COMMAND_ADMIN_FILMS;
 
-        FilmService filmService = AppContext.getInstance().getFilmService();
-        MapperFilm mapperService = new MapperFilm();
         try {
             FilmDTO filmDTO = getFilmDTO(req);
             Film film = mapperService.getFilm(filmDTO);

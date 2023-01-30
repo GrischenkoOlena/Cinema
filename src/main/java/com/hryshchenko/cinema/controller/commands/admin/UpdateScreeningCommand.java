@@ -16,10 +16,10 @@ import java.io.IOException;
 
 public class UpdateScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
+    private final ScreeningService screeningServ = AppContext.getInstance().getScreeningService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String forward = Path.COMMAND_ADMIN_SCREENINGS;
-        ScreeningService screeningServ = AppContext.getInstance().getScreeningService();
 
         long screeningId = Long.parseLong(req.getParameter("screeningId"));
         String state = req.getParameter("state");
