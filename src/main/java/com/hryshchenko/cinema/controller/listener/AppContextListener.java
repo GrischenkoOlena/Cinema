@@ -1,6 +1,7 @@
 package com.hryshchenko.cinema.controller.listener;
 
 import com.hryshchenko.cinema.model.connectionpool.DBManager;
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,7 @@ public class AppContextListener implements ServletContextListener {
         } catch (SQLException e) {
             log.error("deregisterDriver error" + e.getMessage());
         }
+        AbandonedConnectionCleanupThread.checkedShutdown();
         log.debug("Servlet context destroy finished");
     }
 
