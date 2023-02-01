@@ -8,6 +8,7 @@ import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.FieldValidatorException;
+import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.dbservices.ScreeningService;
 import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.service.mapper.MapperScreening;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class AddScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -32,6 +34,7 @@ public class AddScreeningCommand implements ICommand {
         String forward = Path.COMMAND_ADMIN_SCREENINGS;
         try {
             ScreeningDTO screeningDTO = getScreeningDTO(req);
+            checkTimeScreening(screeningDTO);
             Screening screening = mapperService.getScreening(screeningDTO);
             if(!screeningService.createScreening(screening)){
                 forward = Path.COMMAND_ERROR;
@@ -72,5 +75,29 @@ public class AddScreeningCommand implements ICommand {
         screeningDTO.setTimeBegin(timeUpdate);
         screeningDTO.setState(StateScreening.getValueFromId(stateUpdate));
         return screeningDTO;
+    }
+
+    private void checkTimeScreening(ScreeningDTO screening) throws FieldValidatorException{
+        LocalDate addedFilmDate = screening.getFilmDate();
+        LocalTime addedTimeBegin = screening.getTimeBegin();
+        int addedFilmDuration = screening.getFilm().getDuration();
+
+        try {
+            List<Screening> screeningsList = screeningService.getScreeningByDate(addedFilmDate);
+            List<ScreeningDTO> screeningDTOList = mapperService.getListDTO(screeningsList);
+            for(ScreeningDTO screeningDTO : screeningDTOList){
+                LocalTime existTimeBegin = screeningDTO.getTimeBegin();
+                LocalTime existTimeEnd = existTimeBegin.plusMinutes(screeningDTO.getFilm().getDuration());
+                if(addedTimeBegin.isAfter(existTimeBegin) && addedTimeBegin.isBefore(existTimeEnd)){
+                    throw new FieldValidatorException("You can't add new movie at busy time");
+                }
+                LocalTime addedTimeEnd = addedTimeBegin.plusMinutes(addedFilmDuration);
+                if(addedTimeEnd.isBefore(existTimeEnd)){
+                    throw new FieldValidatorException("You can't add new movie at busy time");
+                }
+            }
+        } catch (DAOException | MapperException e) {
+            log.error(e.getMessage());
+        }
     }
 }
