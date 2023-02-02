@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
+import java.io.IOException;
 
 public class UpdateProfileCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -34,7 +34,13 @@ public class UpdateProfileCommand implements ICommand {
             log.error(e.getMessage());
         }
         log.info(user.getLogin() + " profile's updated");
-        return Path.PROFILE;
+
+        try {
+            resp.sendRedirect(Path.COMMAND_PROFILE);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
     }
 
     private void updateUserInfo(HttpServletRequest req, User user) throws FieldValidatorException {

@@ -75,7 +75,7 @@
                       <td>${screening.state}</td>
                       <td>${screening.freePlaces}</td>
                       <td>
-                        <form action="controller" method="POST">
+                        <form action="controller" method="GET">
                           <input type="hidden" name="action" value="freeSeats"/>
                           <input type="hidden" name="screeningId" value=${screening.id} />
                           <button class="btn btn-success" type="submit"/>

@@ -10,7 +10,7 @@
   <body class="w-50 p-3">
     <h2><fmt:message key="success.header"/></h2>
     <br>
-    <form method="post" action="controller?action=enter">
+    <form method="GET" action="controller?action=enter">
         <input type="hidden" name="page" value="login"/>
         <button class="btn btn-outline-success" type="submit"><fmt:message key="button.login"/></button>
     </form>

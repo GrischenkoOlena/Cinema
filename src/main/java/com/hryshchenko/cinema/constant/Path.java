@@ -28,4 +28,6 @@ public interface Path {
 
     String COMMAND_ERROR = "controller?action=error";
 
+    String COMMAND_PROFILE = "controller?action=profile";
+
 }

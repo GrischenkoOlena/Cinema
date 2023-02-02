@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <form class="form-inline my-2 my-lg-0 text-end" method="post" action="controller?action=logout">
+      <form class="form-inline my-2 my-lg-0 text-end" method="GET" action="controller?action=logout">
         <button class="btn btn-outline-success" type="submit"><fmt:message key="button.logout"/></button>
       </form>
   </div>
