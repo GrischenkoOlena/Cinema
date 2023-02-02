@@ -38,8 +38,10 @@
         </div>
       </div>
 
-      <form class="form-inline my-2 my-lg-0 text-end" method="GET" action="controller?action=logout">
-        <button class="btn btn-outline-success" type="submit"><fmt:message key="button.logout"/></button>
+      <form class="form-inline my-2 my-lg-0 text-end" method="GET" action="controller">
+        <button class="btn btn-outline-success" name="action" value="logout" type="submit">
+            <fmt:message key="button.logout"/>
+        </button>
       </form>
   </div>
   <div class="col-md-auto text-end text-info"> <ctg:hello role="${user.name}"/></div>
