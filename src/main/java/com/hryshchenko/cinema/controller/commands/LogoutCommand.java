@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class LogoutCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -18,6 +19,11 @@ public class LogoutCommand implements ICommand {
             session.invalidate();
         }
         log.info("Logout finished");
-        return Path.HOME;
+        try {
+            resp.sendRedirect(Path.COMMAND_EMPTY);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
     }
 }

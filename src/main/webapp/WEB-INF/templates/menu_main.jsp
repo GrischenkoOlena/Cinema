@@ -39,18 +39,20 @@
 
       <div class="col-md-auto text-end">
         <form name="header" action="controller" method="GET">
-          <c:set var="actionName" value="enter"/>
-          <button type="submit" name="page" value="login" class="btn btn-outline-primary me-2">
             <c:choose>
               <c:when test="${not empty user}">
                 <c:set var="actionName" value="logout"/>
-                <fmt:message key="button.logout"/>
+                <button type="submit" class="btn btn-outline-primary me-2">
+                   <fmt:message key="button.logout"/>
+                </button>
               </c:when>
               <c:otherwise>
-                <fmt:message key="button.login"/>
+                <c:set var="actionName" value="enter"/>
+                <button type="submit" name="page" value="login" class="btn btn-outline-primary me-2">
+                    <fmt:message key="button.login"/>
+                </button>
               </c:otherwise>
             </c:choose>
-          </button>
           <button type="submit" name="page" value="signUp" class="btn btn-outline-warning">
             <fmt:message key="button.signup"/>
           </button>

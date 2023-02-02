@@ -1,7 +1,7 @@
 package com.hryshchenko.cinema.constant;
 
 public interface Path {
-    String HOME = "index.jsp";
+    String HOME = "/index.jsp";
     String MAIN = "/WEB-INF/main.jsp";
     String LOGIN = "/WEB-INF/login.jsp";
     String SIGN_UP = "/WEB-INF/signUp.jsp";
@@ -27,7 +27,9 @@ public interface Path {
     String COMMAND_USER_TICKETS = "controller?action=tickets";
 
     String COMMAND_ERROR = "controller?action=error";
+    String COMMAND_EMPTY = "controller?action=empty";
 
     String COMMAND_PROFILE = "controller?action=profile";
+    String COMMAND_BASKET = "controller?action=basket";
 
 }

@@ -47,11 +47,14 @@ public class AuthenticationFilter implements Filter {
         String commandName = request.getParameter("action");
         HttpSession session = ((HttpServletRequest) request).getSession(false);
 
-        if (commandName == null || commandName.isEmpty() || session == null) {
+        if (commandName == null || commandName.isEmpty()) {
             return false;
         }
         if (everybody.contains(commandName)) {
             return true;
+        }
+        if (session == null) {
+            return false;
         }
 
         UserRole userRole = (UserRole) session.getAttribute("userRole");
