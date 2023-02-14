@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.common;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
@@ -6,14 +6,16 @@ import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ErrorCommand implements ICommand {
+public class EnterCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String errorMessage = (String) req.getSession().getAttribute("error");
-        if(errorMessage != null){
-            req.getSession().removeAttribute("error");
+        String page = req.getParameter("page");
+        if (page.equals("login")) {
+            return Path.LOGIN;
         }
-        req.setAttribute("error", errorMessage);
+        if (page.equals("signUp")) {
+            return Path.SIGN_UP;
+        }
         return Path.ERROR;
     }
 }

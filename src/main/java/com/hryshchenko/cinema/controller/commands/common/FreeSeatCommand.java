@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.common;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
@@ -27,7 +27,7 @@ public class FreeSeatCommand implements ICommand {
     private final ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
     private final SeatService seatServ = AppContext.getInstance().getSeatService();
     private final CategoryService categoryServ = AppContext.getInstance().getCategoryService();
-    IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
+    private final IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
