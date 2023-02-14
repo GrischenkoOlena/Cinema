@@ -26,20 +26,12 @@ public class BasketCommand implements ICommand {
         UserRole userRole = (UserRole) session.getAttribute("userRole");
 
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
-        int placeId = Integer.parseInt(req.getParameter("placeId"));
-
-        SeatDTO seat = getSeatDTO(placeId);
+        SeatDTO seat = getSeatDTO(req);
 
         String response;
         if(userRole != null && userRole.equals(UserRole.CLIENT)){
             session.removeAttribute("errorUnregister");
-            List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
-            if (seats == null){
-                seats = new ArrayList<>();
-            }
-            if(!seats.contains(seat)){
-                seats.add(seat);
-            }
+            List<SeatDTO> seats = addNextSeatToSession(session, seat);
             double cost = seats.stream().mapToDouble(temp -> temp.getCategory().getPrice()).sum();
             session.setAttribute("seats", seats);
             req.setAttribute("cost", cost);
@@ -51,13 +43,23 @@ public class BasketCommand implements ICommand {
             } else {
                 message = "You have to register to buy ticket";
             }
-            req.setAttribute("errorUnregister", message);
             session.setAttribute("errorUnregister",message);
             String forward = Path.COMMAND_FREE_SEATS + "&screeningId=" + screening.getId();
             response = Path.COMMAND_REDIRECT;
             sendRedirectRequest(resp, forward);
         }
         return response;
+    }
+
+    private List<SeatDTO> addNextSeatToSession(HttpSession session, SeatDTO seat) {
+        List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
+        if (seats == null){
+            seats = new ArrayList<>();
+        }
+        if(seat != null && !seats.contains(seat)){
+            seats.add(seat);
+        }
+        return seats;
     }
 
     private void sendRedirectRequest(HttpServletResponse resp, String forward) {
@@ -68,11 +70,12 @@ public class BasketCommand implements ICommand {
         }
     }
 
-    private SeatDTO getSeatDTO(int placeId) {
+    private SeatDTO getSeatDTO(HttpServletRequest req) {
         SeatDTO seat = null;
         try {
-           seat = mapperSeat.getSeatDTObyID(placeId);
-        } catch (MapperException e) {
+            int placeId = Integer.parseInt(req.getParameter("placeId"));
+            seat = mapperSeat.getSeatDTObyID(placeId);
+        } catch (NumberFormatException | MapperException e){
             log.error(e.getMessage());
         }
         return seat;

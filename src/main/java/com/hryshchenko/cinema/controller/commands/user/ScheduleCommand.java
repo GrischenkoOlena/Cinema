@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,25 +28,44 @@ public class ScheduleCommand implements ICommand {
     private IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession();
+        if (req.getMethod().equals("POST")){
+            return executePost(req, resp);
+        } else {
+            return executeGet(req);
+        }
+    }
 
+    private String executePost(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession();
         if (req.getParameter("btnApplySort") != null) {
             session.removeAttribute("orderScreening");
         }
+        setOrderToSession(getOrder(req, session), session);
+        try {
+            resp.sendRedirect(Path.COMMAND_USER_SCHEDULE);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
+    }
 
-        String orderBD = getOrderBD(req, session);
+    private String executeGet(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+
+        String order = getOrder(req, session);
+        String orderBD = getOrderBD(order);
         long page = getPage(req);
         LocalDate currentDate = LocalDate.now();
 
         try {
-            List<ScreeningView> screeningsList;
-            long countPages;
-            screeningsList = screeningsPagination.getFilterScreeningViewsPage(currentDate, orderBD, page);
-            countPages = screeningsPagination.getCountFilterScreeningViewPages(currentDate);
+            List<ScreeningView> screeningsList =
+                    screeningsPagination.getFilterScreeningViewsPage(currentDate, orderBD, page);
+            long countPages = screeningsPagination.getCountFilterScreeningViewPages(currentDate);
             List<ScreeningViewDTO> screenings = mapperScreening.getListDTO(screeningsList);
 
             req.setAttribute("screenings", screenings);
             req.setAttribute("countPages", countPages);
+            setOrderToSession(order, session);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
@@ -62,16 +82,24 @@ public class ScheduleCommand implements ICommand {
         return page;
     }
 
-    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+    private String getOrderBD(String order) {
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private String getOrder(HttpServletRequest req, HttpSession session) {
         String order = req.getParameter("order");
         String orderSession = (String) session.getAttribute("orderScreening");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
             order = "defaultScreening";
-        } else {
+        }
+        return order;
+    }
+
+    private void setOrderToSession(String order, HttpSession session){
+        if(!order.equals("defaultScreening")){
             session.setAttribute("orderScreening", order);
         }
-        return new OrderMapUtil().getOrderBD(order);
     }
 }

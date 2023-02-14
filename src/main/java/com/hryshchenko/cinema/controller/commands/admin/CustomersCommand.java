@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class CustomersCommand implements ICommand {
@@ -25,12 +26,32 @@ public class CustomersCommand implements ICommand {
     private final IMapperService<User, UserDTO> mapperService = new MapperUser();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        if (req.getMethod().equals("POST")){
+            return executePost(req, resp);
+        } else {
+            return executeGet(req);
+        }
+    }
+
+    private String executePost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         if (req.getParameter("btnApplySort") != null) {
             session.removeAttribute("orderCustomers");
         }
+        setOrderToSession(getOrder(req, session), session);
+        try {
+            resp.sendRedirect(Path.COMMAND_ADMIN_CUSTOMERS);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
+    }
 
-        String orderBD = getOrderBD(req, session);
+    private String executeGet(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+
+        String order = getOrder(req, session);
+        String orderBD = getOrderBD(order);
         long page = getPage(req);
 
         try {
@@ -40,23 +61,33 @@ public class CustomersCommand implements ICommand {
 
             long countPages = usersPagination.getCountUserPages();
             req.setAttribute("countPages", countPages);
+
+            setOrderToSession(order, session);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
         return Path.ADMIN_CUSTOMERS;
     }
 
-    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+    private String getOrder(HttpServletRequest req, HttpSession session) {
         String order = req.getParameter("order");
         String orderSession = (String) session.getAttribute("orderCustomers");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
             order = "defaultCustomer";
-        } else {
+        }
+        return order;
+    }
+
+    private String getOrderBD(String order) {
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private void setOrderToSession(String order, HttpSession session){
+        if(!order.equals("defaultCustomer")){
             session.setAttribute("orderCustomers", order);
         }
-        return new OrderMapUtil().getOrderBD(order);
     }
 
     private long getPage(HttpServletRequest req) {

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class TicketsCommand implements ICommand {
@@ -27,28 +28,46 @@ public class TicketsCommand implements ICommand {
     private IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
+        if (req.getMethod().equals("POST")){
+            return executePost(req, resp);
+        } else {
+            return executeGet(req);
+        }
+    }
 
+    private String executePost(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = req.getSession();
         if (req.getParameter("btnApplySort") != null) {
             session.removeAttribute("orderTickets");
         }
+        setOrderToSession(getOrder(req, session), session);
+        try {
+            resp.sendRedirect(Path.COMMAND_USER_TICKETS);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
+    }
 
-        String orderBD = getOrderBD(req, session);
+    private String executeGet(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+
+        String order = getOrder(req, session);
+        String orderBD = getOrderBD(order);
         long page = getPage(req);
 
         try {
             List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(orderBD, user.getId(), page);
-
             List<TicketDTO> ticketDTOList = mapperService.getListDTO(ticketList);
-            req.setAttribute("tickets", ticketDTOList);
-
             long countPages = ticketPagination.getCountTicketPagesByUser(user.getId());
+
+            req.setAttribute("tickets", ticketDTOList);
             req.setAttribute("countPages", countPages);
+            setOrderToSession(order, session);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
-
         return Path.USER_TICKETS;
     }
 
@@ -62,16 +81,24 @@ public class TicketsCommand implements ICommand {
         return page;
     }
 
-    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+    private String getOrderBD(String order) {
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private String getOrder(HttpServletRequest req, HttpSession session) {
         String order = req.getParameter("order");
         String orderSession = (String) session.getAttribute("orderTickets");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
             order = "defaultTicket";
-        } else {
+        }
+        return order;
+    }
+
+    private void setOrderToSession(String order, HttpSession session) {
+        if(!order.equals("defaultTicket")){
             session.setAttribute("orderTickets", order);
         }
-        return new OrderMapUtil().getOrderBD(order);
     }
 }

@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class FilmsCommand implements ICommand {
@@ -33,24 +34,45 @@ public class FilmsCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        if (req.getMethod().equals("POST")){
+            return executePost(req, resp);
+        } else {
+            return executeGet(req);
+        }
+    }
+
+    private String executePost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
+
         if (req.getParameter("btnApplySort") != null) {
             session.removeAttribute("orderFilms");
         }
-
-        String orderBD = getOrderBD(req, session);
-
         if(req.getParameter("btnFilter") != null){
             session.removeAttribute("genreFilter");
         }
-        Long filter = getFilter(req, session);
-        session.setAttribute("genreFilter", filter);
 
+        setOrderToSession(getOrder(req, session), session);
+        session.setAttribute("genreFilter", getFilter(req, session));
+
+        try {
+            resp.sendRedirect(Path.COMMAND_ADMIN_FILMS);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
+    }
+
+    private String executeGet(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+
+        String order = getOrder(req, session);
+        Long filter = getFilter(req, session);
         long page = getPage(req);
 
         try {
             List<Film> filmsList;
             long countPages;
+            String orderBD = getOrderBD(order);
             if(filter != null){
                 filmsList = filmsPagination.getFilteredFilmsPage(filter, orderBD, page);
                 countPages = filmsPagination.getCountFilteredFilmPages(filter);
@@ -66,6 +88,9 @@ public class FilmsCommand implements ICommand {
             List<Genre> genreList = genreService.getAllGenre();
             List<GenreDTO> genres = mapperServiceGenre.getListDTO(genreList);
             req.setAttribute("genres", genres);
+
+            setOrderToSession(order, session);
+            session.setAttribute("genreFilter", filter);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
@@ -73,17 +98,25 @@ public class FilmsCommand implements ICommand {
         return Path.ADMIN_FILMS;
     }
 
-    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+    private String getOrder(HttpServletRequest req, HttpSession session) {
         String order = req.getParameter("order");
         String orderSession = (String) session.getAttribute("orderFilms");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
             order = "defaultFilm";
-        } else {
+        }
+        return order;
+    }
+
+    private String getOrderBD(String order) {
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private void setOrderToSession(String order, HttpSession session){
+        if(!order.equals("defaultFilm")){
             session.setAttribute("orderFilms", order);
         }
-        return new OrderMapUtil().getOrderBD(order);
     }
 
     private Long getFilter(HttpServletRequest req, HttpSession session) {
