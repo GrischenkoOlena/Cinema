@@ -29,21 +29,12 @@
                     data/time &#8595;</option>
                   <option value="availableAsc" <c:if test="${selectedOrder == 'availableAsc'}"> selected </c:if>>
                     available seats &#8593;</option>
-                  <option value="availableDesc" <c:if test="${selectedOrder == 'availableAsc'}"> selected </c:if>>
+                  <option value="availableDesc" <c:if test="${selectedOrder == 'availableDesc'}"> selected </c:if>>
                     available seats &#8595;</option>
                 </select>
                 <button class="btn btn-outline-secondary" type="submit" name="btnApplySort"><fmt:message key="user.main.button.sort"/></button>
               </div>
             </div>
-
-            <!--<c:set var="checkedFilter" value="${sessionScope.filter}" />
-            <div class="form-check col-auto">
-              <label class="form-check-label" for="flexCheck">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheck"
-                name="filter" <c:if test="${filterScreening == 'checked'}" > checked </c:if>>
-                <fmt:message key="user.main.label.filter"/>
-              </label>
-            </div>-->
             <input type="hidden" name="action" value="schedule">
           </form>
 
