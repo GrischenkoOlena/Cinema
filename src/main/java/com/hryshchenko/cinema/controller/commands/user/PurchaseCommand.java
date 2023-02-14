@@ -28,46 +28,50 @@ public class PurchaseCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
     private UserService userService = AppContext.getInstance().getUserService();
+    private BusinessTicketService ticketService = new BusinessTicketService();
+    private MapperUser mapperUser = new MapperUser();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
+        session.removeAttribute("errorBuyTicket");
 
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
 
         TicketDTO ticketDTO = getTicketDTO(user, screening, seats);
-
-        BusinessTicketService ticketService = new BusinessTicketService();
+        String forward = Path.COMMAND_BASKET;
         try {
             if(ticketService.buyTicket(ticketDTO)){
                 Optional<User> userUpdate = userService.getUserByLogin(user.getLogin());
                 userUpdate.ifPresent(value -> session.setAttribute("user", value));
+                forward = Path.COMMAND_USER_TICKETS;
+                session.removeAttribute("seats");
+                log.info("Purchase ticket");
             }
         } catch (NotEnoughMoneyException e) {
             session.setAttribute("errorBuyTicket", "You don't have enough money to purchase ticket");
-            return Path.TICKER_BASKET;
         } catch (SeatHasSoldException e) {
             session.setAttribute("errorBuyTicket", "Unfortunately place has sold recently");
-            return Path.TICKER_BASKET;
         } catch (DAOException e) {
             log.error(e.getMessage());
         }
+        sendRedirectRequest(resp, forward);
+        return Path.COMMAND_REDIRECT;
+    }
+
+    private void sendRedirectRequest(HttpServletResponse resp, String forward) {
         try {
-            resp.sendRedirect(Path.COMMAND_USER_TICKETS);
+            resp.sendRedirect(forward);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
-
-        session.removeAttribute("seats");
-        log.info("Purchase ticket");
-        return Path.COMMAND_REDIRECT;
     }
 
     private TicketDTO getTicketDTO(User user, ScreeningDTO screening, List<SeatDTO> seats) {
         TicketDTO ticketDTO = new TicketDTO();
-        ticketDTO.setUser(new MapperUser().getDTO(user));
+        ticketDTO.setUser(mapperUser.getDTO(user));
         ticketDTO.setScreening(screening);
         ticketDTO.setTicketCount(seats.size());
         ticketDTO.setSeats(seats);

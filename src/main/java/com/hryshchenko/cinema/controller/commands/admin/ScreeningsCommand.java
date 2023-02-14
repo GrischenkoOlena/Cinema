@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,14 +35,34 @@ public class ScreeningsCommand implements ICommand {
     private final IMapperService<Film, FilmDTO> mapperFilm = new MapperFilm();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        if (req.getMethod().equals("POST")){
+            return executePost(req, resp);
+        } else {
+            return executeGet(req);
+        }
+    }
+
+    private String executePost(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
 
         if (req.getParameter("btnApplySort") != null) {
             session.removeAttribute("orderScreening");
             session.removeAttribute("filterScreening");
         }
+        setOrderToSession(getOrder(req, session), session);
+        setFilterToSession(getFilter(req, session), session);
+        try {
+            resp.sendRedirect(Path.COMMAND_ADMIN_SCREENINGS);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return Path.COMMAND_REDIRECT;
+    }
 
-        String orderBD = getOrderBD(req, session);
+    private String executeGet(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+
+        String order = getOrder(req, session);
         long page = getPage(req);
         String filter = getFilter(req, session);
 
@@ -50,6 +71,7 @@ public class ScreeningsCommand implements ICommand {
         try {
             List<ScreeningView> screeningsList;
             long countPages;
+            String orderBD = getOrderBD(order);
             if (filter == null){
                 screeningsList = screeningsPagination.getScreeningViewsPage(orderBD, page);
                 countPages = screeningsPagination.getCountScreeningViewPages();
@@ -67,6 +89,9 @@ public class ScreeningsCommand implements ICommand {
             req.setAttribute("films", films);
 
             req.setAttribute("states", StateScreening.values());
+
+            setOrderToSession(order, session);
+            setFilterToSession(filter, session);
         } catch (DAOException | MapperException e) {
             log.error(e.getMessage());
         }
@@ -74,27 +99,39 @@ public class ScreeningsCommand implements ICommand {
         return Path.ADMIN_MAIN;
     }
 
-    private String getOrderBD(HttpServletRequest req, HttpSession session) {
+    private String getOrder(HttpServletRequest req, HttpSession session) {
         String order = req.getParameter("order");
         String orderSession = (String) session.getAttribute("orderScreening");
         order = orderSession != null ? orderSession : order;
 
         if(order == null || order.isEmpty()){
             order = "defaultScreening";
-        } else {
+        }
+        return order;
+    }
+
+    private String getOrderBD(String order) {
+        return new OrderMapUtil().getOrderBD(order);
+    }
+
+    private void setOrderToSession(String order, HttpSession session){
+        if(!order.equals("defaultScreening")){
             session.setAttribute("orderScreening", order);
         }
-        return new OrderMapUtil().getOrderBD(order);
     }
 
     private String getFilter(HttpServletRequest req, HttpSession session) {
         String filter = req.getParameter("filter");
         String filterScreening = (String) session.getAttribute("filterScreening");
         filter = filterScreening != null ? filterScreening : filter;
+        setFilterToSession(filter, session);
+        return filter;
+    }
+
+    private void setFilterToSession(String filter, HttpSession session) {
         if(filter != null){
             session.setAttribute("filterScreening", "checked");
         }
-        return filter;
     }
 
     private long getPage(HttpServletRequest req) {
