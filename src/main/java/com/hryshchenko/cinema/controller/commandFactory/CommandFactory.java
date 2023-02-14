@@ -1,7 +1,7 @@
 package com.hryshchenko.cinema.controller.commandFactory;
 
-import com.hryshchenko.cinema.controller.commands.*;
 import com.hryshchenko.cinema.controller.commands.admin.*;
+import com.hryshchenko.cinema.controller.commands.common.*;
 import com.hryshchenko.cinema.controller.commands.user.*;
 
 import javax.servlet.http.HttpServletRequest;

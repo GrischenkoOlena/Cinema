@@ -1,4 +1,4 @@
-package com.hryshchenko.cinema.controller.commands;
+package com.hryshchenko.cinema.controller.commands.common;
 
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.exception.DAOException;
