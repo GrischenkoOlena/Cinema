@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.user;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.constant.enums.UserRole;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.exception.MapperException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class BasketCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -38,12 +40,14 @@ public class BasketCommand implements ICommand {
             response = Path.TICKER_BASKET;
         } else {
             String message;
+            ResourceBundle bundle = ResourceBundle.getBundle("messages", CommandUtils.getLocale(session));
+
             if(userRole != null && userRole.equals(UserRole.ADMIN)){
-                message = "You have to login as user to buy ticket";
+                message = bundle.getString("error.admin.buy.ticket");
             } else {
-                message = "You have to register to buy ticket";
+                message = bundle.getString("error.unregister.buy.ticket");
             }
-            session.setAttribute("errorUnregister",message);
+            session.setAttribute("errorUnregister", message);
             String forward = Path.COMMAND_FREE_SEATS + "&screeningId=" + screening.getId();
             response = Path.COMMAND_REDIRECT;
             sendRedirectRequest(resp, forward);

@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.common;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.FieldValidatorException;
 import com.hryshchenko.cinema.model.entity.User;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ResourceBundle;
 
 public class SignUpCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -23,6 +25,7 @@ public class SignUpCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", CommandUtils.getLocale(session));
 
         String login = req.getParameter("login");
         String password = req.getParameter("inputPassword");
@@ -30,11 +33,11 @@ public class SignUpCommand implements ICommand {
         String userName = req.getParameter("userName");
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            req.setAttribute("error", "Login or password can't be empty");
+            req.setAttribute("error", bundle.getString("error.empty.login"));
             return Path.SIGN_UP;
         }
         if (!password.equals(repeatPassword)){
-            req.setAttribute("error", "Passwords must be identical");
+            req.setAttribute("error", bundle.getString("error.identical.passwords"));
             return Path.SIGN_UP;
         }
         try {
