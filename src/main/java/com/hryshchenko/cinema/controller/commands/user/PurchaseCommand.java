@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.user;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.dto.SeatDTO;
 import com.hryshchenko.cinema.dto.TicketDTO;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class PurchaseCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -34,6 +36,8 @@ public class PurchaseCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", CommandUtils.getLocale(session));
+
         User user = (User) session.getAttribute("user");
         session.removeAttribute("errorBuyTicket");
 
@@ -51,9 +55,9 @@ public class PurchaseCommand implements ICommand {
                 log.info("Purchase ticket");
             }
         } catch (NotEnoughMoneyException e) {
-            session.setAttribute("errorBuyTicket", "You don't have enough money to purchase ticket");
+            session.setAttribute("errorBuyTicket", bundle.getString("error.not.enough.money"));
         } catch (SeatHasSoldException e) {
-            session.setAttribute("errorBuyTicket", "Unfortunately place has sold recently");
+            session.setAttribute("errorBuyTicket", bundle.getString("error.sold.place"));
         } catch (DAOException e) {
             log.error(e.getMessage());
         }
