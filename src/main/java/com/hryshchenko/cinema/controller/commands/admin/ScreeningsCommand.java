@@ -4,6 +4,7 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.constant.enums.StateScreening;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.ScreeningViewDTO;
 import com.hryshchenko.cinema.exception.DAOException;
@@ -15,7 +16,6 @@ import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperFilm;
 import com.hryshchenko.cinema.service.mapper.MapperScreeningView;
-import com.hryshchenko.cinema.util.OrderMapUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,7 +63,7 @@ public class ScreeningsCommand implements ICommand {
         HttpSession session = req.getSession();
 
         String order = getOrder(req, session);
-        long page = getPage(req);
+        long page = CommandUtils.getPage(req);
         String filter = getFilter(req, session);
 
         LocalDate currentDate = LocalDate.now();
@@ -71,7 +71,7 @@ public class ScreeningsCommand implements ICommand {
         try {
             List<ScreeningView> screeningsList;
             long countPages;
-            String orderBD = getOrderBD(order);
+            String orderBD = CommandUtils.getOrderBD(order);
             if (filter == null){
                 screeningsList = screeningsPagination.getScreeningViewsPage(orderBD, page);
                 countPages = screeningsPagination.getCountScreeningViewPages();
@@ -110,10 +110,6 @@ public class ScreeningsCommand implements ICommand {
         return order;
     }
 
-    private String getOrderBD(String order) {
-        return new OrderMapUtil().getOrderBD(order);
-    }
-
     private void setOrderToSession(String order, HttpSession session){
         if(!order.equals("defaultScreening")){
             session.setAttribute("orderScreening", order);
@@ -134,13 +130,4 @@ public class ScreeningsCommand implements ICommand {
         }
     }
 
-    private long getPage(HttpServletRequest req) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-        return page;
-    }
 }

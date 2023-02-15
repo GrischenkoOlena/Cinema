@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.user;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.TicketDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
@@ -11,7 +12,6 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperTicket;
-import com.hryshchenko.cinema.util.OrderMapUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,8 +54,8 @@ public class TicketsCommand implements ICommand {
         User user = (User) session.getAttribute("user");
 
         String order = getOrder(req, session);
-        String orderBD = getOrderBD(order);
-        long page = getPage(req);
+        String orderBD = CommandUtils.getOrderBD(order);
+        long page = CommandUtils.getPage(req);
 
         try {
             List<Ticket> ticketList = ticketPagination.getTicketsPageByUser(orderBD, user.getId(), page);
@@ -69,20 +69,6 @@ public class TicketsCommand implements ICommand {
             log.error(e.getMessage());
         }
         return Path.USER_TICKETS;
-    }
-
-    private long getPage(HttpServletRequest req) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-        return page;
-    }
-
-    private String getOrderBD(String order) {
-        return new OrderMapUtil().getOrderBD(order);
     }
 
     private String getOrder(HttpServletRequest req, HttpSession session) {

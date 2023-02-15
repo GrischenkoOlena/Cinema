@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.GenreDTO;
 import com.hryshchenko.cinema.exception.DAOException;
@@ -14,7 +15,6 @@ import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperFilm;
 import com.hryshchenko.cinema.service.mapper.MapperGenre;
-import com.hryshchenko.cinema.util.OrderMapUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,12 +67,12 @@ public class FilmsCommand implements ICommand {
 
         String order = getOrder(req, session);
         Long filter = getFilter(req, session);
-        long page = getPage(req);
+        long page = CommandUtils.getPage(req);
 
         try {
             List<Film> filmsList;
             long countPages;
-            String orderBD = getOrderBD(order);
+            String orderBD = CommandUtils.getOrderBD(order);
             if(filter != null){
                 filmsList = filmsPagination.getFilteredFilmsPage(filter, orderBD, page);
                 countPages = filmsPagination.getCountFilteredFilmPages(filter);
@@ -109,10 +109,6 @@ public class FilmsCommand implements ICommand {
         return order;
     }
 
-    private String getOrderBD(String order) {
-        return new OrderMapUtil().getOrderBD(order);
-    }
-
     private void setOrderToSession(String order, HttpSession session){
         if(!order.equals("defaultFilm")){
             session.setAttribute("orderFilms", order);
@@ -128,7 +124,7 @@ public class FilmsCommand implements ICommand {
         }
         Long filterSession;
         try {
-            filterSession = Long.parseLong((String) session.getAttribute("genreFilter"));
+            filterSession = (Long)session.getAttribute("genreFilter");
         } catch (NumberFormatException e) {
             filterSession = null;
         }
@@ -136,13 +132,4 @@ public class FilmsCommand implements ICommand {
         return filter;
     }
 
-    private long getPage(HttpServletRequest req) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-        return page;
-    }
 }

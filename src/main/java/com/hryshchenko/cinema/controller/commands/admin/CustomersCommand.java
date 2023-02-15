@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.UserDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
@@ -10,7 +11,6 @@ import com.hryshchenko.cinema.model.entity.User;
 import com.hryshchenko.cinema.service.Pagination;
 import com.hryshchenko.cinema.service.mapper.IMapperService;
 import com.hryshchenko.cinema.service.mapper.MapperUser;
-import com.hryshchenko.cinema.util.OrderMapUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,8 +51,8 @@ public class CustomersCommand implements ICommand {
         HttpSession session = req.getSession();
 
         String order = getOrder(req, session);
-        String orderBD = getOrderBD(order);
-        long page = getPage(req);
+        String orderBD = CommandUtils.getOrderBD(order);
+        long page = CommandUtils.getPage(req);
 
         try {
             List<User> usersList = usersPagination.getUsersPage(orderBD, page);
@@ -80,23 +80,10 @@ public class CustomersCommand implements ICommand {
         return order;
     }
 
-    private String getOrderBD(String order) {
-        return new OrderMapUtil().getOrderBD(order);
-    }
-
     private void setOrderToSession(String order, HttpSession session){
         if(!order.equals("defaultCustomer")){
             session.setAttribute("orderCustomers", order);
         }
     }
 
-    private long getPage(HttpServletRequest req) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-        return page;
-    }
 }
