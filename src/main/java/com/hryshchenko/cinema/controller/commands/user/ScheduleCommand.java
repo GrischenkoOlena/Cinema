@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,11 +40,7 @@ public class ScheduleCommand implements ICommand {
             session.removeAttribute("orderScreening");
         }
         setOrderToSession(getOrder(req, session), session);
-        try {
-            resp.sendRedirect(Path.COMMAND_USER_SCHEDULE);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_USER_SCHEDULE);
         return Path.COMMAND_REDIRECT;
     }
 

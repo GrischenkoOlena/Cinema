@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.AttendanceDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.service.Pagination;
@@ -18,7 +19,7 @@ public class AttendanceCommand implements ICommand {
     private final Pagination attendancePagination = new Pagination(AppContext.getInstance());
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        long page = getPage(req);
+        long page = CommandUtils.getPage(req);
 
         try {
             List<AttendanceDTO> attendances = attendancePagination.getAttendancePage(page);
@@ -30,15 +31,5 @@ public class AttendanceCommand implements ICommand {
             log.error(e.getMessage());
         }
         return Path.ADMIN_ATTENDANCE;
-    }
-
-    private long getPage(HttpServletRequest req) {
-        long page;
-        try {
-            page = Long.parseLong(req.getParameter("page"));
-        } catch (NumberFormatException e){
-            page = 1;
-        }
-        return page;
     }
 }

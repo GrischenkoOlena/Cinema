@@ -1,7 +1,12 @@
 package com.hryshchenko.cinema.controller.commands;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -9,6 +14,15 @@ import java.util.Map;
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
 public class CommandUtils {
+    private static final Logger log = LogManager.getLogger();
+
+    public static void sendRedirectResponse(HttpServletResponse resp, String forward) {
+        try {
+            resp.sendRedirect(forward);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
 
     public static long getPage(HttpServletRequest req) {
         long page;

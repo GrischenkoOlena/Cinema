@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.common;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.FieldValidatorException;
 import com.hryshchenko.cinema.model.dbservices.UserService;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class UpdateProfileCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -35,11 +35,7 @@ public class UpdateProfileCommand implements ICommand {
         }
         log.info(user.getLogin() + " profile's updated");
 
-        try {
-            resp.sendRedirect(Path.COMMAND_PROFILE);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_PROFILE);
         return Path.COMMAND_REDIRECT;
     }
 

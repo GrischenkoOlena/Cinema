@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.dto.GenreDTO;
 import com.hryshchenko.cinema.exception.DAOException;
@@ -18,7 +19,6 @@ import static com.hryshchenko.cinema.util.DataValidator.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class AddFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -40,18 +40,11 @@ public class AddFilmCommand implements ICommand {
             req.getSession().setAttribute("errorAddFilm",e.getMessage());
         }
 
-        sendRedirectResponse(resp, forward);
+        CommandUtils.sendRedirectResponse(resp, forward);
         log.info("new movies was added");
         return Path.COMMAND_REDIRECT;
     }
 
-    private void sendRedirectResponse(HttpServletResponse resp, String forward) {
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
 
     private FilmDTO getFilmDTO(HttpServletRequest req) throws FieldValidatorException {
         String titleUpdate = req.getParameter("title");

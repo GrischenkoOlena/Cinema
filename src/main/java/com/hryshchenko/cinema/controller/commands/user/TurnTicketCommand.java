@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.user;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.TicketDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dbservices.UserService;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,11 +44,7 @@ public class TurnTicketCommand implements ICommand {
                 log.error(e.getMessage());
             }
         }
-        try {
-            resp.sendRedirect(Path.COMMAND_USER_TICKETS);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_USER_TICKETS);
         log.info("Ticket is returned");
         return Path.COMMAND_REDIRECT;
     }

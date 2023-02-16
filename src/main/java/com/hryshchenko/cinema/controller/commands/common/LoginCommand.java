@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -67,11 +66,8 @@ public class LoginCommand implements ICommand {
         if (userRole == UserRole.CLIENT) {
             forward = Path.COMMAND_USER_SCHEDULE;
         }
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+
+        CommandUtils.sendRedirectResponse(resp, forward);
         session.removeAttribute("errorBuyTicket");
         session.setAttribute("user", user);
         session.setAttribute("userRole", userRole);

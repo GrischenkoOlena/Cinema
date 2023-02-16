@@ -51,11 +51,8 @@ public class ScreeningsCommand implements ICommand {
         }
         setOrderToSession(getOrder(req, session), session);
         setFilterToSession(getFilter(req, session), session);
-        try {
-            resp.sendRedirect(Path.COMMAND_ADMIN_SCREENINGS);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_ADMIN_SCREENINGS);
         return Path.COMMAND_REDIRECT;
     }
 

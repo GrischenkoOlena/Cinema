@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,16 +60,8 @@ public class PurchaseCommand implements ICommand {
         } catch (DAOException e) {
             log.error(e.getMessage());
         }
-        sendRedirectRequest(resp, forward);
+        CommandUtils.sendRedirectResponse(resp, forward);
         return Path.COMMAND_REDIRECT;
-    }
-
-    private void sendRedirectRequest(HttpServletResponse resp, String forward) {
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
     }
 
     private TicketDTO getTicketDTO(User user, ScreeningDTO screening, List<SeatDTO> seats) {
