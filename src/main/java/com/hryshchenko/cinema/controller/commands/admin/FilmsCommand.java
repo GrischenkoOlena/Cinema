@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 public class FilmsCommand implements ICommand {
@@ -54,11 +53,7 @@ public class FilmsCommand implements ICommand {
         setOrderToSession(getOrder(req, session), session);
         session.setAttribute("genreFilter", getFilter(req, session));
 
-        try {
-            resp.sendRedirect(Path.COMMAND_ADMIN_FILMS);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_ADMIN_FILMS);
         return Path.COMMAND_REDIRECT;
     }
 

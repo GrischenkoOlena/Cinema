@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 public class TicketsCommand implements ICommand {
@@ -41,11 +40,7 @@ public class TicketsCommand implements ICommand {
             session.removeAttribute("orderTickets");
         }
         setOrderToSession(getOrder(req, session), session);
-        try {
-            resp.sendRedirect(Path.COMMAND_USER_TICKETS);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, Path.COMMAND_USER_TICKETS);
         return Path.COMMAND_REDIRECT;
     }
 

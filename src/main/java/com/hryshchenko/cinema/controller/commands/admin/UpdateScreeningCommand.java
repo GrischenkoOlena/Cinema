@@ -4,6 +4,7 @@ import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.constant.enums.StateScreening;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.model.dbservices.ScreeningService;
 import com.hryshchenko.cinema.model.entity.Screening;
@@ -12,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class UpdateScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
@@ -34,11 +34,7 @@ public class UpdateScreeningCommand implements ICommand {
             log.error(e.getMessage());
         }
 
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        CommandUtils.sendRedirectResponse(resp, forward);
         log.info("State session is changed");
         return Path.COMMAND_REDIRECT;
     }

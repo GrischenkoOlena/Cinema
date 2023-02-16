@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.dto.FilmDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.FieldValidatorException;
@@ -15,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static com.hryshchenko.cinema.util.DataValidator.*;
 
@@ -40,16 +40,8 @@ public class UpdateFilmCommand implements ICommand {
             log.error(e.getMessage());
         }
 
-        sendRedirectResponse(resp, forward);
+        CommandUtils.sendRedirectResponse(resp, forward);
         return Path.COMMAND_REDIRECT;
-    }
-
-    private void sendRedirectResponse(HttpServletResponse resp, String forward) {
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
     }
 
     private FilmDTO getFilmDTO(HttpServletRequest req) throws FieldValidatorException {

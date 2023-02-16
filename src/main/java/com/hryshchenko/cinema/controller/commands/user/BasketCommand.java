@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -50,7 +49,7 @@ public class BasketCommand implements ICommand {
             session.setAttribute("errorUnregister", message);
             String forward = Path.COMMAND_FREE_SEATS + "&screeningId=" + screening.getId();
             response = Path.COMMAND_REDIRECT;
-            sendRedirectRequest(resp, forward);
+            CommandUtils.sendRedirectResponse(resp, forward);
         }
         return response;
     }
@@ -64,14 +63,6 @@ public class BasketCommand implements ICommand {
             seats.add(seat);
         }
         return seats;
-    }
-
-    private void sendRedirectRequest(HttpServletResponse resp, String forward) {
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
     }
 
     private SeatDTO getSeatDTO(HttpServletRequest req) {

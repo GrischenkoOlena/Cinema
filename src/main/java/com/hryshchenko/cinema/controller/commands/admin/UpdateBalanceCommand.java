@@ -3,6 +3,7 @@ package com.hryshchenko.cinema.controller.commands.admin;
 import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
+import com.hryshchenko.cinema.controller.commands.CommandUtils;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.FieldValidatorException;
 import com.hryshchenko.cinema.model.dbservices.UserService;
@@ -13,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Optional;
 
 public class UpdateBalanceCommand implements ICommand {
@@ -34,17 +34,9 @@ public class UpdateBalanceCommand implements ICommand {
         }
 
         String forward = Path.COMMAND_ADMIN_CUSTOMERS;
-        sendRedirectResponse(resp, forward);
+        CommandUtils.sendRedirectResponse(resp, forward);
         log.info("User balance's updated");
         return Path.COMMAND_REDIRECT;
-    }
-
-    private void sendRedirectResponse(HttpServletResponse resp, String forward) {
-        try {
-            resp.sendRedirect(forward);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
     }
 
     private double getUpdateBalance(HttpServletRequest req) throws FieldValidatorException {
