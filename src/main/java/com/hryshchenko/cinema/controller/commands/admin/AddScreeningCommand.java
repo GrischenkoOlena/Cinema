@@ -53,18 +53,20 @@ public class AddScreeningCommand implements ICommand {
     private ScreeningDTO getScreeningDTO(HttpServletRequest req) throws FieldValidatorException {
         long filmUpdate = Long.parseLong(req.getParameter("film"));
 
-        LocalDate dateUpdate = LocalDate.parse(req.getParameter("date"));
+        String dateUpdate = req.getParameter("date");
         validateDateScreening(dateUpdate);
+        LocalDate dateScreening = LocalDate.parse(dateUpdate);
 
-        LocalTime timeUpdate = LocalTime.parse(req.getParameter("time"));
+        String timeUpdate = req.getParameter("time");
         validateTimeScreening(timeUpdate);
+        LocalTime timeScreening = LocalTime.parse(timeUpdate);
 
         int stateUpdate = Integer.parseInt(req.getParameter("state"));
 
         ScreeningDTO screeningDTO = new ScreeningDTO();
         screeningDTO.setFilm(new FilmDTO.FilmDTOBuilder(filmUpdate).build());
-        screeningDTO.setFilmDate(dateUpdate);
-        screeningDTO.setTimeBegin(timeUpdate);
+        screeningDTO.setFilmDate(dateScreening);
+        screeningDTO.setTimeBegin(timeScreening);
         screeningDTO.setState(StateScreening.getValueFromId(stateUpdate));
         return screeningDTO;
     }

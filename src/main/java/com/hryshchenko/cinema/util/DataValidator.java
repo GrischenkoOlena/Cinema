@@ -4,6 +4,7 @@ import com.hryshchenko.cinema.exception.FieldValidatorException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 public class DataValidator {
@@ -84,13 +85,27 @@ public class DataValidator {
         return true;
     }
 
-    public static boolean validateTimeScreening(LocalTime time) throws FieldValidatorException{
+    public static boolean validateTimeScreening(String timeString) throws FieldValidatorException{
+        LocalTime time;
+        try {
+            time = LocalTime.parse(timeString);
+        } catch (DateTimeParseException e) {
+            throw new FieldValidatorException("field time contents bad symbols");
+        }
+
         if(!(time.isAfter(MIN_TIME_SCREENING) && time.isBefore(MAX_TIME_SCREENING)))
             throw new FieldValidatorException("don't correct time session");
         return true;
     }
 
-    public static boolean validateDateScreening(LocalDate date) throws FieldValidatorException {
+    public static boolean validateDateScreening(String dateString) throws FieldValidatorException {
+        LocalDate date;
+        try {
+            date = LocalDate.parse(dateString);
+        } catch (DateTimeParseException e) {
+            throw new FieldValidatorException("field date contents bad symbols");
+        }
+
         if(!date.isAfter(CURRENT_DATE))
             throw new FieldValidatorException("don't correct date session");
         return true;
