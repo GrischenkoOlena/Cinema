@@ -23,7 +23,7 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="film" class="form-label"> <fmt:message key="admin.main.new.label.film"/></label>
-              <select class="form-select" id="film" name="film">
+              <select class="form-select" id="film" name="film" required>
                 <option selected style="display:none;"></option>
                 <c:forEach var="film" items="${films}">
                   <option value="${film.id}">${film.title}</option>
@@ -40,7 +40,7 @@
             </div>
             <div class="mb-3">
               <label for="state" class="form-label"> <fmt:message key="admin.main.new.label.state"/></label>
-              <select class="form-select" id="state" name="state">
+              <select class="form-select" id="state" name="state" required>
                 <option selected style="display:none;"></option>
                 <c:forEach var="state" items="${states}">
                   <option value="${state.id}">${state}</option>
