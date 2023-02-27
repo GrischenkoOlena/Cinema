@@ -1,9 +1,7 @@
 package com.hryshchenko.cinema.service.mapper;
 
-import com.hryshchenko.cinema.dto.ScreeningDTO;
 import com.hryshchenko.cinema.dto.ScreeningViewDTO;
 import com.hryshchenko.cinema.exception.MapperException;
-import com.hryshchenko.cinema.model.entity.Screening;
 import com.hryshchenko.cinema.model.entity.ScreeningView;
 
 import java.util.ArrayList;

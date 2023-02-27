@@ -16,6 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class MapperScreening implements IMapperService<Screening, ScreeningDTO> {
+    private final ScreeningService screeningService;
+    private final FilmService filmService;
+    private final IMapperService<Film, FilmDTO> mapperService;
+
+    public MapperScreening() {
+        screeningService = AppContext.getInstance().getScreeningService();
+        filmService = AppContext.getInstance().getFilmService();
+        mapperService = new MapperFilm();
+    }
+
     @Override
     public ScreeningDTO getDTO(Screening entity) throws MapperException {
 
@@ -39,7 +49,6 @@ public class MapperScreening implements IMapperService<Screening, ScreeningDTO> 
     }
 
     private int getAvailableSeatsById(long screeningId) throws MapperException {
-        ScreeningService screeningService = AppContext.getInstance().getScreeningService();
         try {
             return screeningService.getCountAvailableSeatsById(screeningId);
         } catch (DAOException e) {
@@ -48,8 +57,6 @@ public class MapperScreening implements IMapperService<Screening, ScreeningDTO> 
     }
 
     private FilmDTO getFilmDTO(long filmId) throws MapperException {
-        FilmService filmService = AppContext.getInstance().getFilmService();
-        IMapperService<Film, FilmDTO> mapperService = new MapperFilm();
         try {
             Optional<Film> film = filmService.getFilmById(filmId);
             if(film.isPresent()){

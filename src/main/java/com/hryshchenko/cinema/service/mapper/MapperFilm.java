@@ -14,6 +14,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class MapperFilm implements IMapperService<Film, FilmDTO> {
+    private final GenreService genreService;
+    private final IMapperService<Genre, GenreDTO> genreMapperService;
+
+    public MapperFilm() {
+        genreService = AppContext.getInstance().getGenreService();
+        genreMapperService = new MapperGenre();
+    }
+
+    public MapperFilm(GenreService genreService, IMapperService<Genre, GenreDTO> genreMapperService) {
+        this.genreService = genreService;
+        this.genreMapperService = genreMapperService;
+    }
+
     @Override
     public FilmDTO getDTO(Film entity) throws MapperException {
         return new FilmDTO.FilmDTOBuilder(entity.getId())
@@ -36,8 +49,6 @@ public class MapperFilm implements IMapperService<Film, FilmDTO> {
     }
 
     private GenreDTO getGenreDTO(long genreId) throws MapperException {
-        IMapperService<Genre, GenreDTO> genreMapperService = new MapperGenre();
-        GenreService genreService = AppContext.getInstance().getGenreService();
         try {
             Optional<Genre> genre = genreService.getGenreById(genreId);
             if(genre.isPresent()){
