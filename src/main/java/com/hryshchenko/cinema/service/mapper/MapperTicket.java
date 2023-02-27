@@ -20,6 +20,22 @@ import java.util.List;
 import java.util.Optional;
 
 public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
+    private final ScreeningService screeningService;
+    private final IMapperService<Screening, ScreeningDTO> mapperScreening;
+    private final UserService userService;
+    private final IMapperService<User, UserDTO> mapperUser;
+    private final SeatService seatService;
+    private final IMapperService<Seat, SeatDTO> mapperSeat;
+
+    public MapperTicket() {
+        screeningService = AppContext.getInstance().getScreeningService();
+        userService = AppContext.getInstance().getUserService();
+        seatService = AppContext.getInstance().getSeatService();
+        mapperScreening = new MapperScreening();
+        mapperUser = new MapperUser();
+        mapperSeat = new MapperSeat();
+    }
+
     @Override
     public TicketDTO getDTO(Ticket entity) throws MapperException {
         TicketDTO ticketDTO = new TicketDTO();
@@ -43,12 +59,10 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
     }
 
     private ScreeningDTO getScreeningDTO(long screeningId) throws MapperException {
-        ScreeningService screeningService = AppContext.getInstance().getScreeningService();
-        IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
         try {
             Optional<Screening> screening = screeningService.getScreeningById(screeningId);
             if (screening.isPresent()){
-                return mapperService.getDTO(screening.get());
+                return mapperScreening.getDTO(screening.get());
             }
         } catch (DAOException e) {
             throw new MapperException("problem with mapping screening from ticket", e);
@@ -57,12 +71,10 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
     }
 
     private UserDTO getUserDTO(long userId) throws MapperException {
-        UserService userService = AppContext.getInstance().getUserService();
-        IMapperService<User, UserDTO> mapperService = new MapperUser();
         try {
             Optional<User> user = userService.getUserById(userId);
             if(user.isPresent()){
-                return mapperService.getDTO(user.get());
+                return mapperUser.getDTO(user.get());
             }
         } catch (DAOException e) {
             throw new MapperException("problem with mapping user from ticket",e);
@@ -71,13 +83,11 @@ public class MapperTicket implements IMapperService<Ticket, TicketDTO> {
     }
 
     private List<SeatDTO> getSeatsDTO(Ticket ticket) throws MapperException {
-        SeatService seatService = AppContext.getInstance().getSeatService();
-        IMapperService<Seat, SeatDTO> mapperService = new MapperSeat();
         try {
             List<Seat> allSeats = seatService.getSeatsByTicket(ticket);
             List<SeatDTO> seats = new ArrayList<>();
             for(Seat seat : allSeats){
-                seats.add(mapperService.getDTO(seat));
+                seats.add(mapperSeat.getDTO(seat));
             }
             return seats;
         } catch (DAOException e) {
