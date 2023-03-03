@@ -28,7 +28,8 @@
             <c:if test="${empty sessionScope.lang}">en</c:if>
         </button>
         <div class="dropdown-menu">
-           <form class="form-inline" method="post" action="?${pageContext.request.queryString}">
+           <form class="form-inline" method="post" action="controller">
+              <input type="hidden" name="action" value="i18n"/>
               <button type="submit" name="sessionLocale" class="dropdown-item" value="en">en</button>
               <button type="submit" name="sessionLocale" class="dropdown-item" value="uk">uk</button>
            </form>
