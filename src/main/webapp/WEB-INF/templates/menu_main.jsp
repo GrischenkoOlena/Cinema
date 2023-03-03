@@ -3,16 +3,14 @@
 
 <%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom">
       <a class="navbar-brand" href="index.jsp">
         <img src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
             Cinema
       </a>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-       <!-- <li><a href="#" class="nav-link px-2 link-secondary"><fmt:message key="main.menu.home"/></a></li>
-        <li><a href="static/price.jsp" class="nav-link px-2 link-dark"><fmt:message key="main.menu.pricing"/></a></li>
-        <li><a href="static/about.jsp" class="nav-link px-2 link-dark"><fmt:message key="main.menu.about"/></a></li>-->
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-5 justify-content-center mb-md-0">
         <c:if test = "${not empty user}">
             <c:if test="${userRole.id == 1}">
               <c:set var="hrefAccount" value="controller?action=screenings"/>
@@ -20,7 +18,7 @@
             <c:if test="${userRole.id == 2}">
               <c:set var="hrefAccount" value="controller?action=schedule"/>
             </c:if>
-            <li><a href="${hrefAccount}" class="nav-link px-2 link-dark"><fmt:message key="main.menu.account"/></a></li>
+            <li><a href="${hrefAccount}" class="nav-link"><fmt:message key="main.menu.account"/></a></li>
         </c:if>
       </ul>
 
@@ -37,8 +35,7 @@
         </div>
       </div>
 
-      <div class="col-md-auto text-end">
-        <form name="header" action="controller" method="GET">
+      <form class="form-inline my-2 my-lg-0 text-end" name="header" action="controller" method="GET">
             <c:choose>
               <c:when test="${not empty user}">
                 <c:set var="actionName" value="logout"/>
@@ -51,14 +48,14 @@
                 <button type="submit" name="page" value="login" class="btn btn-outline-primary me-2">
                     <fmt:message key="button.login"/>
                 </button>
+                <button type="submit" name="page" value="signUp" class="btn btn-outline-warning">
+                  <fmt:message key="button.signup"/>
+                </button>
               </c:otherwise>
             </c:choose>
-          <button type="submit" name="page" value="signUp" class="btn btn-outline-warning">
-            <fmt:message key="button.signup"/>
-          </button>
           <input type="hidden" name="action" value="${actionName}"/>
-        </form>
-      </div>
+      </form>
+    </div>
 
-      <div class="col-md-auto text-end text-info"> <ctg:hello role="${user.name}"/></div>
-    </header>
+    <div class="col-md-auto text-end text-info"> <ctg:hello role="${user.name}"/></div>
+  </div>
