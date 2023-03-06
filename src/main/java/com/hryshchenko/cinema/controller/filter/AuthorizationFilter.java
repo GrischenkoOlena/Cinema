@@ -14,15 +14,20 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@WebFilter(filterName="authentication", urlPatterns = "/controller",
+/**
+ * Authorization filter that defines the commands allowed for customers
+ *
+ * @author Olena Hryshchenko.
+ */
+@WebFilter(filterName="authorization", urlPatterns = "/controller",
         initParams = {
                 @WebInitParam(name = "admin",
                         value = "customers screenings films attendance updateBalance addScreening updateScreening addFilm updateFilm"),
                 @WebInitParam(name = "client", value = "tickets schedule purchase basket deleteFromBasket turnTicket"),
-                @WebInitParam(name = "common", value = "logout i18n profile updateProfile"),
-                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket error")
+                @WebInitParam(name = "common", value = "logout profile updateProfile"),
+                @WebInitParam(name = "everybody", value = "main enter login signUp freeSeats empty basket error i18n")
         })
-public class AuthenticationFilter implements Filter {
+public class AuthorizationFilter implements Filter {
     private static final Logger log = LogManager.getLogger();
     private static final Map<UserRole, List<String>> accessMap = new HashMap<>();
     private static List<String> common = new ArrayList<>();
