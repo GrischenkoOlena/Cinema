@@ -4,8 +4,8 @@
         <Console name="LogConsole" target="SYSTEM_OUT">
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
         </Console>
-        <RollingFile name="RollingFile" fileName="D:\Users\Lena\programming\java\Final project\Cinema\log\logs.log"
-                     filePattern="D:\Users\Lena\programming\java\Final project\Cinema\log\logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+        <RollingFile name="RollingFile" fileName="log\logs.log"
+                     filePattern="log\logs\$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
