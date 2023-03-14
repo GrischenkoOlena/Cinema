@@ -25,7 +25,16 @@ import java.util.ResourceBundle;
  */
 public class  BasketCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private MapperSeat mapperSeat = new MapperSeat();
+    private final MapperSeat mapperSeat;
+
+    public BasketCommand() {
+        mapperSeat = new MapperSeat();
+    }
+
+    public BasketCommand(MapperSeat mapperSeat) {
+        this.mapperSeat = mapperSeat;
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();

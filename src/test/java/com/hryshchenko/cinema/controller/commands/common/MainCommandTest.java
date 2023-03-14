@@ -42,6 +42,7 @@ class MainCommandTest {
         Mockito.when(req.getParameter("scheduleDate")).thenReturn("25/01/2023");
         Mockito.when(service.getScreeningByDate(Mockito.any())).thenReturn(new ArrayList<>());
         Mockito.when(mapper.getListDTO(Mockito.any())).thenReturn(new ArrayList<>());
+        command = new MainCommand(service, mapper);
     }
 
     @Test

@@ -27,8 +27,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AddFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private FilmService filmService = AppContext.getInstance().getFilmService();
-    private MapperFilm mapperService = new MapperFilm();
+    private final FilmService filmService;
+    private final MapperFilm mapperService;
+
+    public AddFilmCommand() {
+        filmService = AppContext.getInstance().getFilmService();
+        mapperService = new MapperFilm();
+    }
+
+    public AddFilmCommand(FilmService filmService, MapperFilm mapperService) {
+        this.filmService = filmService;
+        this.mapperService = mapperService;
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
 
@@ -42,11 +53,11 @@ public class AddFilmCommand implements ICommand {
             }
         } catch (DAOException | MapperException | FieldValidatorException e) {
             log.error(e.getMessage());
-            req.getSession().setAttribute("errorAddFilm",e.getMessage());
+            req.getSession().setAttribute("errorAddFilm", e.getMessage());
         }
 
         CommandUtils.sendRedirectResponse(resp, forward);
-        log.info("new movies was added");
+        log.info("new movie was added");
         return Path.COMMAND_REDIRECT;
     }
 

@@ -33,9 +33,9 @@ import java.util.ResourceBundle;
 public class PurchaseCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
-    private UserService userService = AppContext.getInstance().getUserService();
-    private BusinessTicketService ticketService = new BusinessTicketService();
-    private MapperUser mapperUser = new MapperUser();
+    private final UserService userService = AppContext.getInstance().getUserService();
+    private final BusinessTicketService ticketService = new BusinessTicketService();
+    private final MapperUser mapperUser = new MapperUser();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

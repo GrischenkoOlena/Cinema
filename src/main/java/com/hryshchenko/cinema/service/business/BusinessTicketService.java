@@ -30,16 +30,16 @@ public class BusinessTicketService {
     private static final Logger log = LogManager.getLogger();
     private static final Lock MUTEX = new ReentrantLock();
 
-    private TicketDAO ticketDAO = new TicketDAO();
-    private UserDAO userDAO = new UserDAO();
-    private TicketSeatDAO ticketSeatDAO = new TicketSeatDAO();
-    private EntityTransaction entityTransaction = new EntityTransaction();
+    private final TicketDAO ticketDAO = new TicketDAO();
+    private final UserDAO userDAO = new UserDAO();
+    private final TicketSeatDAO ticketSeatDAO = new TicketSeatDAO();
+    private final EntityTransaction entityTransaction = new EntityTransaction();
 
-    private MapperTicket mapperTicket = new MapperTicket();
-    private MapperUser mapperUser = new MapperUser();
-    private MapperSeat mapperSeat = new MapperSeat();
+    private final MapperTicket mapperTicket = new MapperTicket();
+    private final MapperUser mapperUser = new MapperUser();
+    private final MapperSeat mapperSeat = new MapperSeat();
 
-    private SeatService seatService = AppContext.getInstance().getSeatService();
+    private final SeatService seatService = AppContext.getInstance().getSeatService();
 
     public boolean buyTicket(TicketDTO ticketDTO) throws NotEnoughMoneyException, SeatHasSoldException {
         double cost = getCost(ticketDTO);

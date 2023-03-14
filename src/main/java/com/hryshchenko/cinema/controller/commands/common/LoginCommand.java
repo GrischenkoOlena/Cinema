@@ -26,7 +26,16 @@ import java.util.ResourceBundle;
  */
 public class LoginCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private UserService userService = AppContext.getInstance().getUserService();
+    private final UserService userService;
+
+    public LoginCommand() {
+        userService = AppContext.getInstance().getUserService();
+    }
+
+    public LoginCommand(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();

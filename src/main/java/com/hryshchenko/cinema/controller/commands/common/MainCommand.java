@@ -26,8 +26,18 @@ import java.util.List;
 public class MainCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
-    private ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();
-    private IMapperService<Screening, ScreeningDTO> mapperService = new MapperScreening();
+    private final ScreeningService screeningsServ;
+    private final IMapperService<Screening, ScreeningDTO> mapperService;
+
+    public MainCommand() {
+        screeningsServ = AppContext.getInstance().getScreeningService();
+        mapperService = new MapperScreening();
+    }
+
+    public MainCommand(ScreeningService screeningsServ, IMapperService<Screening, ScreeningDTO> mapperService) {
+        this.screeningsServ = screeningsServ;
+        this.mapperService = mapperService;
+    }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

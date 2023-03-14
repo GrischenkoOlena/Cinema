@@ -28,8 +28,8 @@ import java.util.List;
 public class TicketsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
-    private Pagination ticketPagination = new Pagination(AppContext.getInstance());
-    private IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
+    private final Pagination ticketPagination = new Pagination(AppContext.getInstance());
+    private final IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
 
     /**
      * Execute the view of tickets page command using the PRG pattern.

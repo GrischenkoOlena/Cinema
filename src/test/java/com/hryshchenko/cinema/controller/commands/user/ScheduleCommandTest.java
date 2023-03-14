@@ -1,5 +1,6 @@
 package com.hryshchenko.cinema.controller.commands.user;
 
+import com.hryshchenko.cinema.constant.Path;
 import com.hryshchenko.cinema.dto.ScreeningViewDTO;
 import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,14 +44,15 @@ class ScheduleCommandTest {
     @BeforeEach
     public void setUp(){
         HttpSession session = mock(HttpSession.class);
-        Mockito.when(req.getParameter("btnApplySort")).thenReturn("");
-        Mockito.when(req.getParameter("page")).thenReturn("");
-        Mockito.when(req.getParameter("order")).thenReturn("");
         Mockito.when(req.getSession()).thenReturn(session);
     }
 
     @Test
-    void executeTest() throws DAOException, MapperException {
+    void executeGetTest() throws DAOException, MapperException {
+        Mockito.when(req.getMethod()).thenReturn("GET");
+        Mockito.when(req.getParameter("page")).thenReturn("");
+        Mockito.when(req.getParameter("order")).thenReturn("");
+
         Mockito.when(screeningsPagination
                 .getFilterScreeningViewsPage(Mockito.any(), Mockito.anyString(), Mockito.anyLong()))
                 .thenReturn(new ArrayList<>());
@@ -66,5 +69,12 @@ class ScheduleCommandTest {
         Mockito.verify(mapperScreening, Mockito.times(1))
                 .getListDTO(Mockito.any());
 
+    }
+
+    @Test
+    void executePostTest(){
+        Mockito.when(req.getMethod()).thenReturn("POST");
+        Mockito.when(req.getParameter("btnApplySort")).thenReturn("");
+        assertEquals(Path.COMMAND_REDIRECT, command.execute(req, resp));
     }
 }

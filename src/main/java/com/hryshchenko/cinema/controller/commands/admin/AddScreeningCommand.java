@@ -31,8 +31,8 @@ import java.util.List;
 public class AddScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
-    private ScreeningService screeningService = AppContext.getInstance().getScreeningService();
-    private MapperScreening mapperService = new MapperScreening();
+    private final ScreeningService screeningService = AppContext.getInstance().getScreeningService();
+    private final MapperScreening mapperService = new MapperScreening();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
 

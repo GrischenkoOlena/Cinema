@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  */
 public class SignUpCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private  UserService userService = AppContext.getInstance().getUserService();
+    private  final UserService userService = AppContext.getInstance().getUserService();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();

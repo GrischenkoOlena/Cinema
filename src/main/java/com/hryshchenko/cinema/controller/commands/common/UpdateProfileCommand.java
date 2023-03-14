@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  */
 public class UpdateProfileCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private UserService userService = AppContext.getInstance().getUserService();
+    private final UserService userService = AppContext.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

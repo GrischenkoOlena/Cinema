@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
  */
 public class TurnTicketCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
-    private BusinessTicketService ticketService = new BusinessTicketService();
-    private UserService userService = AppContext.getInstance().getUserService();
+    private final BusinessTicketService ticketService = new BusinessTicketService();
+    private final UserService userService = AppContext.getInstance().getUserService();
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

@@ -28,8 +28,18 @@ import java.util.List;
 public class ScheduleCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
-    private Pagination screeningsPagination = new Pagination(AppContext.getInstance());
-    private IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
+    private final Pagination screeningsPagination;
+    private final IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening;
+
+    public ScheduleCommand() {
+        screeningsPagination = new Pagination(AppContext.getInstance());
+        mapperScreening = new MapperScreeningView();
+    }
+
+    public ScheduleCommand(Pagination screeningsPagination, IMapperService<ScreeningView, ScreeningViewDTO> mapper) {
+        this.screeningsPagination = screeningsPagination;
+        this.mapperScreening = mapper;
+    }
 
     /**
      * Execute the view of the schedule page command using the PRG pattern.
