@@ -2,6 +2,11 @@ package com.hryshchenko.cinema.context;
 
 import com.hryshchenko.cinema.model.dbservices.*;
 
+/**
+ * Class creates all services on app starts.
+ *
+ * @author  Olena Hryshchenko.
+ */
 public class AppContext {
     private static volatile AppContext appContext = new AppContext();
     private final ScreeningService screeningService = new ScreeningService();

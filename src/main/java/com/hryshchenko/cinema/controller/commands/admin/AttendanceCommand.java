@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ *  Command for view attendance cinema. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class AttendanceCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final Pagination attendancePagination = new Pagination(AppContext.getInstance());

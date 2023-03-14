@@ -23,6 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ *  Command for view films. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class FilmsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
@@ -31,6 +36,13 @@ public class FilmsCommand implements ICommand {
     private final GenreService genreService = AppContext.getInstance().getGenreService();
     private final IMapperService<Genre, GenreDTO> mapperServiceGenre = new MapperGenre();
 
+    /**
+     * Execute the view of films page command using the PRG template.
+     *
+     * @param req to get method, session and set all required attributes
+     * @param resp to send response
+     * @return path to redirect or forward by front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getMethod().equals("POST")){

@@ -20,6 +20,11 @@ import static com.hryshchenko.cinema.util.DataValidator.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *  Command for add new film. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class AddFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private FilmService filmService = AppContext.getInstance().getFilmService();

@@ -22,10 +22,14 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ *  Command for view screenings. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class ScreeningsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
@@ -33,6 +37,14 @@ public class ScreeningsCommand implements ICommand {
     private final IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
     private final FilmService filmService = AppContext.getInstance().getFilmService();
     private final IMapperService<Film, FilmDTO> mapperFilm = new MapperFilm();
+
+    /**
+     * Execute the view of screenings page command using the PRG pattern.
+     *
+     * @param req to get method, session and set all required attributes
+     * @param resp to send response
+     * @return path to redirect or forward by front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getMethod().equals("POST")){

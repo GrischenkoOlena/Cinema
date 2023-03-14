@@ -19,6 +19,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ *  Command for turn user's ticket. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class TurnTicketCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private BusinessTicketService ticketService = new BusinessTicketService();

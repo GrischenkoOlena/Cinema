@@ -22,6 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ *  Command for view session free seats. Available to every user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class FreeSeatCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final ScreeningService screeningsServ = AppContext.getInstance().getScreeningService();

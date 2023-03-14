@@ -1,5 +1,11 @@
 package com.hryshchenko.cinema.constant;
 
+/**
+ * Interface represents all SQL query.
+ *
+ * @author  Olena Hryshchenko.
+ */
+
 public interface Query {
     String GET_ALL_USERS = "SELECT * FROM user orderField LIMIT ?, ?";
     String GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login = ?";

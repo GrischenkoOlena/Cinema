@@ -1,5 +1,11 @@
 package com.hryshchenko.cinema.constant;
 
+/**
+ * Interface represents all jsp-pages and commands in app.
+ *
+ * @author  Olena Hryshchenko.
+ */
+
 public interface Path {
     String HOME = "/index.jsp";
     String MAIN = "/WEB-INF/main.jsp";

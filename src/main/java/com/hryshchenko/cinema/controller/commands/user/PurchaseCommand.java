@@ -25,6 +25,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ *  Command for purchase all seats from basket. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class PurchaseCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 

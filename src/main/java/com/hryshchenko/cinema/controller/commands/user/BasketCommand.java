@@ -18,7 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class BasketCommand implements ICommand {
+/**
+ *  Command for add new seat to user's basket. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
+public class  BasketCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private MapperSeat mapperSeat = new MapperSeat();
     @Override

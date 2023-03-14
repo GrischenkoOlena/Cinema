@@ -19,10 +19,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ *  Command for view customers. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class CustomersCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final Pagination usersPagination = new Pagination(AppContext.getInstance());
     private final IMapperService<User, UserDTO> mapperService = new MapperUser();
+
+    /**
+     * Execute the view of customers page command using the PRG pattern.
+     *
+     * @param req to get method, session and set all required attributes
+     * @param resp to send response
+     * @return path to redirect or forward by front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getMethod().equals("POST")){

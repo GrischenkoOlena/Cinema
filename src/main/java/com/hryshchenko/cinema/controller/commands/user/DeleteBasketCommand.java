@@ -11,6 +11,11 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Command for delete seat from user's basket. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class DeleteBasketCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

@@ -19,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
+/**
+ *  Command for sign up user. Available to every user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class SignUpCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private  UserService userService = AppContext.getInstance().getUserService();

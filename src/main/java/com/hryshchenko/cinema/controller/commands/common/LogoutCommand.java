@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ *  Command for log out user. Available to registered user and admin.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class LogoutCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     @Override

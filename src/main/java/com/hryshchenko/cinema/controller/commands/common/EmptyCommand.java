@@ -6,6 +6,11 @@ import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *  Command for forward to the main page. Available to every user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class EmptyCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

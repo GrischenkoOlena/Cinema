@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+/**
+ *  Command for update user's balance. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class UpdateBalanceCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final UserService userService = AppContext.getInstance().getUserService();

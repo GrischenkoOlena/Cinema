@@ -19,6 +19,11 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ *  Command for login user with authentication. Available to every user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class LoginCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private UserService userService = AppContext.getInstance().getUserService();

@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Main controller servlet
+ * @author Olena Hryshchenko
+ */
 @WebServlet("/controller")
 public class FrontController extends HttpServlet {
     @Override

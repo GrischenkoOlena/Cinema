@@ -20,11 +20,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ *  Command for view user's tickets. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class TicketsCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
     private Pagination ticketPagination = new Pagination(AppContext.getInstance());
     private IMapperService<Ticket, TicketDTO> mapperService = new MapperTicket();
+
+    /**
+     * Execute the view of tickets page command using the PRG pattern.
+     *
+     * @param req to get method, session and set all required attributes
+     * @param resp to send response
+     * @return path to redirect or forward by front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getMethod().equals("POST")){

@@ -13,9 +13,19 @@ import java.util.Map;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * CommandUtils  class contains utils methods to use in commands.
+ *
+ * @author Olena Hryschenko
+ */
 public class CommandUtils {
     private static final Logger log = LogManager.getLogger();
 
+    /**
+     * Redirect response with catch IOException
+     * @param resp response passed by command
+     * @param forward redirect path
+     */
     public static void sendRedirectResponse(HttpServletResponse resp, String forward) {
         try {
             resp.sendRedirect(forward);
@@ -24,6 +34,11 @@ public class CommandUtils {
         }
     }
 
+    /**
+     * Get number of page from request
+     * @param req request passed by command
+     * @return number of page (default 1)
+     */
     public static long getPage(HttpServletRequest req) {
         long page;
         try {
@@ -34,6 +49,11 @@ public class CommandUtils {
         return page;
     }
 
+    /**
+     * Get locale from session using attribute "lang"
+     * @param session passed by command
+     * @return Locale (default language EN)
+     */
     public static Locale getLocale(HttpSession session) {
         String nameLocale = (String) session.getAttribute("lang");
         Locale locale = new Locale("en");
@@ -43,6 +63,11 @@ public class CommandUtils {
         return locale;
     }
 
+    /**
+     * Get a row to sort in the database using inner static class OrderMapUtil
+     * @param order passed by command
+     * @return sort's string
+     */
     public static String getOrderBD(String order) {
         return OrderMapUtil.getOrderBD(order);
     }

@@ -19,7 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.hryshchenko.cinema.util.DataValidator.*;
 
-
+/**
+ *  Command for update film. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class UpdateFilmCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final FilmService filmService = AppContext.getInstance().getFilmService();

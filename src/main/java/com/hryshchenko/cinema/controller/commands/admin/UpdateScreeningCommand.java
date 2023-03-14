@@ -14,6 +14,11 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *  Command for update screening. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class UpdateScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private final ScreeningService screeningServ = AppContext.getInstance().getScreeningService();

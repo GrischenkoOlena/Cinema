@@ -20,11 +20,24 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ *  Command for view the schedule of the movies available for viewing. Available to the register user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class ScheduleCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 
     private Pagination screeningsPagination = new Pagination(AppContext.getInstance());
     private IMapperService<ScreeningView, ScreeningViewDTO> mapperScreening = new MapperScreeningView();
+
+    /**
+     * Execute the view of the schedule page command using the PRG pattern.
+     *
+     * @param req to get method, session and set all required attributes
+     * @param resp to send response
+     * @return path to redirect or forward by front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         if (req.getMethod().equals("POST")){

@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ *  Command for view current sessions. Available to every user.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class MainCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 

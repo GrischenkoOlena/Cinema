@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ *  Command for update user's profile. Available to registered user and admin.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class UpdateProfileCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
     private UserService userService = AppContext.getInstance().getUserService();

@@ -4,6 +4,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Role entity enum. Matches table 'role' in database.
+ *
+ * @author Olena Hryshchenko
+ */
+
 public enum UserRole {
     ADMIN (1),
     CLIENT (2);

@@ -1,5 +1,11 @@
 package com.hryshchenko.cinema.constant;
 
+/**
+ * Interface represents all fields' names in database tables.
+ *
+ * @author  Olena Hryshchenko.
+ */
+
 public interface FieldName {
     String USER_ID = "user_id";
     String USER_LOGIN = "login";

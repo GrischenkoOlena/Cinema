@@ -23,6 +23,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ *  Command for add new screening. Available to the administrator.
+ *
+ *  @author Olena Hryshchenko
+ */
 public class AddScreeningCommand implements ICommand {
     private static final Logger log = LogManager.getLogger();
 

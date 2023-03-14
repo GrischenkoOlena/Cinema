@@ -4,6 +4,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * State screening enum. Matches table 'state' in database.
+ *
+ * @author Olena Hryshchenko
+ */
+
 public enum StateScreening {
     ACTIVE (1),
     CANCELED(2),

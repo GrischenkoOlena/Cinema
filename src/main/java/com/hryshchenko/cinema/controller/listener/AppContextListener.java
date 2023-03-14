@@ -11,6 +11,11 @@ import javax.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Context listener.
+ *
+ * @author Olena Hryshchenko.
+ */
 @WebListener
 public class AppContextListener implements ServletContextListener {
     private static final Logger log = LogManager.getLogger();
@@ -34,6 +39,9 @@ public class AppContextListener implements ServletContextListener {
         log.debug("Servlet context destroy finished");
     }
 
+    /**
+     * Initializes CommandFactory.
+     */
     private void initCommandFactory() {
         log.debug("ICommand container initialization started");
 
