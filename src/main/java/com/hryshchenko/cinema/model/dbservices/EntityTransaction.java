@@ -2,7 +2,6 @@ package com.hryshchenko.cinema.model.dbservices;
 
 import com.hryshchenko.cinema.model.connectionpool.DBManager;
 import com.hryshchenko.cinema.model.dao.AbstractDAO;
-import com.hryshchenko.cinema.model.entity.Entity;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,8 +11,8 @@ public class EntityTransaction {
     private final static DBManager dbManager = DBManager.getInstance();
     private Connection connection;
 
-    @SafeVarargs
-    public final void initTransaction(AbstractDAO dao, AbstractDAO... daos) {
+
+    public final void initTransaction(AbstractDAO<?, ?> dao, AbstractDAO<?, ?>... daos) {
         connection = dbManager.getConnection();
 
         try {
@@ -23,7 +22,7 @@ public class EntityTransaction {
         }
         dao.setConnection(connection);
 
-        for (AbstractDAO daoElement : daos) {
+        for (AbstractDAO<?, ?> daoElement : daos) {
             daoElement.setConnection(connection);
         }
     }

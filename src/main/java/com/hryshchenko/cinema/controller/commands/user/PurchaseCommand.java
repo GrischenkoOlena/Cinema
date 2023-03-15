@@ -46,6 +46,8 @@ public class PurchaseCommand implements ICommand {
         session.removeAttribute("errorBuyTicket");
 
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
+
+        @SuppressWarnings (value="unchecked")
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
 
         TicketDTO ticketDTO = getTicketDTO(user, screening, seats);

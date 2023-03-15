@@ -1,7 +1,5 @@
 package com.hryshchenko.cinema.dto;
 
-import com.hryshchenko.cinema.model.entity.Seat;
-
 import java.util.List;
 import java.util.Objects;
 

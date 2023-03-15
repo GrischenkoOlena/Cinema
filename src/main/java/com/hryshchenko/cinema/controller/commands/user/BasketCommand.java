@@ -69,6 +69,7 @@ public class  BasketCommand implements ICommand {
     }
 
     private List<SeatDTO> addNextSeatToSession(HttpSession session, SeatDTO seat) {
+        @SuppressWarnings (value="unchecked")
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
         if (seats == null){
             seats = new ArrayList<>();

@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 public class DataValidator {
-    private final static String REGEX_CHECK_FOR_LOGIN_AS_EMAIL = "^([\\w\\-\\.]+)@([\\w\\-\\.]+)\\.([a-zA-Z]{2,5})$";
+    private final static String REGEX_CHECK_FOR_LOGIN_AS_EMAIL = "^([\\w\\-.]+)@([\\w\\-.]+)\\.([a-zA-Z]{2,5})$";
     private final static String REGEX_CHECK_FOR_PASSWORD = "^([\\wа-яА-Я]{4,10})$";
     private final static String REGEX_CHECK_FOR_NAME = "^[a-zA-ZЄ-Яа-ї' ]{2,120}$";
     private final static String REGEX_CHECK_FOR_TITLE = "^.{2,250}";

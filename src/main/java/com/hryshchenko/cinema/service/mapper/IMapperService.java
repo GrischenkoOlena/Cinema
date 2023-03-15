@@ -1,7 +1,6 @@
 package com.hryshchenko.cinema.service.mapper;
 
 import com.hryshchenko.cinema.dto.ISimpleDTO;
-import com.hryshchenko.cinema.exception.DAOException;
 import com.hryshchenko.cinema.exception.MapperException;
 import com.hryshchenko.cinema.model.entity.Entity;
 import java.util.List;

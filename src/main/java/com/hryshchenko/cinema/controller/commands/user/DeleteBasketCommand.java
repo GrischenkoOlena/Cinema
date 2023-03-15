@@ -20,7 +20,10 @@ public class DeleteBasketCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
+
+        @SuppressWarnings (value="unchecked")
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
+
         int deleteSeatId = Integer.parseInt(req.getParameter("deleteSeatId"));
 
         seats.removeIf(seat -> seat.getId() == deleteSeatId);

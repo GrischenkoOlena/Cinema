@@ -35,6 +35,8 @@ public class TurnTicketCommand implements ICommand {
 
         long ticketId = Long.parseLong(req.getParameter("ticketId"));
         User user = (User) session.getAttribute("user");
+
+        @SuppressWarnings (value="unchecked")
         List<TicketDTO> tickets = (List<TicketDTO>) session.getAttribute("tickets");
 
         TicketDTO ticket = tickets.stream()

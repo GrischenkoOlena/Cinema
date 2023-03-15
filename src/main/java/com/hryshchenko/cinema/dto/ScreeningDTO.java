@@ -1,6 +1,5 @@
 package com.hryshchenko.cinema.dto;
 
-import com.hryshchenko.cinema.model.entity.Film;
 import com.hryshchenko.cinema.constant.enums.StateScreening;
 
 import java.time.LocalDate;
