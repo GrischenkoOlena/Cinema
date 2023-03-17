@@ -9,7 +9,15 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * TicketSeat entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class TicketSeatQueryExecutor extends QueryExecutor<TicketSeat> {
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.TicketSeat}
+     */
     @Override
     public TicketSeat getResult(ResultSet rs) throws SQLException {
         TicketSeat ticketSeat = new TicketSeat();
@@ -21,6 +29,9 @@ public class TicketSeatQueryExecutor extends QueryExecutor<TicketSeat> {
         return ticketSeat;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.TicketSeat}
+     */
     @Override
     public List<TicketSeat> getListOfResult(ResultSet rs) throws SQLException {
         List<TicketSeat> ticketSeats = new ArrayList<>();

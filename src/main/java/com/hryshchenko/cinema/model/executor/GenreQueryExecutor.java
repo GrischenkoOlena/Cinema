@@ -9,7 +9,15 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * Genre entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class GenreQueryExecutor extends QueryExecutor<Genre> {
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.Genre}
+     */
     @Override
     public Genre getResult(ResultSet rs) throws SQLException {
         Genre genre = new Genre();
@@ -20,6 +28,9 @@ public class GenreQueryExecutor extends QueryExecutor<Genre> {
         return genre;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.Genre}
+     */
     @Override
     public List<Genre> getListOfResult(ResultSet rs) throws SQLException {
         List <Genre> genres = new ArrayList<>();

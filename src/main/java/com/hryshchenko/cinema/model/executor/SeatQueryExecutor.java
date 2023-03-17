@@ -9,7 +9,15 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * Seat entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class SeatQueryExecutor extends QueryExecutor<Seat> {
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.Seat}
+     */
     @Override
     public Seat getResult(ResultSet rs) throws SQLException {
         Seat seat = new Seat();
@@ -22,6 +30,9 @@ public class SeatQueryExecutor extends QueryExecutor<Seat> {
         return seat;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.Seat}
+     */
     @Override
     public List<Seat> getListOfResult(ResultSet rs) throws SQLException {
         List<Seat> seats = new ArrayList<>();

@@ -9,8 +9,16 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * Category entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class CategoryQueryExecutor extends QueryExecutor<Category> {
 
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.Category}
+     */
     @Override
     public Category getResult(ResultSet rs) throws SQLException {
         Category category = new Category();
@@ -22,6 +30,9 @@ public class CategoryQueryExecutor extends QueryExecutor<Category> {
         return category;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.Category}
+     */
     @Override
     public List<Category> getListOfResult(ResultSet rs) throws SQLException {
         List<Category> categories = new ArrayList<>();

@@ -9,7 +9,15 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * Screening entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class ScreeningQueryExecutor extends QueryExecutor<Screening> {
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.Screening}
+     */
     @Override
     public Screening getResult(ResultSet rs) throws SQLException {
         Screening screening = new Screening();
@@ -23,6 +31,9 @@ public class ScreeningQueryExecutor extends QueryExecutor<Screening> {
         return screening;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.Screening}
+     */
     @Override
     public List<Screening> getListOfResult(ResultSet rs) throws SQLException {
         List<Screening> screenings = new ArrayList<>();

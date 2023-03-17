@@ -10,8 +10,16 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * User entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class UserQueryExecutor extends QueryExecutor<User> {
 
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.User}
+     */
     @Override
     public User getResult(ResultSet rs) throws SQLException {
         User user = new User();
@@ -27,6 +35,9 @@ public class UserQueryExecutor extends QueryExecutor<User> {
         return user;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.User}
+     */
     @Override
     public List<User> getListOfResult(ResultSet rs) throws SQLException {
         List<User> users = new ArrayList<>();

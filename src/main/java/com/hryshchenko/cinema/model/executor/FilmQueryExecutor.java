@@ -9,7 +9,15 @@ import java.util.List;
 
 import static com.hryshchenko.cinema.constant.FieldName.*;
 
+/**
+ * Film entity query executor.
+ *
+ * @author Olena Hryshchenko.
+ */
 public class FilmQueryExecutor extends QueryExecutor<Film> {
+    /**
+     * @return the {@link com.hryshchenko.cinema.model.entity.Film}
+     */
     @Override
     public Film getResult(ResultSet rs) throws SQLException {
         Film film = null;
@@ -26,6 +34,9 @@ public class FilmQueryExecutor extends QueryExecutor<Film> {
         return film;
     }
 
+    /**
+     * @return the list of {@link com.hryshchenko.cinema.model.entity.Film}
+     */
     @Override
     public List<Film> getListOfResult(ResultSet rs) throws SQLException {
         List<Film> films = new ArrayList<>();
