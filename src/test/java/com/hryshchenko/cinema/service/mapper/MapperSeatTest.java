@@ -29,6 +29,9 @@ class MapperSeatTest {
     @Mock
     CategoryService categoryService;
 
+    @Mock
+    MapperCategory mapperCategory;
+
     @InjectMocks
     MapperSeat mapper = new MapperSeat();
 
@@ -54,17 +57,22 @@ class MapperSeatTest {
     void getDTO() throws MapperException, DAOException {
         Mockito.when(categoryService.getCategoryByID(Mockito.anyInt()))
                 .thenReturn(Optional.of(new Category(1, "premium", 150.0)));
+        Mockito.when(mapperCategory.getDTO(Mockito.any()))
+                .thenReturn(new CategoryDTO(1, "premium", 150.0));
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertEquals(testDTO, mapper.getDTO(testSeat));
     }
     @Test
     void getDTOWithException() throws DAOException {
         Mockito.when(categoryService.getCategoryByID(Mockito.anyInt())).thenThrow(DAOException.class);
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertThrows(MapperException.class, ()-> mapper.getDTO(testSeat));
     }
 
     @Test
     void getDTOEmpty() throws DAOException {
         Mockito.when(categoryService.getCategoryByID(Mockito.anyInt())).thenReturn(Optional.empty());
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertThrows(MapperException.class, ()-> mapper.getDTO(testSeat));
     }
 
@@ -78,6 +86,8 @@ class MapperSeatTest {
 
         Mockito.when(categoryService.getCategoryByID(Mockito.anyInt()))
                 .thenReturn(Optional.of(new Category(1, "premium", 150.0)));
+
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
 
         assertEquals(dtoList, mapper.getListDTO(entityList));
     }
@@ -103,18 +113,21 @@ class MapperSeatTest {
         Mockito.when(categoryService.getCategoryByID(Mockito.anyInt()))
                 .thenReturn(Optional.of(new Category(1, "premium", 150.0)));
         Mockito.when(seatService.getSeatById(Mockito.anyInt())).thenReturn(Optional.of(testSeat));
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertEquals(testDTO, mapper.getSeatDTObyID(1));
     }
 
     @Test
     void getSeatDTObyIDWithException() throws DAOException {
         Mockito.when(seatService.getSeatById(Mockito.anyInt())).thenThrow(DAOException.class);
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertThrows(MapperException.class, ()-> mapper.getSeatDTObyID(1));
     }
 
     @Test
     void getSeatDTObyIDEmpty() throws DAOException {
         Mockito.when(seatService.getSeatById(Mockito.anyInt())).thenReturn(Optional.empty());
+        mapper = new MapperSeat(seatService, categoryService, mapperCategory);
         assertThrows(MapperException.class, ()-> mapper.getSeatDTObyID(1));
     }
 }

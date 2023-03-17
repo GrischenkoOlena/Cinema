@@ -16,9 +16,22 @@ import java.util.List;
 import java.util.Optional;
 
 public class MapperSeat implements IMapperService<Seat, SeatDTO> {
-    private SeatService seatService = AppContext.getInstance().getSeatService();
-    private CategoryService categoryService = AppContext.getInstance().getCategoryService();
-    private IMapperService<Category, CategoryDTO> mapperService = new MapperCategory();
+    private final SeatService seatService;
+    private final CategoryService categoryService;
+    private final IMapperService<Category, CategoryDTO> mapperService;
+
+    public MapperSeat() {
+        seatService = AppContext.getInstance().getSeatService();
+        categoryService = AppContext.getInstance().getCategoryService();
+        mapperService = new MapperCategory();
+    }
+
+    public MapperSeat(SeatService seatServ, CategoryService categoryServ, IMapperService<Category, CategoryDTO> mapper) {
+        this.seatService = seatServ;
+        this.categoryService = categoryServ;
+        this.mapperService = mapper;
+    }
+
     @Override
     public SeatDTO getDTO(Seat entity) throws MapperException {
         SeatDTO seatDTO = new SeatDTO();
