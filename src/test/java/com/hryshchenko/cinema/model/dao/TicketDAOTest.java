@@ -27,7 +27,7 @@ class TicketDAOTest {
     @InjectMocks
     TicketDAO dao;
     Ticket testTicket;
-    List<Ticket> testList = new ArrayList();
+    List<Ticket> testList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {

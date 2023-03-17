@@ -7,8 +7,6 @@ import com.hryshchenko.cinema.model.entity.Ticket;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 public class TicketService implements ICinemaService {
     private final TicketDAO ticketDAO;
@@ -50,11 +48,4 @@ public class TicketService implements ICinemaService {
         return count;
     }
 
-    public Optional<Ticket> getTicketById(long ticketId) throws DAOException {
-        Connection conn = dbManager.getConnection();
-        ticketDAO.setConnection(conn);
-        Optional<Ticket> ticket = ticketDAO.findEntityByKey(ticketId);
-        dbManager.closeConnection(conn);
-        return ticket;
-    }
 }
