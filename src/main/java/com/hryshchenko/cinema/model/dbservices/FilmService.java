@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FilmService implements ICinemaService{
-    private FilmDAO filmDAO;
+    private final FilmDAO filmDAO;
 
     public FilmService() {
         this.filmDAO = new FilmDAO();
