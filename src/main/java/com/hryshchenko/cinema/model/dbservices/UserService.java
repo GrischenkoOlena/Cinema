@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements ICinemaService{
+public class UserService extends CinemaService {
     private final UserDAO userDAO;
 
     public UserService() {

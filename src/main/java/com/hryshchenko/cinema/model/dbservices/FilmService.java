@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class FilmService implements ICinemaService{
+public class FilmService extends CinemaService {
     private final FilmDAO filmDAO;
 
     public FilmService() {

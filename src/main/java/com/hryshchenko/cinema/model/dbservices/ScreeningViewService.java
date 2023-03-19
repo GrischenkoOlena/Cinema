@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ScreeningViewService implements ICinemaService {
+public class ScreeningViewService extends CinemaService {
     private final ScreeningViewDAO screeningViewDAO;
 
     public ScreeningViewService() {

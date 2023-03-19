@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryService implements ICinemaService{
+public class CategoryService extends CinemaService {
     private final CategoryDAO categoryDAO;
 
     public CategoryService() {

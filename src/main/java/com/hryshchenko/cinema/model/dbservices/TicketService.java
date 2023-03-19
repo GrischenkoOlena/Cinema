@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
-public class TicketService implements ICinemaService {
+public class TicketService extends CinemaService {
     private final TicketDAO ticketDAO;
 
     public TicketService() {

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class ScreeningService implements ICinemaService {
+public class ScreeningService extends CinemaService {
     private final ScreeningDAO screeningDAO;
 
     public ScreeningService() {

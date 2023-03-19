@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
-public class GenreService implements ICinemaService{
+public class GenreService extends CinemaService {
     private final GenreDAO genreDAO;
 
     public GenreService() {

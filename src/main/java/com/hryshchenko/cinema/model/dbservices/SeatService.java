@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class SeatService implements ICinemaService {
+public class SeatService extends CinemaService {
     private final SeatDAO seatDAO;
 
     public SeatService() {
