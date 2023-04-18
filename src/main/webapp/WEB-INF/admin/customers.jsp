@@ -54,13 +54,13 @@
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
               <option value="nameAsc" <c:if test="${selectedOrder == 'nameAsc'}"> selected </c:if>>
-                name &#8593;</option>
-              <option value="nameDesc" <c:if test="${selectedOrder == 'nameDesc'}"> selected </c:if>>
                 name &#8595;</option>
+              <option value="nameDesc" <c:if test="${selectedOrder == 'nameDesc'}"> selected </c:if>>
+                name &#8593;</option>
               <option value="balanceAsc" <c:if test="${selectedOrder == 'balanceAsc'}"> selected </c:if>>
-                balance &#8593;</option>
-              <option value="balanceDesc" <c:if test="${selectedOrder == 'balanceDesc'}"> selected </c:if>>
                 balance &#8595;</option>
+              <option value="balanceDesc" <c:if test="${selectedOrder == 'balanceDesc'}"> selected </c:if>>
+                balance &#8593;</option>
             </select>
             <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
                 <fmt:message key="admin.customers.sort.button"/>

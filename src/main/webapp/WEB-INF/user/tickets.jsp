@@ -21,9 +21,9 @@
             <select class="form-select" id="inputOrder" name="order">
               <option selected style="display:none;"></option>
               <option value="dataTicketAsc" <c:if test="${selectedOrder == 'dataTicketAsc'}"> selected </c:if>>
-                data/time &#8593;</option>
-              <option value="dataTicketDesc" <c:if test="${selectedOrder == 'dataTicketDesc'}"> selected </c:if>>
                 data/time &#8595;</option>
+              <option value="dataTicketDesc" <c:if test="${selectedOrder == 'dataTicketDesc'}"> selected </c:if>>
+                data/time &#8593;</option>
             </select>
             <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
                 <fmt:message key="user.tickets.button.sort"/>

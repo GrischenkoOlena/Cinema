@@ -20,17 +20,17 @@
                 <select class="form-select" id="inputOrder" name="order">
                   <option <c:if test="${selectedOrder == ''}"> selected </c:if> style="display:none;"></option>
                   <option value="movieAsc" <c:if test="${selectedOrder == 'movieAsc'}"> selected </c:if>>
-                    movie title &#8593;</option>
-                  <option value="movieDesc" <c:if test="${selectedOrder == 'movieDesc'}"> selected </c:if>>
                     movie title &#8595;</option>
+                  <option value="movieDesc" <c:if test="${selectedOrder == 'movieDesc'}"> selected </c:if>>
+                    movie title &#8593;</option>
                   <option value="dataAsc" <c:if test="${selectedOrder == 'dataAsc'}"> selected </c:if>>
-                    data/time &#8593;</option>
-                  <option value="dataDesc" <c:if test="${selectedOrder == 'dataDesc'}"> selected </c:if>>
                     data/time &#8595;</option>
+                  <option value="dataDesc" <c:if test="${selectedOrder == 'dataDesc'}"> selected </c:if>>
+                    data/time &#8593;</option>
                   <option value="availableAsc" <c:if test="${selectedOrder == 'availableAsc'}"> selected </c:if>>
-                    available seats &#8593;</option>
-                  <option value="availableDesc" <c:if test="${selectedOrder == 'availableDesc'}"> selected </c:if>>
                     available seats &#8595;</option>
+                  <option value="availableDesc" <c:if test="${selectedOrder == 'availableDesc'}"> selected </c:if>>
+                    available seats &#8593;</option>
                 </select>
                 <button class="btn btn-outline-secondary" type="submit" name="btnApplySort"><fmt:message key="user.main.button.sort"/></button>
               </div>

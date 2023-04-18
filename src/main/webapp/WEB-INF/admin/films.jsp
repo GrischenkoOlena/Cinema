@@ -125,13 +125,13 @@
                 <select class="form-select" id="inputOrder" name="order">
                   <option selected style="display:none;"></option>
                   <option value="titleAsc" <c:if test="${selectedOrder == 'titleAsc'}"> selected </c:if>>
-                    name &#8593;</option>
-                  <option value="titleDesc" <c:if test="${selectedOrder == 'titleDesc'}"> selected </c:if>>
                     name &#8595;</option>
+                  <option value="titleDesc" <c:if test="${selectedOrder == 'titleDesc'}"> selected </c:if>>
+                    name &#8593;</option>
                   <option value="durationAsc" <c:if test="${selectedOrder == 'durationAsc'}"> selected </c:if>>
-                   duration &#8593;</option>
+                   duration &#8595;</option>
                   <option value="durationDesc"<c:if test="${selectedOrder == 'durationDesc'}"> selected </c:if>>
-                    duration &#8595;</option>
+                    duration &#8593;</option>
                 </select>
                 <button class="btn btn-outline-secondary" type="submit" name="btnApplySort">
                     <fmt:message key="admin.films.sort.button"/>
