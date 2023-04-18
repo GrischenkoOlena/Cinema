@@ -1,6 +1,7 @@
 package com.hryshchenko.cinema.controller.commands.user;
 
 import com.hryshchenko.cinema.constant.Path;
+import com.hryshchenko.cinema.constant.enums.StateScreening;
 import com.hryshchenko.cinema.context.AppContext;
 import com.hryshchenko.cinema.controller.commandFactory.ICommand;
 import com.hryshchenko.cinema.controller.commands.CommandUtils;
@@ -46,6 +47,11 @@ public class PurchaseCommand implements ICommand {
         session.removeAttribute("errorBuyTicket");
 
         ScreeningDTO screening = (ScreeningDTO) session.getAttribute("screening");
+        if(screening.getState() != StateScreening.ACTIVE){
+            session.setAttribute("errorBuyTicket", bundle.getString("error.not.sold.canceled.screening"));
+            CommandUtils.sendRedirectResponse(resp, Path.COMMAND_BASKET);
+            return Path.COMMAND_REDIRECT;
+        }
 
         @SuppressWarnings (value="unchecked")
         List<SeatDTO> seats = (ArrayList<SeatDTO>) session.getAttribute("seats");
