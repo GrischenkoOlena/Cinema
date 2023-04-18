@@ -79,7 +79,7 @@ public class AddScreeningCommand implements ICommand {
     private void checkTimeScreening(ScreeningDTO screening) throws FieldValidatorException{
         LocalDate addedFilmDate = screening.getFilmDate();
         LocalTime addedTimeBegin = screening.getTimeBegin();
-        int addedFilmDuration = screening.getFilm().getDuration();
+        int addedFilmDuration = 180;
 
         try {
             List<Screening> screeningsList = screeningService.getScreeningByDate(addedFilmDate);
@@ -91,7 +91,7 @@ public class AddScreeningCommand implements ICommand {
                     throw new FieldValidatorException("You can't add new movie at busy time");
                 }
                 LocalTime addedTimeEnd = addedTimeBegin.plusMinutes(addedFilmDuration);
-                if(addedTimeEnd.isBefore(existTimeEnd)){
+                if(addedTimeBegin.isBefore(existTimeBegin) && addedTimeEnd.isAfter(existTimeBegin)){
                     throw new FieldValidatorException("You can't add new movie at busy time");
                 }
             }
