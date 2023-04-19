@@ -81,6 +81,10 @@ public class AddScreeningCommand implements ICommand {
         LocalTime addedTimeBegin = screening.getTimeBegin();
         int addedFilmDuration = 180;
 
+        if(addedFilmDate.isEqual(LocalDate.now()) && addedTimeBegin.isBefore(LocalTime.now())){
+            throw new FieldValidatorException("You can't add new movie at past");
+        }
+
         try {
             List<Screening> screeningsList = screeningService.getScreeningByDate(addedFilmDate);
             List<ScreeningDTO> screeningDTOList = mapperService.getListDTO(screeningsList);
