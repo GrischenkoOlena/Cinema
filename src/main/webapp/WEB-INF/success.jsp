@@ -12,7 +12,7 @@
     <br>
     <form method="GET" action="controller?action=enter">
         <input type="hidden" name="page" value="login"/>
-        <button class="btn btn-outline-success" type="submit"><fmt:message key="button.login"/></button>
+        <button class="btn btn-outline-success" type="submit" name="action" value="enter"><fmt:message key="button.login"/></button>
     </form>
 
     <jsp:include page="/WEB-INF/templates/scripts.jsp"></jsp:include>
